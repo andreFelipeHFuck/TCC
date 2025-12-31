@@ -1,0 +1,29 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@tcc/types": ["lib/types/src/index.ts"],
+      "@tcc/models": ["lib/models/src/index.ts"],
+      "@tcc/domain": ["lib/domain/src/index.ts"],
+      "@tcc/adapters": ["lib/adapters/src/index.ts"],
+      "@tcc/services": ["lib/services/src/index.ts"],
+      "@tcc/utils": ["lib/utils/src/index.ts"],
+      "@tcc/appwrite": ["lib/services/appwrite/src/index.ts"],
+      "@tcc/appwrite-adapter": ["libs/adapters/appwrite-adapter/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}
