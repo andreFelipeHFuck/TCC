@@ -1,2 +1,9 @@
-<app-nx-welcome></app-nx-welcome>
-<router-outlet></router-outlet>
+@if(appwrite) {
+    <p>
+        Appwrite Conectado
+    </p>
+} @else {
+    <p>
+        Não foi possíve conectar o Appwrite
+    </p>
+}

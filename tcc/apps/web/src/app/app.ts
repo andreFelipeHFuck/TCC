@@ -1,13 +1,18 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { NxWelcome } from './nx-welcome';
+
+import { environment } from '../environments/environments';
+
+import { appwriteCreateConnection } from  '@tcc/appwrite'
 
 @Component({
-  imports: [NxWelcome, RouterModule],
+  imports: [],
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
 export class App {
-  protected title = 'web';
+  protected appwrite = appwriteCreateConnection({
+    endpoint: environment.appwrite.endpoint,
+    project: environment.appwrite.projectId
+  });
 }
