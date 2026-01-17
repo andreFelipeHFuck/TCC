@@ -1,1 +1,1 @@
-export * from './lib/types';
+export * from './lib/appwrite-types.types';
