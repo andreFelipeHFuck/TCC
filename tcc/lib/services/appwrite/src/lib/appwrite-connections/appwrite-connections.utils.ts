@@ -1,8 +1,6 @@
 import { Account, Client } from "appwrite";
 
-import { 
-    AppwriteConfig 
-} from "@tcc/types";
+import { AppwriteConfig } from "@tcc/types";
 
 /**
  * Função que cria uma instância para se conectar ao servidor Appwrite
