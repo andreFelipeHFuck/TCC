@@ -9,7 +9,7 @@ import { AppwriteConfig } from "@tcc/types";
  * 
  * @returns retorna uma instância do objeto Client
 */
-function appwriteCreateCliente(config: AppwriteConfig): Client{
+export function appwriteCreateCliente(config: AppwriteConfig): Client{
     const client = new Client();
 
     client 

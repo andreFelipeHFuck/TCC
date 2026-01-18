@@ -17,6 +17,7 @@
     "appwrite": "^21.5.0",
     "axios": "^1.6.0",
     "dotenv": "^17.2.3",
+    "node-appwrite": "^21.1.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~7.8.0"
   },
