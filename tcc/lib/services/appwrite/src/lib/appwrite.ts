@@ -1,15 +1,16 @@
 import { inject, Injectable } from '@angular/core';
-import { APPWRITE_CONFIG } from './appwrite-connections/appwrite-token.token';
 
 import {
-   AppwriteAccount, 
-   AppwriteClient, 
-   AppwriteConfig, 
-   AppwriteError, 
-   UnauthorizedError
-  } from "@tcc/types";
+  AppwriteAccount, 
+  AppwriteClient, 
+  AppwriteConfig, 
+  AppwriteError, 
+  Logger, 
+  UnauthorizedError
+} from "@tcc/types";
 import { appwriteMapperError } from '@tcc/appwrite-adapter';
 
+import { APPWRITE_CONFIG } from './appwrite-connections/appwrite-token.token';
 import { appwriteCreateConnection } from './appwrite-connections/appwrite-connections.utils';
 
 @Injectable({
@@ -17,6 +18,7 @@ import { appwriteCreateConnection } from './appwrite-connections/appwrite-connec
 })
 export class Appwrite {
   private readonly appwriteConfig: AppwriteConfig = inject(APPWRITE_CONFIG);
+  private readonly logger = inject(Logger);
 
   private client: AppwriteClient = 'NONE';
   private account: AppwriteAccount = 'NONE';
@@ -34,9 +36,16 @@ export class Appwrite {
     try {
       [this.client, this.account] = appwriteCreateConnection(this.appwriteConfig);
       this.status = 'ready';
+
+      this.logger.info('[Appwrite] Conexão inicializada com sucesso');
     } catch (error) {
       this.status = 'error';
-      this.lastError = appwriteMapperError()
+      this.lastError = appwriteMapperError(error);
+
+      this.logger.error('[Appwrite] Erro ao inicializar', {
+        error,
+        mappedError: this.lastError,
+      })
     }
   }
 
