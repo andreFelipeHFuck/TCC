@@ -1,5 +1,5 @@
 import {
-    AppWriteError,
+    AppwriteError,
 
     NetworkError,
     UnauthorizedError,
@@ -14,9 +14,8 @@ import {
  * 
  * @returns objeto AppError com os erros do App
  */
-export function appwriteMapperError(error: unknown): AppWriteError {
-    if (error instanceof AppWriteError) {
-        console.log('TESTE: ', error.code);
+export function appwriteMapperError(error: unknown): AppwriteError {
+    if (error instanceof AppwriteError) {
         switch (error.code) {
             case '400':
                 return new Error();

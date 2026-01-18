@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 
 import {
-    AppWriteError,
+    AppwriteError,
 
     NetworkError,
     UnauthorizedError,
@@ -11,14 +11,14 @@ import {
 
 import { appwriteMapperError } from './appwrite-error.mapper';
 
-class TestError extends AppWriteError {
+class TestError extends AppwriteError {
     constructor() {
         super('Erro desconhecido', 'UNKNOW', 'UNKNOW');
     }
 }
 
 describe('Função appwriteMapperError', () => {
-    it('Deve retornar UnlnownError se o erro não fizer parte de AppWriteError', () => {
+    it('Deve retornar UnlnownError se o erro não fizer parte de AppwriteError', () => {
         const error = new Error('Erro padrão');
 
         const resultError = appwriteMapperError(error);

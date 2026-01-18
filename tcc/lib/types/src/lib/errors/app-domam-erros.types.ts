@@ -1,24 +1,24 @@
-import { AppWriteError } from "./app-error.error";
+import { AppwriteError } from "./app-error.error";
 
-export class NetworkError extends AppWriteError {
+export class NetworkError extends AppwriteError {
     constructor() {
         super('Não foi possível conectar ao servidor');
     }
 }
 
-export class UnauthorizedError extends AppWriteError {
+export class UnauthorizedError extends AppwriteError {
     constructor() {
         super('Usuário não autorizado');
     }
 }
 
-export class NotFoundError extends AppWriteError {
+export class NotFoundError extends AppwriteError {
     constructor(resource?: string) {
         super(resource ? `${resource} não encontrado` : 'Recurso não encontrado');
     }
 }
 
-export class UnknowError extends AppWriteError {
+export class UnknowError extends AppwriteError {
     constructor() {
         super('Erro inesperado');
     }

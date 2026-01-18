@@ -1,4 +1,4 @@
-export abstract class AppWriteError extends Error {
+export abstract class AppwriteError extends Error {
     constructor(
         message: string,
         public readonly type?: string,
