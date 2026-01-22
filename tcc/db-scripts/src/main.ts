@@ -11,6 +11,8 @@ import { createChargingSessionSchema } from "./collections/create-chargingSessio
 import { createConnectorsSchema } from "./collections/create-connectors";
 import { createEnergyTranderSchema } from "./collections/create-energyTranferPeriod";
 import { createChargingStationSchema } from "./collections/create-chargingStation";
+import { createEnergySchema } from "./collections/create-energy";
+import { createFlowHistorySchema } from "./collections/create-flowHisory";
 
 const collections: Collection[] = [
     {
@@ -59,6 +61,20 @@ const collections: Collection[] = [
         ]
     },
     {
+        id: 'energies_id',
+        name: 'energies',
+        schemas: [
+            createEnergySchema
+        ]
+    },
+    {
+        id: 'flowHistorical_id',
+        name: 'flowHistorical',
+        schemas: [
+            createFlowHistorySchema
+        ]
+    },
+    {
         id: 'vehicles_id',
         name: 'vehicles',
         schemas: [
@@ -76,6 +92,23 @@ const collections: Collection[] = [
 ];
 
 const relationships: Relationship[] = [
+    // One to One
+    {
+        collectionId: 'chargingSessions_id',
+        relationCollectionId: 'energies_id',
+        relationType: RelationshipType.OneToOne,
+        twoWay: true,
+        onDelete: 'cascade'
+    },
+    {
+        collectionId: 'energyTranferPeriods_id',
+        relationCollectionId: 'energies_id',
+        relationType: RelationshipType.OneToOne,
+        twoWay: true,
+        onDelete: 'null'
+    },
+
+    // One To Many
     {
         collectionId: 'loactions_id',
         relationCollectionId: 'chargingStations_id',
@@ -112,13 +145,22 @@ const relationships: Relationship[] = [
       onDelete: 'null'     
     },
     {
-      collectionId: 'chargingSessions_id',
-      relationCollectionId: 'energyTranferPeriods_id',
+      collectionId: 'energyTranferPeriods_id',
+      relationCollectionId: 'chargingSessions_id',
       relationType: RelationshipType.OneToMany,
       twoWay: true,
       onDelete: 'cascade'
     },
-      {
+    {
+      collectionId: 'energies_id',
+      relationCollectionId: 'flowHistorical_id',
+      relationType: RelationshipType.OneToMany,
+      twoWay: true,
+      onDelete: 'null'
+    },
+
+    // Mant to Many
+    {
       collectionId: 'users_id',
       relationCollectionId: 'vehicles_id',
       relationType: RelationshipType.ManyToMany,
