@@ -4,7 +4,7 @@ export async  function createUsersVehiclesSchema(schema: SchemaContext) {
     const userId = await schema.databases.createStringAttribute({
         databaseId: schema.databaseId,
         collectionId: schema.collectionId,
-        key: 'brand',
+        key: 'usersId',
         size: 512,
         required: true,
     });
@@ -14,7 +14,7 @@ export async  function createUsersVehiclesSchema(schema: SchemaContext) {
     const vehicleId = await schema.databases.createStringAttribute({
         databaseId: schema.databaseId,
         collectionId: schema.collectionId,
-        key: 'brand',
+        key: 'vehicleId',
         size: 512,
         required: true,
     });

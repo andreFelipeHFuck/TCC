@@ -23,7 +23,7 @@ export async function createEnergyTransferSchema(schema: SchemaContext) {
     const startSoc = await schema.databases.createIntegerAttribute({
         databaseId: schema.databaseId,
         collectionId: schema.collectionId,
-        key: 'currentSoc',
+        key: 'startSoc',
         required: true,
         min: 0,
         max: 100
@@ -43,7 +43,7 @@ export async function createEnergyTransferSchema(schema: SchemaContext) {
     const stopSoc = await schema.databases.createIntegerAttribute({
         databaseId: schema.databaseId,
         collectionId: schema.collectionId,
-        key: 'currentSoc',
+        key: 'stopSoc',
         required: true,
         min: 0,
         max: 100

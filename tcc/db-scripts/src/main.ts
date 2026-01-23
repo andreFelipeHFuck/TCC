@@ -90,14 +90,7 @@ const collections: Collection[] = [
 ];
 
 const relationships: Relationship[] = [
-    // One to One
-    { 
-        collectionId: 'chargingSessions_id',
-        relationCollectionId: 'energies_id',
-        relationType: RelationshipType.OneToOne,
-        twoWay: true,
-        onDelete: 'cascade'
-    },
+    // One to Onez
     { 
         collectionId: 'energyTranferPeriods_id',
         relationCollectionId: 'energies_id',
@@ -157,15 +150,15 @@ const relationships: Relationship[] = [
       onDelete: 'cascade'
     },
     {
-      collectionId: 'usersVehicles_id',
-      relationCollectionId: 'users_id',
+      collectionId: 'users_id',
+      relationCollectionId: 'usersVehicles_id',
       relationType: RelationshipType.OneToMany,
       twoWay: true,
       onDelete: 'restrict'
     },
     {
-      collectionId: 'usersVehicles_id',
-      relationCollectionId: 'vehicles_id',
+      collectionId: 'vehicles_id',
+      relationCollectionId: 'usersVehicles_id',
       relationType: RelationshipType.OneToMany,
       twoWay: true,
       onDelete: 'restrict'
@@ -176,7 +169,7 @@ async function waitColection(databases: Databases, databaseId: string, collectio
      while (true) {
         try {
              await databases.getCollection(databaseId, collectionId);
-             console.info(`[Script] Collection "${collectionId}" disponível`);
+             console.info(`[Script Create Database] Collection "${collectionId}" disponível`);
             return;
         } catch (error: any) {
             if (error.code !== 404) {
@@ -261,7 +254,7 @@ async function waitCreateDatabases(databases: Databases, databaseId: string) {
     while (true) {
         try {
              await databases.get(databaseId);
-             console.info(`[Script] Database "${databaseId}" disponível`);
+             console.info(`[Script Create Database] Database "${databaseId}" disponível`);
             return;
         } catch (error: any) {
             if (error.code !== 404) {
