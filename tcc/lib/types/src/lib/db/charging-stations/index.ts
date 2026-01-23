@@ -1,2 +1,2 @@
-import { ChargingStation } from "./charging-stations-db";
-import { ConnectorType, Connector } from "./connectors-db";
+export { ChargingStation } from "./charging-stations-db";
+export { ConnectorType, Connector } from "./connectors-db";

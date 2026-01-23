@@ -1,1 +1,1 @@
-import { Vehicle, VehicleType } from "./vehicle-db";
+export { Vehicle, VehicleType } from "./vehicle-db";

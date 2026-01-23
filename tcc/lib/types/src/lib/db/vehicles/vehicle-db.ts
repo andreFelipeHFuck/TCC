@@ -8,5 +8,4 @@ export interface Vehicle {
     brand: string,
     model: string,
     vehicleType: string,
-    minSoc: number
 }

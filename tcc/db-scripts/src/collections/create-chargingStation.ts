@@ -11,6 +11,16 @@ export async function createChargingStationSchema(schema: SchemaContext) {
 
     console.log(`[Script Create Database] criando atributo NAME na collection ${schema.collectionId}`);
 
+    const photo =  await schema.databases.createStringAttribute({
+        databaseId: schema.databaseId,
+        collectionId: schema.collectionId,
+        key: 'photo',
+        size: 512,
+        required: true,
+    });
+
+    console.log(`[Script Create Database] criando atributo PHOTO na collection ${schema.collectionId}`);
+
     const endpoint = await schema.databases.createStringAttribute({
         databaseId: schema.databaseId,
         collectionId: schema.collectionId,

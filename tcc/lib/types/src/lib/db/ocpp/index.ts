@@ -1,1 +1,1 @@
-import { IdToken } from "./idToken-db";
+export { IdToken } from "./idToken-db";

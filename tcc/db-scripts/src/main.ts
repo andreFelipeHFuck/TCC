@@ -5,13 +5,14 @@ import { Collection, Relationship } from "./types";
 import { createUsersSchema } from "./collections/create-user";
 import { createLocationSchema } from "./collections/create-location";
 import { createAddress } from "./collections/create-address";
-import { createVehicleSchema } from "./collections/create-vehicle";
+import { createVehicleSchema } from "./collections/create-vehicles";
 import { createIdTokenSchema } from "./collections/create-idToken";
 import { createChargingSessionSchema } from "./collections/create-chargingSession";
 import { createConnectorsSchema } from "./collections/create-connectors";
 import { createEnergyTransferSchema } from "./collections/create-energyTranferPeriod";
 import { createChargingStationSchema } from "./collections/create-chargingStation";
 import { createEnergySchema } from "./collections/create-energy";
+import { createUsersVehiclesSchema } from "./collections/create-users-vehicles";
 const collections: Collection[] = [
     { 
         id: 'users_id',
@@ -72,6 +73,13 @@ const collections: Collection[] = [
         ]
     },
     {
+        id: 'usersVehicles_id',
+        name: 'users_vehicles',
+        schemas: [
+            createUsersVehiclesSchema
+        ]
+    },
+    {
         id: 'loactions_id',
         name: 'locations',
         schemas: [
@@ -83,14 +91,14 @@ const collections: Collection[] = [
 
 const relationships: Relationship[] = [
     // One to One
-    {
+    { 
         collectionId: 'chargingSessions_id',
         relationCollectionId: 'energies_id',
         relationType: RelationshipType.OneToOne,
         twoWay: true,
         onDelete: 'cascade'
     },
-    {
+    { 
         collectionId: 'energyTranferPeriods_id',
         relationCollectionId: 'energies_id',
         relationType: RelationshipType.OneToOne,
@@ -100,7 +108,7 @@ const relationships: Relationship[] = [
 
     // One To Many
     {
-        collectionId: 'loactions_id',
+        collectionId: 'chargingStations_id',
         relationCollectionId: 'chargingStations_id',
         relationType: RelationshipType.OneToMany,
         twoWay: true,
@@ -112,6 +120,13 @@ const relationships: Relationship[] = [
         relationType: RelationshipType.OneToMany,
         twoWay: true,
         onDelete: 'cascade'
+    },
+    {
+       collectionId: 'idTokens_id',
+       relationCollectionId: 'connectors_id',
+       relationType: RelationshipType.OneToMany,
+       twoWay: true,
+       onDelete: 'cascade'  
     },
     {
        collectionId: 'idTokens_id',
@@ -135,22 +150,26 @@ const relationships: Relationship[] = [
       onDelete: 'null'     
     },
     {
-      collectionId: 'energyTranferPeriods_id',
-      relationCollectionId: 'chargingSessions_id',
+      collectionId: 'chargingSessions_id',
+      relationCollectionId: 'energyTranferPeriods_id',
       relationType: RelationshipType.OneToMany,
       twoWay: true,
       onDelete: 'cascade'
     },
-
-    // Mant to Many
     {
-      collectionId: 'users_id',
-      relationCollectionId: 'vehicles_id',
-      relationType: RelationshipType.ManyToMany,
+      collectionId: 'usersVehicles_id',
+      relationCollectionId: 'users_id',
+      relationType: RelationshipType.OneToMany,
       twoWay: true,
-      onDelete: 'null'
+      onDelete: 'restrict'
+    },
+    {
+      collectionId: 'usersVehicles_id',
+      relationCollectionId: 'vehicles_id',
+      relationType: RelationshipType.OneToMany,
+      twoWay: true,
+      onDelete: 'restrict'
     }
-    
 ];
 
 async function waitColection(databases: Databases, databaseId: string, collectionId: string) {

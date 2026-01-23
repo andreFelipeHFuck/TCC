@@ -20,6 +20,16 @@ export async function  createUsersSchema(schema:  SchemaContext) {
 
     console.log(`[Script Create Database] criando atributo EMAIL na collection ${schema.collectionId}`);
 
+    const photo =  await schema.databases.createStringAttribute({
+        databaseId: schema.databaseId,
+        collectionId: schema.collectionId,
+        key: 'photo',
+        size: 512,
+        required: true,
+    });
+
+    console.log(`[Script Create Database] criando atributo PHOTO na collection ${schema.collectionId}`);
+
     const password = await schema.databases.createStringAttribute({
         databaseId: schema.databaseId,
         collectionId: schema.collectionId,

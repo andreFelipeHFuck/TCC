@@ -1,4 +1,5 @@
 import { Address } from "./address-db"
+import { ChargingStation } from "./charging-stations/charging-stations-db"
 
 export interface Coordinate {
     lat: number,
@@ -10,4 +11,5 @@ export interface Locations {
     name: string,
     coordinate: Coordinate,
     address: Address
+    chargingStations?: ChargingStation[]
 }

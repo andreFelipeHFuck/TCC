@@ -30,14 +30,4 @@ export async function createVehicleSchema(schema: SchemaContext) {
     });
 
     console.log(`[Script Create Database] criando atributo VEHICLE_TYPE na collection ${schema.collectionId}`);
-
-    const minSoc = await schema.databases.createIntegerAttribute({
-        databaseId: schema.databaseId,
-        collectionId: schema.collectionId,
-        key: 'streetNumber',
-        required: true,
-    });
-
-    console.log(`[Script Create Database] criando atributo MIN_SOC na collection ${schema.collectionId}`);
-
 }
