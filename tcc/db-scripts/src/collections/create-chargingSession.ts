@@ -21,8 +21,6 @@ export async function createChargingSessionSchema(schema: SchemaContext) {
 
     console.log(`[Script Create Database] criando atributo CHARGING_TYPE na collection ${schema.collectionId}`);
 
-    
-
     const currentSoC = await schema.databases.createFloatAttribute({
         databaseId: schema.databaseId,
         collectionId: schema.collectionId,

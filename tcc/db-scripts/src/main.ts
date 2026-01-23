@@ -9,13 +9,11 @@ import { createVehicleSchema } from "./collections/create-vehicle";
 import { createIdTokenSchema } from "./collections/create-idToken";
 import { createChargingSessionSchema } from "./collections/create-chargingSession";
 import { createConnectorsSchema } from "./collections/create-connectors";
-import { createEnergyTranderSchema } from "./collections/create-energyTranferPeriod";
+import { createEnergyTransferSchema } from "./collections/create-energyTranferPeriod";
 import { createChargingStationSchema } from "./collections/create-chargingStation";
 import { createEnergySchema } from "./collections/create-energy";
-import { createFlowHistorySchema } from "./collections/create-flowHisory";
-
 const collections: Collection[] = [
-    {
+    { 
         id: 'users_id',
         name: 'users',
         schemas: [
@@ -23,41 +21,40 @@ const collections: Collection[] = [
             createAddress
         ]
     }, 
-    {
+    { 
         id: 'idTokens_id',
         name: 'idTokens',
         schemas: [
             createIdTokenSchema
         ]
     },
-    {
+    { 
         id: 'connectors_id',
         name: 'connectors',
         schemas: [
             createConnectorsSchema
         ]
     },
-    {
+    { 
         id: 'chargingStations_id',
         name: 'chargingStations',
         schemas: [
             createChargingStationSchema,
-            createEnergyTranderSchema
         ]
     },
-    {
+    { 
         id: 'chargingSessions_id',
         name: 'chargingSessions',
         schemas: [
             createChargingSessionSchema,
-            createEnergyTranderSchema
+            createEnergyTransferSchema
         ]
     },
-    {
+    { 
         id: 'energyTranferPeriods_id',
         name: 'energyTranferPeriods',
         schemas: [
-            createEnergyTranderSchema
+            createEnergyTransferSchema
         ]
     },
     {
@@ -65,13 +62,6 @@ const collections: Collection[] = [
         name: 'energies',
         schemas: [
             createEnergySchema
-        ]
-    },
-    {
-        id: 'flowHistorical_id',
-        name: 'flowHistorical',
-        schemas: [
-            createFlowHistorySchema
         ]
     },
     {
@@ -150,13 +140,6 @@ const relationships: Relationship[] = [
       relationType: RelationshipType.OneToMany,
       twoWay: true,
       onDelete: 'cascade'
-    },
-    {
-      collectionId: 'energies_id',
-      relationCollectionId: 'flowHistorical_id',
-      relationType: RelationshipType.OneToMany,
-      twoWay: true,
-      onDelete: 'null'
     },
 
     // Mant to Many
