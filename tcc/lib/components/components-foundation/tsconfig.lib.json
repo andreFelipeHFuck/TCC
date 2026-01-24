@@ -7,6 +7,6 @@
     "inlineSources": true,
     "types": []
   },
-  "include": ["src/**/*.ts", "src/lib/index.ts"],
+  "include": ["src/**/*.ts"],
   "exclude": ["src/**/*.spec.ts", "src/**/*.test.ts"]
 }
