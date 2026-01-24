@@ -67,8 +67,12 @@
     "tslib": "^2.3.0",
     "typescript": "~5.9.2",
     "typescript-eslint": "^8.40.0",
+    "verdaccio": "^6.0.5",
     "vite": "^7.0.0",
     "vitest": "^4.0.8",
     "webpack-cli": "^5.1.4"
+  },
+  "nx": {
+    "includedScripts": []
   }
 }
