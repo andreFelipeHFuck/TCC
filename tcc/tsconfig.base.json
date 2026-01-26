@@ -22,14 +22,7 @@
       "@tcc/services": ["lib/services/src/index.ts"],
       "@tcc/utils": ["lib/utils/src/index.ts"],
       "@tcc/appwrite": ["lib/services/appwrite/src/index.ts"],
-      "@tcc/appwrite-adapter": ["libs/adapters/appwrite-adapter/src/index.ts"],
-      "@tcc/storybook": ["lib/components/storybook-host/src/index.ts"],
-      "@tcc/buttons": ["lib/components/buttons/src/index.ts"],
-      "@tcc/components-foundation": [
-        "lib/components/components-foundation/src/index.ts"
-      ],
-      "@tcc/material": ["lib/components/material/src/index.ts"],
-      "@tcc/material/styles": ["lib/components/material/src/index.scss"]
+      "@tcc/appwrite-adapter": ["lib/adapters/appwrite-adapter/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
