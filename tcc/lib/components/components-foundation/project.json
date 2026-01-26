@@ -1,0 +1,32 @@
+{
+  "name": "components-foundation",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "lib/components/components-foundation/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "lib/components/components-foundation/ng-package.json",
+        "tsConfig": "lib/components/components-foundation/tsconfig.lib.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "lib/components/components-foundation/tsconfig.lib.prod.json"
+        },
+        "development": {}
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/angular:unit-test",
+      "options": {}
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}
