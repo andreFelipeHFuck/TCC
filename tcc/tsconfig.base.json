@@ -27,7 +27,9 @@
       "@tcc/buttons": ["lib/components/buttons/src/index.ts"],
       "@tcc/components-foundation": [
         "lib/components/components-foundation/src/index.ts"
-      ]
+      ],
+      "@tcc/material": ["lib/components/material/src/index.ts"],
+      "@tcc/material/styles": ["lib/components/material/src/index.scss"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -2,11 +2,17 @@ import type { StorybookConfig } from '@storybook/angular';
 
 const config: StorybookConfig = {
   stories: ['../**/*.@(mdx|stories.@(js|jsx|ts|tsx))'],
-  addons: [],
+  addons: ['@storybook/addon-essentials', '@storybook/addon-interactions'],
   framework: {
     name: '@storybook/angular',
     options: {},
+  },  
+  core: {
+    builder: '@storybook/builder-webpack5',
   },
+  // typescript: {
+  //   check: false,
+  // }
 };
 
 export default config;
