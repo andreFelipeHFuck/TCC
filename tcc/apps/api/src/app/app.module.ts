@@ -2,9 +2,11 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
+import { OcppSocketModule } from '@tcc/ocpp-socket'
+
 @Module({
-  imports: [],
+  imports: [ OcppSocketModule ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, OcppSocketModule],
 })
 export class AppModule {}
