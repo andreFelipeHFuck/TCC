@@ -2,7 +2,9 @@ import { WebSocketGateway, WebSocketServer, SubscribeMessage, MessageBody } from
 import { Server } from 'socket.io';
 
 @WebSocketGateway({
-    cors: { origin: '*' }
+    cors: {
+        origin: '*',
+    },
 })
 export class OcppGateway {
     @WebSocketServer()

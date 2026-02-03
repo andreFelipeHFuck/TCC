@@ -7,6 +7,6 @@ import { OcppSocketModule } from '@tcc/ocpp-socket'
 @Module({
   imports: [ OcppSocketModule ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, OcppSocketModule],
 })
 export class AppModule {}
