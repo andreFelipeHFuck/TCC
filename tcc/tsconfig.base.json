@@ -22,7 +22,8 @@
       "@tcc/services": ["lib/services/src/index.ts"],
       "@tcc/utils": ["lib/utils/src/index.ts"],
       "@tcc/appwrite": ["lib/services/appwrite/src/index.ts"],
-      "@tcc/appwrite-adapter": ["libs/adapters/appwrite-adapter/src/index.ts"]
+      "@tcc/appwrite-adapter": ["libs/adapters/appwrite-adapter/src/index.ts"],
+      "@tcc/ocpp-socket": ["lib/socket/ocpp-socket/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
