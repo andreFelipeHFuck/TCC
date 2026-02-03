@@ -1,8 +1,6 @@
 import { Account, Client } from "appwrite";
 
-import { 
-    AppwriteConfig 
-} from "@tcc/types";
+import { AppwriteConfig } from "@tcc/types";
 
 /**
  * Função que cria uma instância para se conectar ao servidor Appwrite
@@ -11,7 +9,7 @@ import {
  * 
  * @returns retorna uma instância do objeto Client
 */
-function appwriteCreateCliente(config: AppwriteConfig): Client{
+export function appwriteCreateCliente(config: AppwriteConfig): Client{
     const client = new Client();
 
     client 
