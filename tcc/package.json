@@ -24,7 +24,8 @@
     "dotenv": "^17.2.3",
     "node-appwrite": "^21.1.0",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "~7.8.0"
+    "rxjs": "~7.8.0",
+    "typed-ocpp": "^1.5.5"
   },
   "devDependencies": {
     "@angular-devkit/core": "21.1.1",
