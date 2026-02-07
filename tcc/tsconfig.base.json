@@ -24,7 +24,8 @@
       "@tcc/appwrite": ["lib/services/appwrite/src/index.ts"],
       "@tcc/appwrite-adapter": ["lib/adapters/appwrite-adapter/src/index.ts"],
       "@tcc/ocpp-socket": ["lib/socket/ocpp-socket/src/index.ts"],
-      "@tcc/bigQuery": ["lib/services/bigQuery/src/index.ts"]
+      "@tcc/bigQuery": ["lib/services/bigQuery/src/index.ts"],
+      "@tcc/big-query-adapter": ["lib/adapters/big-query-adapter/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
