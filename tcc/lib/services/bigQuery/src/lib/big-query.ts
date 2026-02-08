@@ -1,3 +1,5 @@
-export function bigQuery(): string {
-  return 'bigQuery';
+import { ConnectionServices } from '@tcc/types';
+
+export class BigQuery  {
+
 }

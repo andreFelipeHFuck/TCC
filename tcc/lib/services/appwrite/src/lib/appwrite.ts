@@ -5,6 +5,7 @@ import {
   AppwriteClient, 
   AppwriteConfig, 
   AppwriteError, 
+  ConnectionServices, 
   Logger, 
   UnauthorizedError
 } from "@tcc/types";
@@ -16,15 +17,16 @@ import { appwriteCreateConnection } from './appwrite-connections/appwrite-connec
 @Injectable({
   providedIn: 'root',
 })
-export class Appwrite {
+export class Appwrite extends ConnectionServices<AppwriteError> {
   private readonly appwriteConfig: AppwriteConfig = inject(APPWRITE_CONFIG);
   private readonly logger = inject(Logger);
 
   private client: AppwriteClient = 'NONE';
   private account: AppwriteAccount = 'NONE';
 
-  private status: 'ready' | 'error' = 'ready';
-  private lastError?: AppwriteError;
+  constructor(){
+    super();
+  }
 
   /**
    * Método que inicializa a conexão com o serviço do Appwrite 
@@ -73,9 +75,5 @@ export class Appwrite {
     this.status = 'error';
 
     return 'NONE';
-  }
-
-  getError(): AppwriteError | undefined {
-    return this.lastError;
   }
 }

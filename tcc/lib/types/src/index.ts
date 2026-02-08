@@ -1,9 +1,15 @@
 // APP TYPES 
-export * from './lib/errors/app-error.error';
-export * from './lib/errors/app-domam-erros-types.types';
+export * from './lib/errors/app-error';
+export * from './lib/errors/app-domam-errors-types';
+
+// API TYPES
+export * from './lib/errors/api-domam-errors-types';
 
 // LOGGER TYPES
 export * from './lib/logging-types.types';
+
+// CONNECTIONS ABSTRACT CLASS
+export * from './lib/connections';
 
 // APPWRITE TYPES 
 export * from './lib/appwrite-types.types';
