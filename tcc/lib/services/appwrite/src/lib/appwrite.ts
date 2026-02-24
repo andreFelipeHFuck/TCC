@@ -47,13 +47,9 @@ export class Appwrite extends ConnectionServices<AppwriteError> {
       this.logger.error('[Appwrite] Erro ao inicializar', {
         error,
         mappedError: this.lastError,
-      })
+      });
     }
   }
-
-  isReady(): boolean {
-    return this.status === 'ready';
-  } 
 
   getClient(): AppwriteClient {
     if (this.client != 'NONE') {

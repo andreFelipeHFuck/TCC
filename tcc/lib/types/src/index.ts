@@ -13,3 +13,6 @@ export * from './lib/connections';
 
 // APPWRITE TYPES 
 export * from './lib/appwrite-types.types';
+
+// BIG QUERY TYPES
+export * from './lib/big-query-types';
