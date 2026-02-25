@@ -19,7 +19,7 @@
     "strictTemplates": true
   },
   "files": [],
-  "include": [],
+  "include": ["../design-system/src/scss/**/*.scss"],
   "references": [
     {
       "path": "./tsconfig.lib.json"

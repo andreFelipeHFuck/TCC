@@ -3,6 +3,11 @@
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "lib/components/buttons/src",
   "prefix": "lib",
+  "schematics": {
+    "@nx/angular:component": {
+      "style": "scss"
+    }
+  },
   "projectType": "library",
   "tags": [],
   "targets": {

@@ -9,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatButtonModule
   ],
   templateUrl: './button.html',
-  styleUrl: './button.css'
+  styleUrl: './button.scss'
 })
 export class Button {
   title = input.required<string>();

@@ -1,0 +1,7 @@
+@use '../../../../design-system/src/scss/index.scss' as v;
+
+.button {
+    width: 10px;
+    height: 10px;
+    background-color: map-get(v.$colors, "black");
+}
