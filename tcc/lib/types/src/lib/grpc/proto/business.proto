@@ -4,7 +4,7 @@ package business;
 
 import "google/protobuf/timestamp.proto";
 
-service AuthenticationSerive {
+service AuthenticationService {
     rpc SendAuthentication (AuthenticationRequest) returns (AuthenticationResponse) {}
 }
 

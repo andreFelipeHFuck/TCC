@@ -357,14 +357,14 @@ export const AuthenticationResponse: MessageFns<AuthenticationResponse> = {
   },
 };
 
-export interface AuthenticationSeriveServiceImplementation<CallContextExt = {}> {
+export interface AuthenticationServiceImplementation<CallContextExt = {}> {
   sendAuthentication(
     request: AuthenticationRequest,
     context: CallContext & CallContextExt,
   ): Promise<DeepPartial<AuthenticationResponse>>;
 }
 
-export interface AuthenticationSeriveClient<CallOptionsExt = {}> {
+export interface AuthenticationServiceClient<CallOptionsExt = {}> {
   sendAuthentication(
     request: DeepPartial<AuthenticationRequest>,
     options?: CallOptions & CallOptionsExt,

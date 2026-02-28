@@ -14,5 +14,8 @@ export * from './lib/connections';
 // APPWRITE TYPES 
 export * from './lib/appwrite-types.types';
 
+// GRPC TYPES
+export * from './lib/grpc/generated';
+
 // BIG QUERY TYPES
 export * from './lib/big-query-types';
