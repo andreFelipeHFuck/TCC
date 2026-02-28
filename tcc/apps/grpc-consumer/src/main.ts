@@ -9,12 +9,15 @@ import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { AppModule } from './app/app.module';
 
 import { AUTH_GRPC_CONFIG } from '@tcc/nestjs-grpc';
+import { join } from 'path';
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule,  {
     transport: Transport.GRPC,
     options: {
-      ...AUTH_GRPC_CONFIG,
+      package: AUTH_GRPC_CONFIG.package,
+      // Aqui resolvemos o path real relativo à execução da APP
+      protoPath: join(__dirname, AUTH_GRPC_CONFIG.protoPath),
       url: '0.0.0.0:50051',
     },
   });

@@ -11,7 +11,7 @@ export class AuthRpcGuard implements CanActivate {
         const data = rpcContext.getData<AuthenticationRequest>();
 
         // 1. Validar Token
-        if (!data.authToken || data.authToken.length < 10) {
+        if (!data.authToken || data.authToken.length < 1) {
         throw new RpcException({
             code: status.INVALID_ARGUMENT,
             message: 'Token de autenticação ausente ou inválido.',
@@ -28,6 +28,7 @@ export class AuthRpcGuard implements CanActivate {
 
         // 3. Validar Expiração (Data)
         if (data.expiresAt && data.expiresAt < new Date()) {
+
         throw new RpcException({
             code: status.UNAUTHENTICATED,
             message: 'O token enviado já expirou.',

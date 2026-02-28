@@ -12,7 +12,15 @@
         "args": [
           "--node-env=production"
         ],
-        "cwd": "apps/grpc-consumer",
+        "assets":[ 
+          "apps/grpc-consumer/src/assets",
+          {
+            "input": "lib/types/src/lib/grpc/proto",
+            "glob": "**/*.proto",
+            "output": "proto"
+          }
+        ],
+        "cwd": "apps/grpc-consumer"
       },
       "configurations": {
         "development": {
