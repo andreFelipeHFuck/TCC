@@ -7,9 +7,9 @@
   "// targets": "to see all targets run: nx show project nestjs-grpc --web",
   "targets": {
     "assets": {
-      "glob": "**/*",
       "input": "lib/types/src/grpc/proto",
-      "output": "grpc/proto"
+      "glob": "**/*.proto",
+      "output": "proto"
     }
   }
 }

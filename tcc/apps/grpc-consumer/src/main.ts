@@ -7,15 +7,15 @@ import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices'; 
 import { AppModule } from './app/app.module';
-import { join } from 'path';
+
+import { AUTH_GRPC_CONFIG } from '@tcc/nestjs-grpc';
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule,  {
     transport: Transport.GRPC,
     options: {
+      ...AUTH_GRPC_CONFIG,
       url: '0.0.0.0:50051',
-      package: 'hero',
-      protoPath: join(process.cwd(), 'dist/apps/grpc-consumer/proto/hero.proto'),
     },
   });
 
