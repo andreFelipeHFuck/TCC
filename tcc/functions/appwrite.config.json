@@ -40,26 +40,6 @@
     },
     "functions": [
         {
-            "$id": "69a34e800029bc2f3292",
-            "name": "grpc_producer",
-            "runtime": "node-16.0",
-            "path": "functions/grpc_producer",
-            "entrypoint": "src/main.js",
-            "execute": [
-                "any"
-            ],
-            "enabled": true,
-            "logging": true,
-            "events": [],
-            "schedule": "",
-            "timeout": 15,
-            "commands": "npm install",
-            "scopes": [
-                "users.read"
-            ],
-            "specification": "s-0.5vcpu-512mb"
-        },
-        {
             "$id": "69a41f63003681b60c11",
             "name": "grpc-producer",
             "runtime": "node-16.0",
@@ -76,7 +56,7 @@
             "enabled": true,
             "logging": true,
             "entrypoint": "src/main.js",
-            "commands": "npm install",
+            "commands": "npm install && npm run build",
             "ignore": [
                 "node_modules",
                 ".npm"

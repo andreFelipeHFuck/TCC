@@ -2,7 +2,7 @@
   "name": "starter-template",
   "version": "1.0.0",
   "description": "",
-  "main": "src/main.ts",
+  "main": "src/main.js",
   "type": "module",
   "scripts": {
     "format": "prettier --write .",
@@ -10,6 +10,8 @@
     "build": "tsc"
   },
   "dependencies": {
+    "@grpc/grpc-js": "^1.14.3",
+    "@grpc/proto-loader": "^0.8.0",
     "node-appwrite": "^20.2.1"
   },
   "devDependencies": {

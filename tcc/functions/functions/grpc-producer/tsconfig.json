@@ -1,13 +1,15 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "module": "CommonJS",
-    "lib": ["ES2020"],
-    "strict": true,
+    "module": "ESNext",
+    "moduleResolution": "node",
     "esModuleInterop": true,
-    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "./" 
+    "strict": true,
+    "skipLibCheck": true,
+    "outDir": "./src",    // Onde o JS será criado
+    "rootDir": "./src"     // Onde o TS original está
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"], // Inclui os arquivos para compilar
+  "exclude": ["node_modules"] // REMOVA o "./src" daqui!
 }
