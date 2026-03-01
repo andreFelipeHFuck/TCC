@@ -1,5 +1,7 @@
 import { 
     Controller, 
+    Inject, 
+    Injectable, 
     UseGuards 
 } from '@nestjs/common';
 
@@ -19,10 +21,16 @@ import {
     AuthenticationRequest,
     AuthenticationResponse
 } from '@tcc/types'
+import { ConsoleLogger } from '@tcc/utils';
 
 
+@Injectable()
 @Controller()
 export class AuthBusinessController {
+    constructor(
+        @Inject('LOGGER_TOKEN') private readonly logger: ConsoleLogger
+    ) {}
+
     @UseGuards(AuthRpcGuard)
     @GrpcMethod('AuthenticationService', 'SendAuthentication')
     sendAuthentication(
@@ -30,7 +38,7 @@ export class AuthBusinessController {
         metadata: Metadata,
         call: ServerUnaryCall<any, any>
     ): AuthenticationResponse {
-        console.log(`Recebido auth para: ${data.userSummary?.userName}`);
+        this.logger.info(`[RPC AUTH BUSINESS] Recebido auth para: ${data.userSummary?.userName}`);
 
     return {
       success: true,

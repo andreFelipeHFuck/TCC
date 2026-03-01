@@ -26,7 +26,8 @@
       "@tcc/ocpp-socket": ["lib/socket/ocpp-socket/src/index.ts"],
       "@tcc/bigQuery": ["lib/services/bigQuery/src/index.ts"],
       "@tcc/big-query-adapter": ["lib/adapters/big-query-adapter/src/index.ts"],
-      "@tcc/nestjs-grpc": ["lib/services/nestjs-grpc/src/index.ts"]
+      "@tcc/nestjs-grpc": ["lib/services/nestjs-grpc/src/index.ts"],
+      "@tcc/nest-logger": ["lib/services/nest-logger/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
