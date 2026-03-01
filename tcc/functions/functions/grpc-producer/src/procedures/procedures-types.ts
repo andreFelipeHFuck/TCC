@@ -1,11 +1,7 @@
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import * as path from 'path';
 
 import * as protoLoader from '@grpc/proto-loader';
 import * as grpc from '@grpc/grpc-js';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 export enum ProceduresTypes  {
     UNKNOW,
@@ -13,7 +9,7 @@ export enum ProceduresTypes  {
 }
 
 const UNKNOW = '';
-const BUSINESS = join(__dirname, '..', 'shared', 'business.proto');
+const BUSINESS = path.join(__dirname, '..', 'shared', 'business.proto');
 
 const PROTO_PATHS = [
     UNKNOW,

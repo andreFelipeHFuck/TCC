@@ -7,7 +7,7 @@
   "scripts": {
     "format": "prettier --write .",
     "copy-proto": "cp -R ../../../lib/types/src/lib/grpc/proto ./src/shared",
-    "build": "tsc"
+    "build": "copy-proto && tsc"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.14.3",
