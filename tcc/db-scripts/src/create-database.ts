@@ -1,0 +1,293 @@
+import { 
+    Databases, 
+    RelationshipType 
+} from "node-appwrite";
+
+import { 
+    Collection, 
+    Relationship, 
+    databases,
+    DATABASE_ID
+} from "./types";
+
+import { createUsersSchema } from "./collections/create-user";
+import { createLocationSchema } from "./collections/create-location";
+import { createAddress } from "./collections/create-address";
+import { createVehicleSchema } from "./collections/create-vehicles";
+import { createIdTokenSchema } from "./collections/create-idToken";
+import { createChargingSessionSchema } from "./collections/create-chargingSession";
+import { createConnectorsSchema } from "./collections/create-connectors";
+import { createEnergyTransferSchema } from "./collections/create-energyTranferPeriod";
+import { createChargingStationSchema } from "./collections/create-chargingStation";
+import { createEnergySchema } from "./collections/create-energy";
+import { createUsersVehiclesSchema } from "./collections/create-users-vehicles";
+
+const collections: Collection[] = [
+    { 
+        id: 'users_id',
+        name: 'users',
+        schemas: [
+            createUsersSchema,
+            createAddress
+        ]
+    }, 
+    { 
+        id: 'idTokens_id',
+        name: 'idTokens',
+        schemas: [
+            createIdTokenSchema
+        ]
+    },
+    { 
+        id: 'connectors_id',
+        name: 'connectors',
+        schemas: [
+            createConnectorsSchema
+        ]
+    },
+    { 
+        id: 'chargingStations_id',
+        name: 'chargingStations',
+        schemas: [
+            createChargingStationSchema,
+        ]
+    },
+    { 
+        id: 'chargingSessions_id',
+        name: 'chargingSessions',
+        schemas: [
+            createChargingSessionSchema,
+            createEnergyTransferSchema
+        ]
+    },
+    { 
+        id: 'energyTranferPeriods_id',
+        name: 'energyTranferPeriods',
+        schemas: [
+            createEnergyTransferSchema
+        ]
+    },
+    {
+        id: 'energies_id',
+        name: 'energies',
+        schemas: [
+            createEnergySchema
+        ]
+    },
+    {
+        id: 'vehicles_id',
+        name: 'vehicles',
+        schemas: [
+            createVehicleSchema
+        ]
+    },
+    {
+        id: 'usersVehicles_id',
+        name: 'users_vehicles',
+        schemas: [
+            createUsersVehiclesSchema
+        ]
+    },
+    {
+        id: 'loactions_id',
+        name: 'locations',
+        schemas: [
+            createLocationSchema,
+            createAddress
+        ]
+    }
+];
+
+const relationships: Relationship[] = [
+    // One to Onez
+    { 
+        collectionId: 'energyTranferPeriods_id',
+        relationCollectionId: 'energies_id',
+        relationType: RelationshipType.OneToOne,
+        twoWay: true,
+        onDelete: 'null'
+    },
+
+    // One To Many
+    {
+        collectionId: 'chargingStations_id',
+        relationCollectionId: 'connectors_id',
+        relationType: RelationshipType.OneToMany,
+        twoWay: true,
+        onDelete: 'cascade'
+    },
+    {
+        collectionId: 'users_id',
+        relationCollectionId: 'idTokens_id',
+        relationType: RelationshipType.OneToMany,
+        twoWay: true,
+        onDelete: 'cascade'
+    },
+    {
+       relationCollectionId: 'connectors_id',
+       collectionId: 'idTokens_id',
+       relationType: RelationshipType.OneToMany,
+       twoWay: true,
+       onDelete: 'cascade'  
+    },
+    {
+       collectionId: 'idTokens_id',
+       relationCollectionId: 'chargingSessions_id',
+       relationType: RelationshipType.OneToMany,
+       twoWay: true,
+       onDelete: 'null'  
+    }, 
+    {
+       collectionId: 'vehicles_id',
+       relationCollectionId: 'chargingSessions_id',
+       relationType: RelationshipType.OneToMany,
+       twoWay: true,
+       onDelete: 'null'   
+    },
+    {
+      collectionId: 'connectors_id',
+      relationCollectionId: 'chargingSessions_id',
+      relationType: RelationshipType.OneToMany,
+      twoWay: true,
+      onDelete: 'null'     
+    },
+    {
+      collectionId: 'chargingSessions_id',
+      relationCollectionId: 'energyTranferPeriods_id',
+      relationType: RelationshipType.OneToMany,
+      twoWay: true,
+      onDelete: 'cascade'
+    },
+    {
+      collectionId: 'users_id',
+      relationCollectionId: 'usersVehicles_id',
+      relationType: RelationshipType.OneToMany,
+      twoWay: true,
+      onDelete: 'restrict'
+    },
+    {
+      collectionId: 'vehicles_id',
+      relationCollectionId: 'usersVehicles_id',
+      relationType: RelationshipType.OneToMany,
+      twoWay: true,
+      onDelete: 'restrict'
+    }
+];
+
+async function waitColection(databases: Databases, databaseId: string, collectionId: string) {
+     while (true) {
+        try {
+             await databases.getCollection(databaseId, collectionId);
+             console.info(`[Script Create Database] Collection "${collectionId}" disponível`);
+            return;
+        } catch (error: any) {
+            if (error.code !== 404) {
+                throw error;
+            }
+        }
+
+        await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+}
+
+async function createSingleCollection(
+    databases: Databases, 
+    databaseId: string,
+    collection: Collection,
+) {
+    console.log('[Script Create Database] criando a coleção ', collection.name);
+    const collectionPromise = await databases.createCollection({
+        databaseId: databaseId,
+        collectionId: collection.id,
+        name: collection.name,
+    });
+
+    if (collection) {
+        console.info(`[Script Create Database] collection ${collection.name} criado com sucesso`);
+    }else{
+        console.error(`[Script Create Database] não foi possível criar a collection ${collection.name}`);
+    }
+ 
+    await waitColection(databases, databaseId, collection.id);
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    console.info(`[Script Create Database] criando schemas para a collection ${collection.name}`);
+    for (const schema of collection.schemas) {
+        await schema({
+            databases: databases,
+            databaseId: databaseId,
+            collectionId: collection.id
+        });
+    }
+}
+
+async function createCollections(databases: Databases, databaseId: string, collections: Collection[]) {
+    console.log('[Script Create Database] criando as coleções');
+
+    for (const collection of collections) {
+        await createSingleCollection(databases, databaseId, collection);
+    }
+}
+
+async function createSingleRelationship(databases: Databases, databaseId: string, relationship: Relationship) {
+    
+    console.log(`[Script Create Database] criando a relação ${relationship.relationType} para ${relationship.collectionId} e ${relationship.relationCollectionId}`);
+    const RelationshipTypeEnumPromise = await databases.createRelationshipAttribute(
+        databaseId,
+        relationship.collectionId,
+        relationship.relationCollectionId,
+        relationship.relationType,
+        relationship.twoWay,
+        relationship.onDelete
+    )
+
+    if (RelationshipTypeEnumPromise) {
+        console.info(`[Script Create Database] relação ${relationship.relationType} para ${relationship.collectionId} e ${relationship.relationCollectionId} criada com sucesso`);
+    } else {
+        console.error(`[Script Create Database] não foi possivel criar o relacionamento`)
+    }
+
+    await new Promise(resolve => setTimeout(resolve, 500));
+}
+
+async function createRelationships(databases: Databases, databaseId: string, relationships: Relationship[]) {
+    console.log('[Script Create Database] criando relações');
+
+    for (const relationship of relationships) {
+        await createSingleRelationship(databases, databaseId, relationship);
+    }
+
+}
+
+async function waitCreateDatabases(databases: Databases, databaseId: string) {
+    while (true) {
+        try {
+             await databases.get(databaseId);
+             console.info(`[Script Create Database] Database "${databaseId}" disponível`);
+            return;
+        } catch (error: any) {
+            if (error.code !== 404) {
+                throw error;
+            }
+        }
+
+        await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+}
+
+export async function main(databaseId: string, databaseName: string) {
+    const appDatabasePromise = await databases.create(databaseId, databaseName);
+
+    if(appDatabasePromise) {
+        console.info(`[Script Create Database] database ${databaseName} criado com sucesso`);
+    } else {
+        console.error(`[Script Create Database] não foi possível criar a database ${databaseName}`);
+    }
+
+    await waitCreateDatabases(databases, databaseId);
+
+    await createCollections(databases, databaseId, collections);
+    await createRelationships(databases, databaseId, relationships);
+
+}
+
