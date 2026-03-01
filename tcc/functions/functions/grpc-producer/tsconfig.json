@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "nodenext",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": false,
+    "skipLibCheck": true,
+    "outDir": "./src",    // Onde o JS será criado
+    "rootDir": "./src"     // Onde o TS original está
+  },
+  "include": ["src/**/*"], // Inclui os arquivos para compilar
+  "exclude": ["node_modules"] // REMOVA o "./src" daqui!
+}

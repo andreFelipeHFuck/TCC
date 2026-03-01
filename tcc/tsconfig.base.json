@@ -22,9 +22,12 @@
       "@tcc/services": ["lib/services/src/index.ts"],
       "@tcc/utils": ["lib/utils/src/index.ts"],
       "@tcc/appwrite": ["lib/services/appwrite/src/index.ts"],
-      "@tcc/appwrite-adapter": ["libs/adapters/appwrite-adapter/src/index.ts"],
+      "@tcc/appwrite-adapter": ["lib/adapters/appwrite-adapter/src/index.ts"],
       "@tcc/ocpp-socket": ["lib/socket/ocpp-socket/src/index.ts"],
-      "@tcc/appwrite-adapter": ["lib/adapters/appwrite-adapter/src/index.ts"]
+      "@tcc/bigQuery": ["lib/services/bigQuery/src/index.ts"],
+      "@tcc/big-query-adapter": ["lib/adapters/big-query-adapter/src/index.ts"],
+      "@tcc/nestjs-grpc": ["lib/services/nestjs-grpc/src/index.ts"],
+      "@tcc/nest-logger": ["lib/services/nest-logger/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

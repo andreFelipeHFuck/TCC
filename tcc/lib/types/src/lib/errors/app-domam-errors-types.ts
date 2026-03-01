@@ -1,4 +1,7 @@
-import { AppwriteError } from "./app-error.error";
+/**
+ * @todo refatorar as mensagens de erro do sistema 
+ */
+import { AppwriteError } from "./app-error";
 
 export class NetworkError extends AppwriteError {
     constructor() {
