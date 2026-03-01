@@ -102,7 +102,7 @@ const relationships: Relationship[] = [
     // One To Many
     {
         collectionId: 'chargingStations_id',
-        relationCollectionId: 'chargingStations_id',
+        relationCollectionId: 'connectors_id',
         relationType: RelationshipType.OneToMany,
         twoWay: true,
         onDelete: 'cascade'
@@ -115,8 +115,8 @@ const relationships: Relationship[] = [
         onDelete: 'cascade'
     },
     {
-       collectionId: 'idTokens_id',
        relationCollectionId: 'connectors_id',
+       collectionId: 'idTokens_id',
        relationType: RelationshipType.OneToMany,
        twoWay: true,
        onDelete: 'cascade'  
