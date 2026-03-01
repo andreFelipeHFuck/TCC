@@ -1,0 +1,972 @@
+{
+    "projectId": "69598d0e0005838fd88f",
+    "projectName": "TCC Teste",
+    "settings": {
+        "services": {
+            "account": true,
+            "avatars": true,
+            "databases": true,
+            "locale": true,
+            "health": true,
+            "storage": true,
+            "teams": true,
+            "users": true,
+            "sites": true,
+            "functions": true,
+            "graphql": true,
+            "messaging": true
+        },
+        "auth": {
+            "methods": {
+                "jwt": true,
+                "phone": true,
+                "invites": true,
+                "anonymous": true,
+                "email-otp": true,
+                "magic-url": true,
+                "email-password": true
+            },
+            "security": {
+                "duration": 31536000,
+                "limit": 0,
+                "sessionsLimit": 10,
+                "passwordHistory": 0,
+                "passwordDictionary": false,
+                "personalDataCheck": false,
+                "sessionAlerts": false,
+                "mockNumbers": []
+            }
+        }
+    },
+    "functions": [
+        {
+            "$id": "69a34e800029bc2f3292",
+            "name": "grpc_producer",
+            "runtime": "node-16.0",
+            "path": "functions/grpc_producer",
+            "entrypoint": "src/main.js",
+            "execute": [
+                "any"
+            ],
+            "enabled": true,
+            "logging": true,
+            "events": [],
+            "schedule": "",
+            "timeout": 15,
+            "commands": "npm install",
+            "scopes": [
+                "users.read"
+            ],
+            "specification": "s-0.5vcpu-512mb"
+        },
+        {
+            "$id": "69a41f63003681b60c11",
+            "name": "grpc-producer",
+            "runtime": "node-16.0",
+            "specification": "s-0.5vcpu-512mb",
+            "execute": [
+                "any"
+            ],
+            "events": [],
+            "scopes": [
+                "users.read"
+            ],
+            "schedule": "",
+            "timeout": 15,
+            "enabled": true,
+            "logging": true,
+            "entrypoint": "src/main.js",
+            "commands": "npm install",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "path": "functions/grpc-producer"
+        }
+    ],
+    "tablesDB": [
+        {
+            "$id": "bd_teste_secret",
+            "name": "bd_teste",
+            "enabled": true
+        },
+        {
+            "$id": "tste-db",
+            "name": "Teste",
+            "enabled": true
+        }
+    ],
+    "tables": [
+        {
+            "$id": "teste",
+            "$permissions": [],
+            "databaseId": "bd_teste_secret",
+            "name": "teste",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [],
+            "indexes": []
+        },
+        {
+            "$id": "users_id",
+            "$permissions": [],
+            "databaseId": "tste-db",
+            "name": "users",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [
+                {
+                    "key": "name",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "email",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "format": "email"
+                },
+                {
+                    "key": "photo",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 512,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "password",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "userType",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "format": "enum",
+                    "elements": [
+                        "driver",
+                        "administrator"
+                    ]
+                },
+                {
+                    "key": "state",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "city",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "neighborhood",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "street",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "cep",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 8,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "streetNumber",
+                    "type": "integer",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "min": -9223372036854775808,
+                    "max": 9223372036854775807
+                },
+                {
+                    "key": "cascade",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "idTokens_id",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "users_id",
+                    "onDelete": "restrict",
+                    "side": "parent"
+                },
+                {
+                    "key": "restrict",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "usersVehicles_id",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "users_id",
+                    "onDelete": "restrict",
+                    "side": "parent"
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "idTokens_id",
+            "$permissions": [],
+            "databaseId": "tste-db",
+            "name": "idTokens",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [
+                {
+                    "key": "name",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "token",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "idTokenType",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "format": "enum",
+                    "elements": [
+                        "ocpp1.6",
+                        "ocpp2.1"
+                    ]
+                },
+                {
+                    "key": "users_id",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "users_id",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "cascade",
+                    "onDelete": "restrict",
+                    "side": "child"
+                },
+                {
+                    "key": "cascade",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "connectors_id",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "idTokens_id",
+                    "onDelete": "restrict",
+                    "side": "parent"
+                },
+                {
+                    "key": "null",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "chargingSessions_id",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "idTokens_id",
+                    "onDelete": "restrict",
+                    "side": "parent"
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "connectors_id",
+            "$permissions": [],
+            "databaseId": "tste-db",
+            "name": "connectors",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [
+                {
+                    "key": "connectorId",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "active",
+                    "type": "boolean",
+                    "required": true,
+                    "array": false,
+                    "default": null
+                },
+                {
+                    "key": "connectorStatus",
+                    "type": "boolean",
+                    "required": true,
+                    "array": false,
+                    "default": null
+                },
+                {
+                    "key": "connectorType",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "format": "enum",
+                    "elements": [
+                        "SAE_J1772",
+                        "IEC_62196",
+                        "GB_T_20234",
+                        "CHAdeMO",
+                        "TESLA"
+                    ]
+                },
+                {
+                    "key": "idTokens_id",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "idTokens_id",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "cascade",
+                    "onDelete": "restrict",
+                    "side": "child"
+                },
+                {
+                    "key": "null",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "chargingSessions_id",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "connectors_id",
+                    "onDelete": "restrict",
+                    "side": "parent"
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "chargingStations_id",
+            "$permissions": [],
+            "databaseId": "tste-db",
+            "name": "chargingStations",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [
+                {
+                    "key": "name",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "photo",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 512,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "endpoint",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 512,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "protocolVersion",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "format": "enum",
+                    "elements": [
+                        "ocpp1.6",
+                        "ocpp2.1"
+                    ]
+                },
+                {
+                    "key": "online",
+                    "type": "boolean",
+                    "required": true,
+                    "array": false,
+                    "default": null
+                },
+                {
+                    "key": "active",
+                    "type": "boolean",
+                    "required": true,
+                    "array": false,
+                    "default": null
+                },
+                {
+                    "key": "isSimulator",
+                    "type": "boolean",
+                    "required": true,
+                    "array": false,
+                    "default": null
+                },
+                {
+                    "key": "cascade",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "chargingStations_id",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "chargingStations_id",
+                    "onDelete": "restrict",
+                    "side": "parent"
+                },
+                {
+                    "key": "chargingStations_id",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "chargingStations_id",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "cascade",
+                    "onDelete": "restrict",
+                    "side": "child"
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "chargingSessions_id",
+            "$permissions": [],
+            "databaseId": "tste-db",
+            "name": "chargingSessions",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [
+                {
+                    "key": "transactionId",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 512,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "chargingType",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "format": "enum",
+                    "elements": [
+                        "g2v",
+                        "v2g"
+                    ]
+                },
+                {
+                    "key": "currentSoC",
+                    "type": "double",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "min": 0,
+                    "max": 100
+                },
+                {
+                    "key": "direction",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "format": "enum",
+                    "elements": [
+                        "toVehicle",
+                        "toGrid"
+                    ]
+                },
+                {
+                    "key": "startCharging",
+                    "type": "datetime",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "format": ""
+                },
+                {
+                    "key": "startSoc",
+                    "type": "integer",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "min": 0,
+                    "max": 100
+                },
+                {
+                    "key": "stoptCharging",
+                    "type": "datetime",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "format": ""
+                },
+                {
+                    "key": "stopSoc",
+                    "type": "integer",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "min": 0,
+                    "max": 100
+                },
+                {
+                    "key": "idTokens_id",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "idTokens_id",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "null",
+                    "onDelete": "restrict",
+                    "side": "child"
+                },
+                {
+                    "key": "vehicles_id",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "vehicles_id",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "null",
+                    "onDelete": "restrict",
+                    "side": "child"
+                },
+                {
+                    "key": "connectors_id",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "connectors_id",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "null",
+                    "onDelete": "restrict",
+                    "side": "child"
+                },
+                {
+                    "key": "cascade",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "energyTranferPeriods_id",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "chargingSessions_id",
+                    "onDelete": "restrict",
+                    "side": "parent"
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "energyTranferPeriods_id",
+            "$permissions": [],
+            "databaseId": "tste-db",
+            "name": "energyTranferPeriods",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [
+                {
+                    "key": "direction",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "format": "enum",
+                    "elements": [
+                        "toVehicle",
+                        "toGrid"
+                    ]
+                },
+                {
+                    "key": "startCharging",
+                    "type": "datetime",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "format": ""
+                },
+                {
+                    "key": "startSoc",
+                    "type": "integer",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "min": 0,
+                    "max": 100
+                },
+                {
+                    "key": "stoptCharging",
+                    "type": "datetime",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "format": ""
+                },
+                {
+                    "key": "stopSoc",
+                    "type": "integer",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "min": 0,
+                    "max": 100
+                },
+                {
+                    "key": "null",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "energies_id",
+                    "relationType": "oneToOne",
+                    "twoWay": true,
+                    "twoWayKey": "energyTranferPeriods_id",
+                    "onDelete": "restrict",
+                    "side": "parent"
+                },
+                {
+                    "key": "chargingSessions_id",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "chargingSessions_id",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "cascade",
+                    "onDelete": "restrict",
+                    "side": "child"
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "energies_id",
+            "$permissions": [],
+            "databaseId": "tste-db",
+            "name": "energies",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [
+                {
+                    "key": "currentDirection",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "format": "enum",
+                    "elements": [
+                        "toVehicle",
+                        "toGrid"
+                    ]
+                },
+                {
+                    "key": "currentSoc",
+                    "type": "integer",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "min": 0,
+                    "max": 100
+                },
+                {
+                    "key": "currentEnergyKWh",
+                    "type": "double",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "min": -1.7976931348623157e+308,
+                    "max": 1.7976931348623157e+308
+                },
+                {
+                    "key": "energyTranferPeriods_id",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "energyTranferPeriods_id",
+                    "relationType": "oneToOne",
+                    "twoWay": true,
+                    "twoWayKey": "null",
+                    "onDelete": "restrict",
+                    "side": "child"
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "vehicles_id",
+            "$permissions": [],
+            "databaseId": "tste-db",
+            "name": "vehicles",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [
+                {
+                    "key": "brand",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 100,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "model",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 100,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "vehicleType",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "format": "enum",
+                    "elements": [
+                        "electric",
+                        "hybrid"
+                    ]
+                },
+                {
+                    "key": "null",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "chargingSessions_id",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "vehicles_id",
+                    "onDelete": "restrict",
+                    "side": "parent"
+                },
+                {
+                    "key": "restrict",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "usersVehicles_id",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "vehicles_id",
+                    "onDelete": "restrict",
+                    "side": "parent"
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "usersVehicles_id",
+            "$permissions": [],
+            "databaseId": "tste-db",
+            "name": "users_vehicles",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [
+                {
+                    "key": "usersId",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 512,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "vehicleId",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 512,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "streetNumber",
+                    "type": "integer",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "min": -9223372036854775808,
+                    "max": 9223372036854775807
+                },
+                {
+                    "key": "users_id",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "users_id",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "restrict",
+                    "onDelete": "restrict",
+                    "side": "child"
+                },
+                {
+                    "key": "vehicles_id",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "vehicles_id",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "restrict",
+                    "onDelete": "restrict",
+                    "side": "child"
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "loactions_id",
+            "$permissions": [],
+            "databaseId": "tste-db",
+            "name": "locations",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [
+                {
+                    "key": "name",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "coordinates",
+                    "type": "point",
+                    "required": true,
+                    "array": false,
+                    "default": null
+                },
+                {
+                    "key": "state",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "city",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "neighborhood",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "street",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "cep",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 8,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "streetNumber",
+                    "type": "integer",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "min": -9223372036854775808,
+                    "max": 9223372036854775807
+                }
+            ],
+            "indexes": []
+        }
+    ],
+    "buckets": [],
+    "teams": [],
+    "topics": []
+}
