@@ -1,10 +1,21 @@
+import 'dotenv/config';
+
 import {  AppwriteContext } from './types.js';
 import { sendAuthentication } from './procedures/index.js';
 
 export default async ({ req, res, log, error }: AppwriteContext) => {
+     const grpcEndpoint = process.env.GRPC_SERVICE_ENDPOINT;
+
+     log(`[APPWRITE FUNCTION GRPC PRODUCER] endpoint gRPC configurado: ${grpcEndpoint}`);
+
+    if (!grpcEndpoint) {
+        error('APPWRITE FUNCTION GRPC PRODUCER] Requisição inválida: GRPC_SERVICE_ENDPOINT não está configurado');
+        return res.json({ error: "Configuração ausente" }, 500);
+    }
+
     try {
         log('[APPWRITE FUNCTION GRPC PRODUCER] Iniciando função gRPC Producer');
-        const result = await sendAuthentication(req.body);
+        const result = await sendAuthentication(req.body, grpcEndpoint);
         return res.json({ reply: (result as any).message });
     } catch (e: any) {
         error('[APPWRITE FUNCTION GRPC PRODUCER]  Erro no gRPC: ' + e.message);

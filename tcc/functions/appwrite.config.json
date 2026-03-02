@@ -61,7 +61,10 @@
                 "node_modules",
                 ".npm"
             ],
-            "path": "functions/grpc-producer"
+            "path": "grpc-producer",
+            "variables": {
+                "GRPC_SERVICE_ENDPOINT": "172.17.0.1:50051"
+            }
         }
     ],
     "tablesDB": [

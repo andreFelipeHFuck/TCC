@@ -8,10 +8,7 @@ import { generateAuthenticationRequest } from '../models/business-models.js';
 import { BodyRequest } from '../types.js';
 
 const protoDescriptor = packageDefinitions(ProceduresTypes.BUSINESS) as any;
-const client = new protoDescriptor.business.AuthenticationService(
-        '172.17.0.1:50051',
-        grpc.credentials.createInsecure()
-);
+
 
 function validateBody(req: any): BodyRequest | null {
     const {  user_id, user_name } = req.body || {};
@@ -22,12 +19,18 @@ function validateBody(req: any): BodyRequest | null {
     return null;
 }
 
-export function sendAuthentication(body: any): Promise<any> {
+export function sendAuthentication(body: any, grpcEndpoint: string): Promise<any> {
+    // '172.17.0.1:50051'
+    const client = new protoDescriptor.business.AuthenticationService(
+        grpcEndpoint,
+        grpc.credentials.createInsecure()
+    );
+
     const validatedBody = validateBody({ body });
 
     if (!validatedBody) {
         return Promise.reject(
-            new Error('[APPWRITE FUNCTION GRPC PRODUCER] Requisição inválida: user_id e user_name são obrigatórios')
+            new Error('Requisição inválida: user_id e user_name são obrigatórios')
         );
     }
 
