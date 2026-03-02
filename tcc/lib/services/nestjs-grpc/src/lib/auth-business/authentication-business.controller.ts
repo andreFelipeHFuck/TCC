@@ -22,6 +22,7 @@ import {
     AuthenticationResponse
 } from '@tcc/types'
 import { ConsoleLogger } from '@tcc/utils';
+import { json } from 'stream/consumers';
 
 
 @Injectable()
@@ -38,7 +39,7 @@ export class AuthBusinessController {
         metadata: Metadata,
         call: ServerUnaryCall<any, any>
     ): AuthenticationResponse {
-        this.logger.info(`[RPC AUTH BUSINESS] Recebido auth para: ${data.userSummary?.userName}`);
+        this.logger.info(`[RPC AUTH BUSINESS] Autenticando usuário: ${JSON.stringify(data)}`);
 
     return {
       success: true,

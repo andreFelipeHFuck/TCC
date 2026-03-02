@@ -4,15 +4,28 @@
   "description": "",
   "main": "src/main.js",
   "type": "module",
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "options": {
+        "main": "dist/lib/models/src/main.ts",
+        "outputPath": "dist/apps/minha-funcao",
+        "bundle": true,
+        "thirdParty": true,
+        "generatePackageJson": true
+      }
+    }
+  },
   "scripts": {
     "format": "prettier --write .",
     "copy-proto": "cp -R ../../../lib/types/src/lib/grpc/proto ./src/shared",
-    "build": "copy-proto && tsc"
+    "build": "tsc"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.14.3",
     "@grpc/proto-loader": "^0.8.0",
-    "node-appwrite": "^20.2.1"
+    "node-appwrite": "^20.2.1",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "prettier": "^3.2.5",

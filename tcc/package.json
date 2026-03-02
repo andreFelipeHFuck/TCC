@@ -30,7 +30,8 @@
     "node-appwrite": "^21.1.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~7.8.0",
-    "typed-ocpp": "^1.5.5"
+    "typed-ocpp": "^1.5.5",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@angular-devkit/core": "21.1.1",
@@ -64,6 +65,7 @@
     "@swc/helpers": "~0.5.11",
     "@types/jest": "^30.0.0",
     "@types/node": "^20.19.35",
+    "@types/uuid": "^10.0.0",
     "@typescript-eslint/utils": "^8.40.0",
     "@vitest/coverage-v8": "^4.0.0",
     "@vitest/ui": "^4.0.0",
