@@ -15,8 +15,11 @@ export default async ({ req, res, log, error }: AppwriteContext) => {
 
     try {
         log('[APPWRITE FUNCTION GRPC PRODUCER] Iniciando função gRPC Producer');
-        const result = await sendAuthentication(req.body, grpcEndpoint);
-        return res.json({ reply: (result as any).message });
+        const  { result, authToken } = await sendAuthentication(grpcEndpoint, req.body);
+        return res.json({ 
+            authToken: authToken,
+            reply: (result as any).message 
+        }, 200);
     } catch (e: any) {
         error('[APPWRITE FUNCTION GRPC PRODUCER]  Erro no gRPC: ' + e.message);
         return res.json({ error: 'Falha na comunicação' }, 500);

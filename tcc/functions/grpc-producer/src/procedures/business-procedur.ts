@@ -9,7 +9,6 @@ import { BodyRequest } from '../types.js';
 
 const protoDescriptor = packageDefinitions(ProceduresTypes.BUSINESS) as any;
 
-
 function validateBody(req: any): BodyRequest | null {
     const {  user_id, user_name } = req.body || {};
     
@@ -19,8 +18,11 @@ function validateBody(req: any): BodyRequest | null {
     return null;
 }
 
-export function sendAuthentication(body: any, grpcEndpoint: string): Promise<any> {
-    // '172.17.0.1:50051'
+export function sendAuthentication(
+        grpcEndpoint: string, 
+        body: any
+): { result: Promise<any>, authToken: string } {
+
     const client = new protoDescriptor.business.AuthenticationService(
         grpcEndpoint,
         grpc.credentials.createInsecure()
@@ -29,20 +31,22 @@ export function sendAuthentication(body: any, grpcEndpoint: string): Promise<any
     const validatedBody = validateBody({ body });
 
     if (!validatedBody) {
-        return Promise.reject(
+        return { result: Promise.reject(
             new Error('Requisição inválida: user_id e user_name são obrigatórios')
-        );
+        ), authToken: '' };
     }
 
     const date: Date = new Date(Date.now() + 3600 * 1000); // Token válido por 1 hora   
-    const request = generateAuthenticationRequest(validatedBody as BodyRequest, date);
+    const { request, authToken } = generateAuthenticationRequest(validatedBody as BodyRequest, date);
 
-    return new Promise((resolve, reject) => {
+    return { result: new Promise((resolve, reject) => {
             client.SendAuthentication(
                 request
                 , (err: Error | null, response: any) => {
                 if (err) reject(err);
                 else resolve(response);
             });
-        });
+        }), 
+        authToken: authToken
     };
+};

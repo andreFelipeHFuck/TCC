@@ -43,7 +43,7 @@ export class AuthBusinessController {
     return {
       success: true,
       sessionId: `nest_sess_${Date.now()}`,
-      processedAt: new Date(),
+      processedAt: new Date(Date.now()),
     };
-    }
+ }
 }
