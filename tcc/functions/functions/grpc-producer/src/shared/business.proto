@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package business;
+
+import "google/protobuf/timestamp.proto";
+
+service AuthenticationService {
+    rpc SendAuthentication (AuthenticationRequest) returns (AuthenticationResponse) {}
+}
+
+message AuthenticationRequest {
+    string auth_token = 1;
+    google.protobuf.Timestamp expires_at = 2;
+    UserSummary user_summary = 3;
+}
+
+enum Roles {
+    ROLE_UNSPECIFIED = 0;
+    ROLE_DRIVER = 1;
+    ROLE_ADMINISTRATOR = 2;
+}
+
+message UserSummary {
+    string user_id = 1;
+    string user_name = 2;
+}
+
+message AuthenticationResponse {
+    bool success = 1;
+    string session_id = 2;
+    google.protobuf.Timestamp processed_at = 3;
+}

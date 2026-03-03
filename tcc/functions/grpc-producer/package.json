@@ -2,11 +2,10 @@
   "name": "starter-template",
   "version": "1.0.0",
   "description": "",
-  "main": "src/main.js",
+  "main": "src/main.ts",
   "type": "module",
   "scripts": {
-    "format": "prettier --write .",
-    "build": "tsc"
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.14.3",
@@ -16,8 +15,9 @@
     "uuid": "^13.0.0"
   },
   "devDependencies": {
+    "@types/bun": "^1.1.16",
     "@types/node": "^25.3.3",
-    "prettier": "^3.2.5",
+    "prettier": "^3.0.0",
     "typescript": "^5.9.3"
   }
 }

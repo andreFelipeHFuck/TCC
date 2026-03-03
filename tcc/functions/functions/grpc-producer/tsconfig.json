@@ -1,15 +1,15 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "ESNext",
-    "moduleResolution": "nodenext",
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": false,
     "skipLibCheck": true,
-    "outDir": "./src",    // Onde o JS será criado
-    "rootDir": "./src"     // Onde o TS original está
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./",
+    "rootDir": "./"
   },
-  "include": ["src/**/*"], // Inclui os arquivos para compilar
-  "exclude": ["node_modules"] // REMOVA o "./src" daqui!
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules"]
 }

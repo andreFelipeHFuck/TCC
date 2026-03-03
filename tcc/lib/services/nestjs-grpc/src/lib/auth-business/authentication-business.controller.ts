@@ -38,12 +38,12 @@ export class AuthBusinessController {
         metadata: Metadata,
         call: ServerUnaryCall<any, any>
     ): AuthenticationResponse {
-        this.logger.info(`[RPC AUTH BUSINESS] Recebido auth para: ${data.userSummary?.userName}`);
+        this.logger.info(`[RPC AUTH BUSINESS] Autenticando usuário: ${JSON.stringify(data)}`);
 
     return {
       success: true,
       sessionId: `nest_sess_${Date.now()}`,
-      processedAt: new Date(),
+      processedAt: new Date(Date.now()),
     };
-    }
+ }
 }
