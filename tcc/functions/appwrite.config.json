@@ -40,9 +40,33 @@
     },
     "functions": [
         {
-            "$id": "69a41f63003681b60c11",
+            "$id": "69a6b90f0034defa12b1",
             "name": "grpc-producer",
-            "runtime": "node-16.0",
+            "runtime": "bun-1.0",
+            "specification": "s-0.5vcpu-512mb",
+            "execute": [
+                "any"
+            ],
+            "events": [],
+            "scopes": [
+                "users.read"
+            ],
+            "schedule": "",
+            "timeout": 15,
+            "enabled": true,
+            "logging": true,
+            "entrypoint": "src/main.js",
+            "commands": "bun install",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "path": "grpc-producer"
+        },
+        {
+            "$id": "69a6d85800289f4983da",
+            "name": "grpc-producer",
+            "runtime": "node-20.0",
             "specification": "s-0.5vcpu-512mb",
             "execute": [
                 "any"
@@ -61,10 +85,7 @@
                 "node_modules",
                 ".npm"
             ],
-            "path": "grpc-producer",
-            "variables": {
-                "GRPC_SERVICE_ENDPOINT": "172.17.0.1:50051"
-            }
+            "path": "functions/grpc-producer"
         }
     ],
     "tablesDB": [
