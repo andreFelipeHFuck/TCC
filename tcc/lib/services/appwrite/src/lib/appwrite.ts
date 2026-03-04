@@ -11,8 +11,8 @@ import {
 } from "@tcc/types";
 import { appwriteMapperError } from '@tcc/appwrite-adapter';
 
-import { APPWRITE_CONFIG } from './appwrite-connections/appwrite-token.token';
-import { appwriteCreateConnection } from './appwrite-connections/appwrite-connections.utils';
+import { APPWRITE_CONFIG } from './appwrite-connections/appwrite-token-token';
+import { appwriteCreateConnection } from './appwrite-connections/appwrite-connections-utils';
 
 @Injectable({
   providedIn: 'root',
