@@ -11,7 +11,7 @@ import {
 } from "@tcc/types";
 import { appwriteMapperError } from '@tcc/appwrite-adapter';
 
-import { APPWRITE_CONFIG } from './appwrite-connections/appwrite-token-token';
+import { APPWRITE_CONFIG } from './appwrite-connections/appwrite-token';
 import { appwriteCreateConnection } from './appwrite-connections/appwrite-connections-utils';
 
 @Injectable({
@@ -39,12 +39,12 @@ export class Appwrite extends ConnectionServices<AppwriteError> {
       [this.client, this.account] = appwriteCreateConnection(this.appwriteConfig);
       this.status = 'ready';
 
-      this.logger.info('[Appwrite] Conexão inicializada com sucesso');
+      this.logger.info('[APPWRITE SERVICE] Conexão inicializada com sucesso');
     } catch (error) {
       this.status = 'error';
       this.lastError = appwriteMapperError(error);
 
-      this.logger.error('[Appwrite] Erro ao inicializar', {
+      this.logger.error('[APPWRITE SERVICE] Erro ao inicializar', {
         error,
         mappedError: this.lastError,
       });

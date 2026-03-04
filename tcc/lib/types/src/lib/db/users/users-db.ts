@@ -17,3 +17,11 @@ export interface User {
     address: Address,
     idTokens?: IdToken[]
 }
+
+export interface UserCreateDTO extends Address {
+    name: string,
+    email: string,
+    password: string,
+    photo: string,
+    userType: UserType,
+}

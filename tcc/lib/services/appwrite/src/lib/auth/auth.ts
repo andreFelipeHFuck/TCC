@@ -44,7 +44,7 @@ export class Auth extends UseConnection {
    */
   async create(name: string, email: string, password: string) {
     if (this.account === 'NONE') {
-      throw new Error('Serviço do Appwrite não está inicializado.');
+      throw new Error(' [APPWRITE AUTH SERVICE] Serviço do Appwrite não está inicializado.');
     }
 
     try {
@@ -55,10 +55,10 @@ export class Auth extends UseConnection {
         name
       );
 
-      this.logger.info(`[Auth] Conta criada com sucesso: ${user.$id}`);
+      this.logger.info(`[APPWRITE AUTH SERVICE] Conta criada com sucesso: ${user.$id}`);
       return user;
     } catch (error) {
-      this.logger.error('[Auth] Erro ao criar conta', { error });
+      this.logger.error('[APPWRITE AUTH SERVICE] Erro ao criar conta', { error });
       throw error;
     }
   }
