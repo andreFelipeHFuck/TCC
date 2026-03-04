@@ -1,1 +1,1 @@
-export { ChargingType, ChargingSession } from "./charging-sessions";
+export type { ChargingType, ChargingSession } from "./charging-sessions";

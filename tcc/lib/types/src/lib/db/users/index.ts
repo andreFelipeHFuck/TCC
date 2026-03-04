@@ -1,2 +1,2 @@
-export { User, UserType } from "./users-db";
-export { UserVehicles } from "./users-vehicle-db";
+export type { User, UserType } from "./users-db";
+export type { UserVehicles } from "./users-vehicle-db";
