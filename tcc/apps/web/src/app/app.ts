@@ -7,7 +7,7 @@ import { appwriteCreateConnection } from  '@tcc/appwrite'
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [Button],
+  imports: [],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

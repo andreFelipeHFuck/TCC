@@ -2,7 +2,7 @@ import { Provider } from "@angular/core";
 
 import { AppwriteConfig } from "@tcc/types";
 
-import { APPWRITE_CONFIG } from './appwrite-connections/appwrite-token.token';
+import { APPWRITE_CONFIG } from './appwrite-connections/appwrite-token-token';
 import { Appwrite } from "./appwrite";
 
 export function appwriteProvide(
