@@ -1,12 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 
 import {
-  AppwriteAccount, 
-  AppwriteClient, 
-  AppwriteConfig, 
-  AppwriteError, 
-  ConnectionServices, 
-  Logger, 
+  AppwriteAccount,
+  AppwriteClient,
+  AppwriteConfig,
+  AppwriteError,
+  ConnectionServices,
+  Logger,
   UnauthorizedError
 } from "@tcc/types";
 import { appwriteMapperError } from '@tcc/appwrite-adapter';
@@ -24,7 +24,7 @@ export class Appwrite extends ConnectionServices<AppwriteError> {
   private client: AppwriteClient = 'NONE';
   private account: AppwriteAccount = 'NONE';
 
-  constructor(){
+  constructor() {
     super();
   }
 
@@ -59,7 +59,7 @@ export class Appwrite extends ConnectionServices<AppwriteError> {
     this.lastError = new UnauthorizedError();
     this.status = 'error';
 
-     return 'NONE';
+    return 'NONE';
   }
 
   getAccount(): AppwriteAccount {

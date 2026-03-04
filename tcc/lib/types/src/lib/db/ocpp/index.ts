@@ -1,1 +1,1 @@
-export { IdToken } from "./idToken-db";
+export type { IdToken } from "./idToken-db";

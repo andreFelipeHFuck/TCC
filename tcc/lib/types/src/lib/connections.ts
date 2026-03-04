@@ -7,9 +7,14 @@ export abstract class ConnectionServices<T> {
 
     isReady(): boolean {
         return this.status === 'ready';
-    } 
+    }
 
-    getError():  T| undefined {
+    getError(): T | undefined {
         return this.lastError;
     }
+}
+
+
+export abstract class UseConnection {
+    protected abstract init(): Promise<void>;
 }
