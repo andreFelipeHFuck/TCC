@@ -15,17 +15,25 @@ export class AuthUser {
   private readonly auth = inject(Auth);
   private readonly databaseUser = inject(DatabaseUser);
 
-  async create(user: User) {
+  async createUser(user: User) {
     const { name, email, password, ...rest } = user;
-    const result = await this.auth.create(name, email, password);
-    return result;
+
+    try {
+      await this.auth.create(name, email, password);
+      const sessionLogin = await this.auth.login(email, password);
+
+      return sessionLogin;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   }
 
-  login() {
-    this.auth.login();
-  }
+  // login() {
+  //   this.auth.login();
+  // }
 
-  logout() {
-    this.auth.logout();
-  }
+  // logout() {
+  //   this.auth.logout();
+  // }
 }

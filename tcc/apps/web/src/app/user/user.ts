@@ -34,7 +34,8 @@ export class User {
       }
     };
 
-    this.authUser.create(user);
+    const result = await this.authUser.createUser(user);
+    console.log(`[APP USER] usuário logado ${result}`);
 
     // console.log(`[APP USER] criação de usuário: ${result}`);
   }
