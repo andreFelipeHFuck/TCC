@@ -20,11 +20,14 @@ export class DatabaseUser extends CrudServiceDB {
 
   constructor() {
     super();
+    this.logger.info('[APPWRITE DATABASE USER SERVICE] Inicializado, id do banco: ', this.database.getDatabaseId());
   }
 
   public override async get<T>(id: string): Promise<T> {
     const database = this.database.getDatabase();
     const databaseId = this.database.getDatabaseId();
+
+    console.log('[APPWRITE DATABASE USER SERVICE] get, id do banco: ', databaseId);
 
     const response = await database.getDocument(
       databaseId,
@@ -39,6 +42,7 @@ export class DatabaseUser extends CrudServiceDB {
     const database = this.database.getDatabase();
     const databaseId = this.database.getDatabaseId();
 
+    console.log('[APPWRITE DATABASE USER SERVICE] get, id do banco: ', databaseId);
 
     this.logger.info('Creating user', database);
 

@@ -16,7 +16,9 @@ export class AuthUser {
   private readonly databaseUser = inject(DatabaseUser);
 
   async create(user: User) {
-
+    const { name, email, password, ...rest } = user;
+    const result = await this.auth.create(name, email, password);
+    return result;
   }
 
   login() {

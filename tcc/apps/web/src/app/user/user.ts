@@ -1,0 +1,41 @@
+import { Component, inject } from '@angular/core';
+
+import { User as UserType } from '@tcc/types';
+import { APPWRITE_DATABASE_ID, AuthUser, DatabaseUser } from '@tcc/appwrite';
+
+@Component({
+  selector: 'app-user',
+  imports: [],
+  templateUrl: './user.html',
+  styleUrl: './user.css',
+})
+export class User {
+  private readonly authUser: AuthUser = inject(AuthUser);
+  private readonly databaseUser: DatabaseUser = inject(DatabaseUser);
+  private readonly databaseId: string = inject(APPWRITE_DATABASE_ID);
+
+  public async createUser(): Promise<void> {
+    // console.log(`[APP USER] criação de usuário: ${this.databaseId}`);
+
+    const user: UserType = {
+      $id: '',
+      name: 'Teste Database',
+      email: 'test@example.com',
+      password: 'password123',
+      photo: 'https://example.com/photo.jpg',
+      userType: 'driver',
+      address: {
+        state: 'SP',
+        city: 'São Paulo',
+        neighborhood: 'Jardins',
+        street: 'Rua Teste',
+        cep: '12345678',
+        streetNumber: 123
+      }
+    };
+
+    this.authUser.create(user);
+
+    // console.log(`[APP USER] criação de usuário: ${result}`);
+  }
+}

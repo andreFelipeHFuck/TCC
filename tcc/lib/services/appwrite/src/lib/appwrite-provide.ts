@@ -7,7 +7,6 @@ import { Appwrite } from "./appwrite";
 
 export function appwriteProvide(
   config: AppwriteConfig,
-  databaseId: string
 ): Provider[] {
   return [
     Appwrite,
@@ -17,7 +16,7 @@ export function appwriteProvide(
     },
     {
       provide: APPWRITE_DATABASE_ID,
-      useValue: databaseId,
-    },
+      useValue: config.databaseId,
+    }
   ];
 }
