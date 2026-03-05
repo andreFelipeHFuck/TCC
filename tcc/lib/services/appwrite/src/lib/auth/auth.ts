@@ -63,7 +63,30 @@ export class Auth extends UseConnection {
     }
   }
 
-  login() { }
+  /**
+   * Realiza o login do usuário
+   * 
+   * @param email Email do usuário
+   * @param password Senha do usuário
+   */
+  async login(email: string, password: string) {
+    if (this.account === 'NONE') {
+      throw new Error(' [APPWRITE AUTH SERVICE] Serviço do Appwrite não está inicializado.');
+    }
+
+    try {
+      const user = await this.account.createEmailPasswordSession(
+        email,
+        password
+      );
+
+      this.logger.info(`[APPWRITE AUTH SERVICE] Login feito com sucesso: ${user.$id}`);
+      return user;
+    } catch (error) {
+      this.logger.error('[APPWRITE AUTH SERVICE] Erro ao fazer login', { error });
+      throw error;
+    }
+  }
 
   logout() { }
 
