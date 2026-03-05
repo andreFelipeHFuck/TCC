@@ -6,7 +6,8 @@ export type AppwriteAccount = Account | 'NONE';
 /**
  * @todo refactors project to projectId
  */
-export interface  AppwriteConfig  {
+export interface AppwriteConfig {
     endpoint: string,
-    project: string
+    project: string,
+    databaseId: string
 };
