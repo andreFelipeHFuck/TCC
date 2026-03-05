@@ -33,8 +33,8 @@ export function appwriteMapperError(service: AppwriteServices, error: unknown): 
             return appwriteMapperErrorAUTH(error);
         case AppwriteServices.CONNECTION:
             return appwriteMapperErrorCONNECTION(error);
-        // case AppwriteServices.DATABASE:
-        //     return appwriteMapperErrorDATABASE(error);
+        case AppwriteServices.DATABASE:
+            return appwriteMapperErrorDATABASE(error);
         // case AppwriteServices.STORAGE:
         //     return appwriteMapperErrorSTORAGE(error);
         // case AppwriteServices.FUNCTIONS:
@@ -44,6 +44,21 @@ export function appwriteMapperError(service: AppwriteServices, error: unknown): 
     }
 }
 
+function appwriteMapperErrorCONNECTION(error: unknown): AppwriteError {
+    if (isAppwriteErrorLike(error)) {
+        const appwriteError = error as AppwriteError;
+        switch (String(appwriteError.code)) {
+            case '401':
+                return new UnauthorizedError('Usuário não autorizado');
+
+            default:
+                return new UnknowError(String(appwriteError.message));
+        }
+    }
+
+    return new UnknowError();
+}
+
 function appwriteMapperErrorAUTH(error: unknown): AppwriteError {
     if (isAppwriteErrorLike(error)) {
         const appwriteError = error as AppwriteError;
@@ -51,25 +66,29 @@ function appwriteMapperErrorAUTH(error: unknown): AppwriteError {
             case '409':
                 return new AuthError('Tentativa de criar uma conta com um email já cadastrado');
 
+            case '429':
+                return new UnauthorizedError('Muitas tentativas de login em pouco tempo');
+
             default:
-                return new UnknowError(String(appwriteError.code));
+                return new UnknowError(String(appwriteError));
         }
     }
 
     return new UnknowError('Erro inesperado de autenticação');
 }
 
-function appwriteMapperErrorCONNECTION(error: unknown): AppwriteError {
+function appwriteMapperErrorDATABASE(error: unknown): AppwriteError {
     if (isAppwriteErrorLike(error)) {
         const appwriteError = error as AppwriteError;
-        switch (appwriteError.code) {
-            case '401':
-                return new UnauthorizedError('Usuário não autorizado');
+        switch (String(appwriteError.code)) {
+            case '403':
+                return new UnauthorizedError('Usuário não autorizado a escrever no banco de dados');
 
             default:
-                return new UnknowError(appwriteError.message);
+                return new UnknowError(String(appwriteError.message));
         }
     }
 
     return new UnknowError();
 }
+
