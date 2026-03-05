@@ -5,6 +5,7 @@ import {
   AppwriteClient,
   AppwriteConfig,
   AppwriteError,
+  AppwriteServices,
   ConnectionServices,
   Logger,
   UnauthorizedError
@@ -37,16 +38,15 @@ export class Appwrite extends ConnectionServices<AppwriteError> {
 
     try {
       [this.client, this.account] = appwriteCreateConnection(this.appwriteConfig);
-      this.status = 'ready';
+      this.setReady();
 
       this.logger.info('[APPWRITE SERVICE] Conexão inicializada com sucesso');
     } catch (error) {
-      this.status = 'error';
-      this.lastError = appwriteMapperError(error);
+      this.setError(appwriteMapperError(AppwriteServices.CONNECTION, error));
 
       this.logger.error('[APPWRITE SERVICE] Erro ao inicializar', {
         error,
-        mappedError: this.lastError,
+        mappedError: this.getError(),
       });
     }
   }
@@ -56,8 +56,7 @@ export class Appwrite extends ConnectionServices<AppwriteError> {
       return this.client;
     }
 
-    this.lastError = new UnauthorizedError();
-    this.status = 'error';
+    this.setError(appwriteMapperError(AppwriteServices.CONNECTION, new Error('Cliente não inicializado')));
 
     return 'NONE';
   }
@@ -67,8 +66,7 @@ export class Appwrite extends ConnectionServices<AppwriteError> {
       return this.account;
     }
 
-    this.lastError = new UnauthorizedError();
-    this.status = 'error';
+    this.setError(appwriteMapperError(AppwriteServices.CONNECTION, new Error('Cliente não inicializado')));
 
     return 'NONE';
   }

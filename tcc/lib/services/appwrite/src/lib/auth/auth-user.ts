@@ -19,15 +19,10 @@ export class AuthUser {
   async createUser(user: User) {
     const userCreateDTO: UserCreateDTO = appwriteUserToUserCreateDTO(user);
 
-    try {
-      await this.auth.create(userCreateDTO.name, userCreateDTO.email, userCreateDTO.password);
-      const sessionLogin = await this.auth.login(userCreateDTO.email, userCreateDTO.password);
+    await this.auth.create(userCreateDTO.name, userCreateDTO.email, userCreateDTO.password);
+    const sessionLogin = await this.auth.login(userCreateDTO.email, userCreateDTO.password);
 
-      return sessionLogin;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+    return sessionLogin;
   }
 
   // login() {

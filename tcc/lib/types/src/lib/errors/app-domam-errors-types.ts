@@ -4,14 +4,20 @@
 import { AppwriteError } from "./app-error";
 
 export class NetworkError extends AppwriteError {
-    constructor() {
-        super('Não foi possível conectar ao servidor');
+    constructor(message?: string) {
+        super(message || 'Não foi possível conectar ao servidor');
     }
 }
 
 export class UnauthorizedError extends AppwriteError {
-    constructor() {
-        super('Usuário não autorizado');
+    constructor(message?: string) {
+        super(message || 'Usuário não autorizado');
+    }
+}
+
+export class AuthError extends AppwriteError {
+    constructor(message?: string) {
+        super(message || 'Erro ao realizar autenticação');
     }
 }
 
@@ -22,7 +28,7 @@ export class NotFoundError extends AppwriteError {
 }
 
 export class UnknowError extends AppwriteError {
-    constructor() {
-        super('Erro inesperado');
+    constructor(message?: string) {
+        super(message || 'Erro inesperado');
     }
 }

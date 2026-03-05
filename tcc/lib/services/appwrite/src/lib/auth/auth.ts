@@ -7,15 +7,18 @@ import { ID } from 'appwrite';
 
 import { Appwrite } from '../appwrite';
 import {
-  UseConnection,
   AppwriteAccount,
-  Logger
+  Logger,
+  ConnectionServices,
+  AppwriteError,
+  AppwriteServices
 } from '@tcc/types';
+import { appwriteMapperError } from '@tcc/appwrite-adapter';
 
 @Injectable({
   providedIn: 'root',
 })
-export class Auth extends UseConnection {
+export class Auth extends ConnectionServices<AppwriteError> {
   private readonly appwrite: Appwrite = inject(Appwrite);
   private readonly logger = inject(Logger);
 
@@ -26,7 +29,7 @@ export class Auth extends UseConnection {
     this.init();
   }
 
-  protected async init() {
+  async init(): Promise<void> {
     const _ = await this.appwrite.init();
     const isReady = this.appwrite.isReady();
 
@@ -58,8 +61,10 @@ export class Auth extends UseConnection {
       this.logger.info(`[APPWRITE AUTH SERVICE] Conta criada com sucesso: ${user.$id}`);
       return user;
     } catch (error) {
-      this.logger.error('[APPWRITE AUTH SERVICE] Erro ao criar conta', { error });
-      throw error;
+      this.setError(appwriteMapperError(AppwriteServices.AUTH, error));
+
+      this.logger.error('[APPWRITE AUTH SERVICE] Erro ao criar conta', this.getError());
+      throw this.getError();
     }
   }
 
@@ -83,8 +88,9 @@ export class Auth extends UseConnection {
       this.logger.info(`[APPWRITE AUTH SERVICE] Login feito com sucesso: ${user.$id}`);
       return user;
     } catch (error) {
-      this.logger.error('[APPWRITE AUTH SERVICE] Erro ao fazer login', { error });
-      throw error;
+      this.setError(appwriteMapperError(AppwriteServices.AUTH, error));
+      this.logger.error('[APPWRITE AUTH SERVICE] Erro ao fazer login', this.getError());
+      throw this.getError();
     }
   }
 

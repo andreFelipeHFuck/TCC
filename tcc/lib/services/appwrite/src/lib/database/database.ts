@@ -4,7 +4,8 @@ import { Databases } from 'appwrite';
 
 import {
   AppwriteClient,
-  UseConnection,
+  AppwriteError,
+  ConnectionServices,
   Logger
 } from '@tcc/types';
 import { Appwrite } from '../appwrite';
@@ -13,7 +14,7 @@ import { APPWRITE_DATABASE_ID } from '../appwrite-connections/appwrite-token';
 @Injectable({
   providedIn: 'root',
 })
-export class Database extends UseConnection {
+export class Database extends ConnectionServices<AppwriteError> {
   private readonly appwrite: Appwrite = inject(Appwrite);
   private readonly logger = inject(Logger);
   private readonly databaseId: string = inject(APPWRITE_DATABASE_ID);
@@ -25,7 +26,7 @@ export class Database extends UseConnection {
     this.init();
   }
 
-  protected async init() {
+  async init(): Promise<void> {
     const _ = await this.appwrite.init();
     const isReady = this.appwrite.isReady();
 
