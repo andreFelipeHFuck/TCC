@@ -21,6 +21,7 @@ export class AuthUser {
 
     await this.auth.create(userCreateDTO.name, userCreateDTO.email, userCreateDTO.password);
     const sessionLogin = await this.auth.login(userCreateDTO.email, userCreateDTO.password);
+    await this.databaseUser.create(userCreateDTO);
 
     return sessionLogin;
   }

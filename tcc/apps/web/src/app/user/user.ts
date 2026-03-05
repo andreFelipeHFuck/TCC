@@ -1,6 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 
-import { User as UserType } from '@tcc/types';
+import { AppwriteError, User as UserType } from '@tcc/types';
 import { APPWRITE_DATABASE_ID, AuthUser, DatabaseUser } from '@tcc/appwrite';
 
 @Component({
@@ -13,6 +13,10 @@ export class User {
   private readonly authUser: AuthUser = inject(AuthUser);
   private readonly databaseUser: DatabaseUser = inject(DatabaseUser);
   private readonly databaseId: string = inject(APPWRITE_DATABASE_ID);
+
+  messageError = signal<string>('');
+
+  isError = computed(() => this.messageError().length > 0);
 
   public async createUser(): Promise<void> {
     // console.log(`[APP USER] criação de usuário: ${this.databaseId}`);
@@ -34,8 +38,13 @@ export class User {
       }
     };
 
-    const result = await this.authUser.createUser(user);
-    console.log(`[APP USER] usuário logado ${result}`);
+    try {
+      const result = await this.authUser.createUser(user);
+      this.messageError.set('');
+    } catch (error: any) {
+      this.messageError.set(error.message);
+    }
+
 
     // console.log(`[APP USER] criação de usuário: ${result}`);
   }
