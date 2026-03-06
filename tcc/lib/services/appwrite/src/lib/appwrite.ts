@@ -70,4 +70,37 @@ export class Appwrite extends ConnectionServices<AppwriteError> {
 
     return 'NONE';
   }
+
+  protected async handleCall<T>(
+    promise: Promise<T>,
+    service: AppwriteServices,
+    serviceName: string,
+    successMessage: string,
+    errorMessage: string,
+    silent: boolean = false
+  ) {
+
+    if (this.client === 'NONE' || this.account === 'NONE') {
+      this.setError(appwriteMapperError(
+        AppwriteServices.CONNECTION,
+        new Error(errorMessage)
+      ));
+
+      throw this.getError();
+    }
+
+    try {
+      this.logger.info(`[${serviceName}] ${successMessage}`);
+      return await promise;
+    } catch (error) {
+      this.setError(appwriteMapperError(service, error));
+      this.logger.error(`[${serviceName}] ${errorMessage}`, this.getError());
+
+      if (!silent) {
+        // this.notifier.showError(translatedError.message);
+      }
+
+      throw this.getError();
+    }
+  }
 }
