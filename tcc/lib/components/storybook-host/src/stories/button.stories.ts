@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/angular";
 
-import { Button } from "@tcc/buttons"
+import { Button } from "@tcc/components/buttons"
 
 const meta: Meta<Button> = {
     component: Button
