@@ -1,5 +1,4 @@
 export abstract class ConnectionServices<T> {
-
     private status: 'ready' | 'error' = 'ready';
     private lastError?: T;
 
