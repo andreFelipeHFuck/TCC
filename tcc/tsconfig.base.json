@@ -27,7 +27,10 @@
       "@tcc/bigQuery": ["lib/services/bigQuery/src/index.ts"],
       "@tcc/big-query-adapter": ["lib/adapters/big-query-adapter/src/index.ts"],
       "@tcc/nestjs-grpc": ["lib/services/nestjs-grpc/src/index.ts"],
-      "@tcc/nest-logger": ["lib/services/nest-logger/src/index.ts"]
+      "@tcc/nest-logger": ["lib/services/nest-logger/src/index.ts"],
+      "@tcc/components/buttons": ["lib/components/buttons/src/index.ts"],
+      "@tcc/styles/material": ["lib/components/material/src/index.scss"],
+      "@tcc/shared-angular": ["lib/services/shared/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
