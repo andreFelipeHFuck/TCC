@@ -6,13 +6,13 @@ export * from './lib/errors/app-domam-errors-types';
 export * from './lib/errors/api-domam-errors-types';
 
 // LOGGER TYPES
-export * from './lib/logging-types.types';
+export * from './lib/logging-types';
 
 // CONNECTIONS ABSTRACT CLASS
 export * from './lib/connections';
 
 // APPWRITE TYPES 
-export * from './lib/appwrite-types.types';
+export * from './lib/appwrite-types';
 
 // DB TYPES
 export * from './lib/db';

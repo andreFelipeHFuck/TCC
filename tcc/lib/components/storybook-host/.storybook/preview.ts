@@ -1,9 +1,16 @@
-import type { Preview } from "@storybook/angular";
+import { applicationConfig, type Preview } from "@storybook/angular";
+import { provideAnimations } from '@angular/platform-browser/animations';
 
-import '@tcc/material/styles';
-// import '@angular/material/prebuilt-themes/indigo-pink.css';
+import '@tcc/styles/material';
 
 const preview: Preview = {
+  decorators: [
+    applicationConfig({
+      providers: [
+        provideAnimations(),
+      ],
+    }),
+  ],
   parameters: {
     actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {

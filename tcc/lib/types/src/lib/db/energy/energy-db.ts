@@ -1,6 +1,6 @@
 import { Direction } from "./directions";
 
-export interface Energy {
+export type Energy = {
     $id: string,
     currentDirection: Direction,
     currentSoc: number,

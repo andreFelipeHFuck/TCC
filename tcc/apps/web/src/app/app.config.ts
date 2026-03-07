@@ -14,7 +14,7 @@ import { LOGGER_PROVIDER } from '../providers/logger.provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideBrowserGlobalErrorListeners(), 
+    provideBrowserGlobalErrorListeners(),
     provideRouter(appRoutes),
 
     LOGGER_PROVIDER,
@@ -22,6 +22,7 @@ export const appConfig: ApplicationConfig = {
     ...appwriteProvide({
       endpoint: environment.appwrite.endpoint,
       project: environment.appwrite.projectId,
+      databaseId: environment.appwrite.databaseId
     }),
 
     provideAppInitializer(() => {
