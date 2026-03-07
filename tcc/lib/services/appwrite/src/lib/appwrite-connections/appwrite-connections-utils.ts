@@ -1,4 +1,4 @@
-import { Account, Client } from "appwrite";
+import { Account, Client, Databases } from "appwrite";
 
 import { AppwriteConfig } from "@tcc/types";
 
@@ -9,10 +9,10 @@ import { AppwriteConfig } from "@tcc/types";
  * 
  * @returns retorna uma instância do objeto Client
 */
-export function appwriteCreateCliente(config: AppwriteConfig): Client{
+export function appwriteCreateCliente(config: AppwriteConfig): Client {
     const client = new Client();
 
-    client 
+    client
         .setEndpoint(config.endpoint)
         .setProject(config.project);
 
@@ -33,17 +33,31 @@ function appwriteCreatAccount(client: Client): Account {
     return account
 }
 
+/**
+ * Função que cria uma instância de Databases para interagir com coleções e documentos
+ * 
+ * @param client objeto Client de Appwrite
+ * 
+ * @returns retorna uma instância do objeto Databases
+ */
+export function appwriteCreateDatabases(client: Client): Databases {
+    const databases = new Databases(client);
+
+    return databases;
+}
+
 
 /**
  * Função que cria uma instância de Connection e Account para uso em outros seviços
  * 
  * @param config objeto que contém o endpoint e o nome do projeto que deseja estabelecer a conexão
  * 
- * @returns retorna uma instância dos objetos Client e Account
+ * @returns retorna uma instância dos objetos Client, Account e Databases
  */
-export function appwriteCreateConnection(config: AppwriteConfig): [Client, Account] {
+export function appwriteCreateConnection(config: AppwriteConfig): [Client, Account, Databases] {
     const client = appwriteCreateCliente(config);
     const account = appwriteCreatAccount(client);
+    const databases = appwriteCreateDatabases(client);
 
-    return [client, account];
+    return [client, account, databases];
 }

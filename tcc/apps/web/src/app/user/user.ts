@@ -23,9 +23,9 @@ export class User {
 
     const user: UserType = {
       $id: '',
-      name: 'Teste Database',
-      email: 'test@example.com',
-      password: 'password123',
+      name: 'Teste Database 123',
+      email: 'test123@example.com',
+      password: 'password1234',
       photo: 'https://example.com/photo.jpg',
       userType: 'driver',
       address: {
@@ -39,8 +39,8 @@ export class User {
     };
 
 
-    await this.authUser.createUser(user);
+    const result = await this.authUser.createUser(user);
 
-    // console.log(`[APP USER] criação de usuário: ${result}`);
+    console.log(`[APP USER] criação de usuário: ${result}`);
   }
 }
