@@ -1,15 +1,21 @@
-import { Account, Client } from 'appwrite';
+import { Account, Client, Databases } from 'appwrite';
 
 export type AppwriteClient = Client | 'NONE';
 export type AppwriteAccount = Account | 'NONE';
+export type AppwriteDatabases = Databases | 'NONE';
 
 export enum AppwriteServices {
-    UNKNOWN,
-    CONNECTION,
-    AUTH,
-    DATABASE,
-    STORAGE,
-    FUNCTIONS
+    UNKNOWN = 'APPWRITE UNKNOWN SERVICE',
+    CONNECTION = 'APPWRITE CONNECTION SERVICE',
+    AUTH = 'APPWRITE AUTH SERVICE',
+    DATABASE = 'APPWRITE DATABASE SERVICE',
+    STORAGE = 'APPWRITE STORAGE SERVICE',
+    FUNCTIONS = 'APPWRITE FUNCTIONS SERVICE'
+}
+
+export enum AppwriteDatabaseCollection {
+    UNKNOWN = '',
+    USER = 'users_id'
 }
 
 /**

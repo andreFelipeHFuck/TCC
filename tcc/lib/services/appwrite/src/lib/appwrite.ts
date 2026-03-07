@@ -4,6 +4,7 @@ import { Account } from 'appwrite';
 import {
   AppwriteAccount,
   AppwriteClient,
+  AppwriteDatabases,
   AppwriteConfig,
   AppwriteError,
   AppwriteServices,
@@ -23,11 +24,15 @@ export class Appwrite extends ConnectionServices<AppwriteError> {
   private readonly appwriteConfig: AppwriteConfig = inject(APPWRITE_CONFIG);
   private readonly logger = inject(Logger);
 
-  private client: AppwriteClient = 'NONE';
-  private account: AppwriteAccount = 'NONE';
+  protected service: AppwriteServices = AppwriteServices.CONNECTION;
+
+  protected client: AppwriteClient = 'NONE';
+  protected account: AppwriteAccount = 'NONE';
+  protected databases: AppwriteDatabases = 'NONE';
 
   constructor() {
     super();
+    this.init();
   }
 
   /**
@@ -38,14 +43,14 @@ export class Appwrite extends ConnectionServices<AppwriteError> {
   async init(): Promise<void> {
 
     try {
-      [this.client, this.account] = appwriteCreateConnection(this.appwriteConfig);
+      [this.client, this.account, this.databases] = appwriteCreateConnection(this.appwriteConfig);
       this.setReady();
 
-      this.logger.info('[APPWRITE SERVICE] Conexão inicializada com sucesso');
+      this.logger.info(`[${this.service.valueOf()}] Conexão inicializada com sucesso`);
     } catch (error) {
-      this.setError(appwriteMapperError(AppwriteServices.CONNECTION, error));
+      this.setError(appwriteMapperError(this.service, error));
 
-      this.logger.error('[APPWRITE SERVICE] Erro ao inicializar', {
+      this.logger.error(`[${this.service.valueOf()}] Erro ao inicializar`, {
         error,
         mappedError: this.getError(),
       });
@@ -63,11 +68,21 @@ export class Appwrite extends ConnectionServices<AppwriteError> {
   }
 
   getAccount(): AppwriteAccount {
-    if (this.client != 'NONE') {
+    if (this.account != 'NONE') {
       return this.account;
     }
 
-    this.setError(appwriteMapperError(AppwriteServices.CONNECTION, new Error('Cliente não inicializado')));
+    this.setError(appwriteMapperError(AppwriteServices.CONNECTION, new Error('Account não inicializado')));
+
+    return 'NONE';
+  }
+
+  getDatabases(): AppwriteDatabases {
+    if (this.databases != 'NONE') {
+      return this.databases;
+    }
+
+    this.setError(appwriteMapperError(AppwriteServices.CONNECTION, new Error('Databases não inicializado')));
 
     return 'NONE';
   }
@@ -83,17 +98,17 @@ export class Appwrite extends ConnectionServices<AppwriteError> {
    * @param silent Flag que indica se o erro deve ser exibido
    * @returns 
    */
-  protected async handleCall<T>(
-    call: (account: Account) => Promise<T>,
-    service: AppwriteServices,
-    serviceName: string,
+  public async handleCall<T, S>(
+    service: S | 'NONE',
+    call: (instance: S) => Promise<T>,
+    serviceId: AppwriteServices,
     successMessage: string,
     errorMessage: string,
     silent: boolean = false
   ) {
 
-    if (this.client === 'NONE' || this.account === 'NONE') {
-      this.logger.error(`[${serviceName}] Problema ao tentar acessar o serviço`, this.getError());
+    if (this.client === 'NONE' || service === 'NONE') {
+      this.logger.error(`[${serviceId.valueOf()}] Problema ao tentar acessar o serviço`, this.getError());
 
       this.setError(appwriteMapperError(
         AppwriteServices.CONNECTION,
@@ -104,12 +119,11 @@ export class Appwrite extends ConnectionServices<AppwriteError> {
     }
 
     try {
-      const result = await call(this.account as Account);
-      this.logger.info(`[${serviceName}] ${successMessage}`);
-      return result;
+      this.logger.info(`[${serviceId.valueOf()}] ${successMessage}`);
+      return await call(service as S);
     } catch (error) {
-      this.setError(appwriteMapperError(service, error));
-      this.logger.error(`[${serviceName}] ${errorMessage}`, this.getError());
+      this.setError(appwriteMapperError(serviceId, error));
+      this.logger.error(`[${serviceId.valueOf()}] ${errorMessage}`, this.getError());
 
       if (!silent) {
         // this.notifier.showError(translatedError.message);
