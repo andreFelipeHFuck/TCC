@@ -71,6 +71,17 @@ export class Appwrite extends ConnectionServices<AppwriteError> {
     return 'NONE';
   }
 
+  /**
+   * Método que trata os erros que podem ocorrer durante a execução de uma promise do Appwrite
+   * 
+   * @param promise Promise que será executada
+   * @param service Serviço que será executado
+   * @param serviceName Nome do serviço que será executado
+   * @param successMessage Mensagem de sucesso
+   * @param errorMessage Mensagem de erro
+   * @param silent Flag que indica se o erro deve ser exibido
+   * @returns 
+   */
   protected async handleCall<T>(
     promise: Promise<T>,
     service: AppwriteServices,
@@ -81,9 +92,11 @@ export class Appwrite extends ConnectionServices<AppwriteError> {
   ) {
 
     if (this.client === 'NONE' || this.account === 'NONE') {
+      this.logger.error(`[${serviceName}] Problema ao tentar acessar o serviço`, this.getError());
+
       this.setError(appwriteMapperError(
         AppwriteServices.CONNECTION,
-        new Error(errorMessage)
+        new UnauthorizedError
       ));
 
       throw this.getError();
