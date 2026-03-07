@@ -1,4 +1,5 @@
 import { inject, Injectable } from '@angular/core';
+import { Account } from 'appwrite';
 
 import {
   AppwriteAccount,
@@ -83,7 +84,7 @@ export class Appwrite extends ConnectionServices<AppwriteError> {
    * @returns 
    */
   protected async handleCall<T>(
-    promise: Promise<T>,
+    call: (account: Account) => Promise<T>,
     service: AppwriteServices,
     serviceName: string,
     successMessage: string,
@@ -103,8 +104,9 @@ export class Appwrite extends ConnectionServices<AppwriteError> {
     }
 
     try {
+      const result = await call(this.account as Account);
       this.logger.info(`[${serviceName}] ${successMessage}`);
-      return await promise;
+      return result;
     } catch (error) {
       this.setError(appwriteMapperError(service, error));
       this.logger.error(`[${serviceName}] ${errorMessage}`, this.getError());

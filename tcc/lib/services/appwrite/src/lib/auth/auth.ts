@@ -3,7 +3,7 @@ import {
   inject
 } from '@angular/core';
 
-import { ID } from 'appwrite';
+import { Account, Client, ID } from 'appwrite';
 
 import { Appwrite } from '../appwrite';
 import {
@@ -15,28 +15,20 @@ import {
 } from '@tcc/types';
 import { appwriteMapperError } from '@tcc/appwrite-adapter';
 
+
 @Injectable({
   providedIn: 'root',
 })
-export class Auth extends ConnectionServices<AppwriteError> {
-  private readonly appwrite: Appwrite = inject(Appwrite);
-  private readonly logger = inject(Logger);
+export class Auth extends Appwrite {
 
-  private account: AppwriteAccount = 'NONE';
+  private readonly service: AppwriteServices = AppwriteServices.AUTH;
+  private readonly serviceName: string = '[APPWRITE AUTH SERVICE]';
 
   constructor() {
     super();
     this.init();
   }
 
-  async init(): Promise<void> {
-    const _ = await this.appwrite.init();
-    const isReady = this.appwrite.isReady();
-
-    if (isReady) {
-      this.account = this.appwrite.getAccount();
-    }
-  }
 
   /**
    * Cria uma nova conta
@@ -46,26 +38,18 @@ export class Auth extends ConnectionServices<AppwriteError> {
    * @param password Senha do usuário
    */
   async create(name: string, email: string, password: string) {
-    if (this.account === 'NONE') {
-      throw new Error(' [APPWRITE AUTH SERVICE] Serviço do Appwrite não está inicializado.');
-    }
-
-    try {
-      const user = await this.account.create(
+    return await this.handleCall(
+      (account) => account.create(
         ID.unique(),
         email,
         password,
         name
-      );
-
-      this.logger.info(`[APPWRITE AUTH SERVICE] Conta criada com sucesso: ${user.$id}`);
-      return user;
-    } catch (error) {
-      this.setError(appwriteMapperError(AppwriteServices.AUTH, error));
-
-      this.logger.error('[APPWRITE AUTH SERVICE] Erro ao criar conta', this.getError());
-      throw this.getError();
-    }
+      ),
+      this.service,
+      this.serviceName,
+      'Conta criada com sucesso',
+      'Erro ao criar conta'
+    );
   }
 
   /**
@@ -75,23 +59,16 @@ export class Auth extends ConnectionServices<AppwriteError> {
    * @param password Senha do usuário
    */
   async login(email: string, password: string) {
-    if (this.account === 'NONE') {
-      throw new Error(' [APPWRITE AUTH SERVICE] Serviço do Appwrite não está inicializado.');
-    }
-
-    try {
-      const user = await this.account.createEmailPasswordSession(
+    return await this.handleCall(
+      (account) => account.createEmailPasswordSession(
         email,
         password
-      );
-
-      this.logger.info(`[APPWRITE AUTH SERVICE] Login feito com sucesso: ${user.$id}`);
-      return user;
-    } catch (error) {
-      this.setError(appwriteMapperError(AppwriteServices.AUTH, error));
-      this.logger.error('[APPWRITE AUTH SERVICE] Erro ao fazer login', this.getError());
-      throw this.getError();
-    }
+      ),
+      this.service,
+      this.serviceName,
+      'Login feito com sucesso',
+      'Erro ao fazer login'
+    );
   }
 
   logout() { }

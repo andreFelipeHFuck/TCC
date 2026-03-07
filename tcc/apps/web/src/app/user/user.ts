@@ -38,13 +38,8 @@ export class User {
       }
     };
 
-    try {
-      const result = await this.authUser.createUser(user);
-      this.messageError.set('');
-    } catch (error: any) {
-      this.messageError.set(error.message);
-    }
 
+    await this.authUser.createUser(user);
 
     // console.log(`[APP USER] criação de usuário: ${result}`);
   }
