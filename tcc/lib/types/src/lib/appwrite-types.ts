@@ -26,3 +26,9 @@ export interface AppwriteConfig {
     project: string,
     databaseId: string
 };
+
+export interface AppwriteUser {
+    email: string;
+    password: string;
+}
+

@@ -53,7 +53,15 @@ export class Auth extends Appwrite {
     );
   }
 
-  logout() { }
+  async logout() {
+    await this.handleCall(
+      this.account,
+      (account: Account) => account.deleteSession('current'),
+      this.service,
+      'Usuário deslogado com sucesso',
+      'Erro ao fazer logout'
+    );
+  }
 
   initSessionProxy() { }
 

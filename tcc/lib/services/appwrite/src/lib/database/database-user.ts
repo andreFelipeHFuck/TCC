@@ -5,6 +5,7 @@ import { Databases, Query } from 'appwrite';
 import {
   AppwriteDatabaseCollection,
   AppwriteServices,
+  AppwriteUser,
   CrudServiceDB,
   UserCreateDTO
 } from '@tcc/types';
@@ -30,7 +31,7 @@ export class DatabaseUser
     await super.create(this.collection, data);
   }
 
-  public async login(email: string, password: string): Promise<Partial<UserCreateDTO>> {
+  public async login(email: string, password: string): Promise<string | null> {
     const result = await this.handleCall(
       this.getDatabases(),
       (databases: Databases) => databases.listDocuments(
@@ -47,8 +48,10 @@ export class DatabaseUser
       'Erro ao buscar credenciais no banco'
     );
 
-    return result.documents.length > 0
-      ? result.documents[0] as unknown as Partial<UserCreateDTO>
-      : {};
+    if (!result.documents.length) {
+      return null;
+    }
+
+    return result.documents[0]['email'];
   }
 }
