@@ -23,26 +23,43 @@ export class AuthUser {
   async createUser(user: User) {
     const userCreateDTO: UserCreateDTO = appwriteUserToUserCreateDTO(user);
 
-    await this.auth.create(userCreateDTO.name, userCreateDTO.email, userCreateDTO.password);
-    const sessionLogin = await this.auth.login(userCreateDTO.email, userCreateDTO.password);
+    // await this.auth.create(userCreateDTO.name, userCreateDTO.email, userCreateDTO.password);
+    // await this.databaseUser.create(userCreateDTO);
 
-    const dados = await this.auth.get()
-    this.logger.info('DADOS:' + JSON.stringify(dados));
-    await this.databaseUser.create(userCreateDTO);
-
-    this.login(userCreateDTO.email, userCreateDTO.password)
-
-    return sessionLogin;
+    await this.login(userCreateDTO.email, userCreateDTO.password);
   }
 
-  login(email: string, password: string) {
-    console.log(this.service + 'Login no Banco de Dados');
-    const result = this.databaseUser.login(email, password);
+  /**
+   * Verifica se a autenticação é válida tanto no Auth quanto no Database
+   */
+  async login(email: string, password: string) {
+    this.logger.info(`${this.service} Iniciando verificação de autenticação dupla...`);
 
-    console.log(result);
+    // 1. Verifica no Appwrite Auth (Gera sessão)
+    const authSession = await this.auth.login(email, password);
+    const authUser = await this.auth.get();
+
+    // 2. Verifica no Banco de Dados
+    const dbUser = await this.databaseUser.login(email, password);
+
+    // 3. Comparação
+    if (!dbUser) {
+      this.logger.error(`${this.service} Usuário autenticado no Auth, mas NÃO encontrado no Banco de Dados.`);
+      return { authUser, dbUser: null, consistent: false };
+    }
+
+    const isConsistent = authUser.email === dbUser;
+
+    if (isConsistent) {
+      this.logger.info(`${this.service} Autenticação consistente entre Auth e Database.`);
+    } else {
+      this.logger.warn(`${this.service} Autenticação realizada, mas os emails divergiram entre os serviços.`);
+    }
+
+    return { authSession, authUser, dbUser, isConsistent };
   }
 
-  // logout() {
-  //   this.auth.logout();
-  // }
+  async logout() {
+    await this.auth.logout();
+  }
 }
