@@ -8,7 +8,9 @@
   "targets": {
     "build": {
       "executor": "@nx/angular:ng-packagr-lite",
-      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/dist/{projectRoot}"
+      ],
       "options": {
         "project": "lib/services/appwrite/ng-package.json",
         "tsConfig": "lib/services/appwrite/tsconfig.lib.json"
@@ -22,8 +24,10 @@
       "defaultConfiguration": "production"
     },
     "test": {
-      "executor": "@nx/angular:unit-test",
-      "options": {}
+      "executor": "@nx/vite:test",
+      "options": {
+        "configFile": "lib/services/appwrite/vite.config.mts"
+      }
     },
     "lint": {
       "executor": "@nx/eslint:lint"
