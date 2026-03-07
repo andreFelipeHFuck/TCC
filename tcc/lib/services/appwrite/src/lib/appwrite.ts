@@ -1,30 +1,39 @@
 import { inject, Injectable } from '@angular/core';
+import { Account } from 'appwrite';
 
 import {
-  AppwriteAccount, 
-  AppwriteClient, 
-  AppwriteConfig, 
-  AppwriteError, 
-  Logger, 
+  AppwriteAccount,
+  AppwriteClient,
+  AppwriteDatabases,
+  AppwriteConfig,
+  AppwriteError,
+  AppwriteServices,
+  ConnectionServices,
+  Logger,
   UnauthorizedError
 } from "@tcc/types";
 import { appwriteMapperError } from '@tcc/appwrite-adapter';
 
-import { APPWRITE_CONFIG } from './appwrite-connections/appwrite-token.token';
-import { appwriteCreateConnection } from './appwrite-connections/appwrite-connections.utils';
+import { APPWRITE_CONFIG } from './appwrite-connections/appwrite-token';
+import { appwriteCreateConnection } from './appwrite-connections/appwrite-connections-utils';
 
 @Injectable({
   providedIn: 'root',
 })
-export class Appwrite {
+export class Appwrite extends ConnectionServices<AppwriteError> {
   private readonly appwriteConfig: AppwriteConfig = inject(APPWRITE_CONFIG);
   private readonly logger = inject(Logger);
 
-  private client: AppwriteClient = 'NONE';
-  private account: AppwriteAccount = 'NONE';
+  protected service: AppwriteServices = AppwriteServices.CONNECTION;
 
-  private status: 'ready' | 'error' = 'ready';
-  private lastError?: AppwriteError;
+  protected client: AppwriteClient = 'NONE';
+  protected account: AppwriteAccount = 'NONE';
+  protected databases: AppwriteDatabases = 'NONE';
+
+  constructor() {
+    super();
+    this.init();
+  }
 
   /**
    * Método que inicializa a conexão com o serviço do Appwrite 
@@ -34,48 +43,94 @@ export class Appwrite {
   async init(): Promise<void> {
 
     try {
-      [this.client, this.account] = appwriteCreateConnection(this.appwriteConfig);
-      this.status = 'ready';
+      [this.client, this.account, this.databases] = appwriteCreateConnection(this.appwriteConfig);
+      this.setReady();
 
-      this.logger.info('[Appwrite] Conexão inicializada com sucesso');
+      this.logger.info(`[${this.service.valueOf()}] Conexão inicializada com sucesso`);
     } catch (error) {
-      this.status = 'error';
-      this.lastError = appwriteMapperError(error);
+      this.setError(appwriteMapperError(this.service, error));
 
-      this.logger.error('[Appwrite] Erro ao inicializar', {
+      this.logger.error(`[${this.service.valueOf()}] Erro ao inicializar`, {
         error,
-        mappedError: this.lastError,
-      })
+        mappedError: this.getError(),
+      });
     }
   }
-
-  isReady(): boolean {
-    return this.status === 'ready';
-  } 
 
   getClient(): AppwriteClient {
     if (this.client != 'NONE') {
       return this.client;
     }
 
-    this.lastError = new UnauthorizedError();
-    this.status = 'error';
-
-     return 'NONE';
-  }
-
-  getAccount(): AppwriteAccount {
-    if (this.client != 'NONE') {
-      return this.account;
-    }
-
-    this.lastError = new UnauthorizedError();
-    this.status = 'error';
+    this.setError(appwriteMapperError(AppwriteServices.CONNECTION, new Error('Cliente não inicializado')));
 
     return 'NONE';
   }
 
-  getError(): AppwriteError | undefined {
-    return this.lastError;
+  getAccount(): AppwriteAccount {
+    if (this.account != 'NONE') {
+      return this.account;
+    }
+
+    this.setError(appwriteMapperError(AppwriteServices.CONNECTION, new Error('Account não inicializado')));
+
+    return 'NONE';
+  }
+
+  getDatabases(): AppwriteDatabases {
+    if (this.databases != 'NONE') {
+      return this.databases;
+    }
+
+    this.setError(appwriteMapperError(AppwriteServices.CONNECTION, new Error('Databases não inicializado')));
+
+    return 'NONE';
+  }
+
+  /**
+   * Método que trata os erros que podem ocorrer durante a execução de uma promise do Appwrite
+   * 
+   * @param promise Promise que será executada
+   * @param service Serviço que será executado
+   * @param serviceName Nome do serviço que será executado
+   * @param successMessage Mensagem de sucesso
+   * @param errorMessage Mensagem de erro
+   * @param silent Flag que indica se o erro deve ser exibido
+   * @returns 
+   */
+  public async handleCall<T, S>(
+    service: S | 'NONE',
+    call: (instance: S) => Promise<T>,
+    serviceId: AppwriteServices,
+    successMessage: string,
+    errorMessage: string,
+    silent: boolean = false
+  ) {
+
+    if (this.client === 'NONE' || service === 'NONE') {
+      this.logger.error(`[${serviceId.valueOf()}] Problema ao tentar acessar o serviço`, this.getError());
+
+      this.setError(appwriteMapperError(
+        AppwriteServices.CONNECTION,
+        new UnauthorizedError
+      ));
+
+      throw this.getError();
+    }
+
+    try {
+      const result = await call(service as S);
+      this.logger.info(`[${serviceId.valueOf()}] ${successMessage}`);
+      return result;
+    } catch (error) {
+      this.setError(appwriteMapperError(serviceId, error));
+      this.logger.error(`[${serviceId.valueOf()}] ${errorMessage}`, this.getError());
+
+      if (!silent) {
+        // this.notifier.showError(translatedError.message);
+      }
+
+      throw this.getError();
+    }
   }
 }

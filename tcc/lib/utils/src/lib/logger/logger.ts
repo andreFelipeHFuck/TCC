@@ -1,4 +1,4 @@
-import { LogLevel, Logger} from '@tcc/types'
+import { LogLevel, Logger } from '@tcc/types'
 
 export class NoopLogger implements Logger {
     debug() {}

@@ -1,10 +1,7 @@
 import { Address } from "../address-db";
 import { IdToken } from "../ocpp/idToken-db";
 
-export enum UserType {
-    DRIVER = 'driver',
-    ADMINISTRATOR = 'administrator'
-}
+export type UserType = 'driver' | 'administrator';
 
 export interface User {
     $id: string,
@@ -16,4 +13,12 @@ export interface User {
     userType: UserType,
     address: Address,
     idTokens?: IdToken[]
+}
+
+export interface UserCreateDTO extends Address {
+    name: string,
+    email: string,
+    password: string,
+    photo: string,
+    userType: UserType,
 }

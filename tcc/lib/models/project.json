@@ -14,7 +14,9 @@
         "tsConfig": "lib/models/tsconfig.lib.json",
         "assets": ["lib/models/*.md"],
         "format": ["cjs"],
-        "generatePackageJson": true
+        "generatePackageJson": true,
+        "bundle": true,        
+        "thirdParty": true
       }
     }
   }

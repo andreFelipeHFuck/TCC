@@ -5,6 +5,16 @@
   "projectType": "library",
   "tags": [],
   "targets": {
+    "generate-proto": {
+        "executor": "nx:run-commands",
+        "options": {
+          "commands": [
+            "mkdir -p lib/types/src/lib/grpc/generated",
+            "protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=lib/types/src/lib/grpc/generated --ts_proto_opt=esModuleInterop=true,outputServices=nice-grpc,outputJsonMethods=true --proto_path=lib/types/src/lib/grpc/proto lib/types/src/lib/grpc/proto/*.proto"
+          ],
+          "parallel": false
+        }
+    },
     "build": {
       "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],

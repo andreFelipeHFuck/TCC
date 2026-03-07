@@ -1,3 +1,2 @@
-export { Direction } from "./directions";
-export { Energy } from "./energy-db";
-export { EnergyTransferPeriod } from "./energy-transfer-periods-db";
+export type { Energy } from "./energy-db";
+export type { EnergyTransferPeriod } from "./energy-transfer-periods-db";
