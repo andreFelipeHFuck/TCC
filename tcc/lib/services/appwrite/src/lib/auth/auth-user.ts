@@ -18,7 +18,7 @@ export class AuthUser {
   private readonly databaseUser = inject(DatabaseUser);
   private readonly logger = inject(Logger);
 
-  protected service: string = '[APPWRITE USER AUTH SERVICE]'
+  protected service = '[APPWRITE USER AUTH SERVICE]'
 
   async createUser(user: User) {
     const userCreateDTO: UserCreateDTO = appwriteUserToUserCreateDTO(user);
