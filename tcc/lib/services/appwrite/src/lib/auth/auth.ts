@@ -1,9 +1,5 @@
-import {
-  Injectable,
-  inject
-} from '@angular/core';
-
-import { Account, Client, ID } from 'appwrite';
+import { Injectable } from '@angular/core';
+import { Account, Client, ID, Models } from 'appwrite';
 
 import { Appwrite } from '../appwrite';
 import { AppwriteServices } from '@tcc/types';
@@ -19,14 +15,17 @@ export class Auth extends Appwrite {
     this.service = AppwriteServices.AUTH;
   }
 
-  /**
-   * Cria uma nova conta
-   * 
-   * @param name Nome do usuário
-   * @param email Email do usuário
-   * @param password Senha do usuário
-   */
-  async create(name: string, email: string, password: string) {
+  async get(): Promise<Models.User<Models.Preferences>> {
+    return await this.handleCall(
+      this.account,
+      (account: Account) => account.get(),
+      this.service,
+      'Dados do usuário retornados com sucesso',
+      'Não foi possível retornar os dados'
+    );
+  }
+
+  async create(name: string, email: string, password: string): Promise<Models.User<Models.Preferences>> {
     return await this.handleCall(
       this.account,
       (account: Account) => account.create(
@@ -41,13 +40,7 @@ export class Auth extends Appwrite {
     );
   }
 
-  /**
-   * Realiza o login do usuário
-   * 
-   * @param email Email do usuário
-   * @param password Senha do usuário
-   */
-  async login(email: string, password: string) {
+  async login(email: string, password: string): Promise<Models.Session> {
     return await this.handleCall(
       this.account,
       (account: Account) => account.createEmailPasswordSession(

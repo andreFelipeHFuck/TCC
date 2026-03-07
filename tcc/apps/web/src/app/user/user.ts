@@ -23,9 +23,9 @@ export class User {
 
     const user: UserType = {
       $id: '',
-      name: 'Teste Database 123',
-      email: 'test123@example.com',
-      password: 'password1234',
+      name: 'Teste Database',
+      email: 'test@example.com',
+      password: 'password123',
       photo: 'https://example.com/photo.jpg',
       userType: 'driver',
       address: {
