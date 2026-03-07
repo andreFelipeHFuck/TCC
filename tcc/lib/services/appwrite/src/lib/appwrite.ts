@@ -119,8 +119,9 @@ export class Appwrite extends ConnectionServices<AppwriteError> {
     }
 
     try {
+      const result = await call(service as S);
       this.logger.info(`[${serviceId.valueOf()}] ${successMessage}`);
-      return await call(service as S);
+      return result;
     } catch (error) {
       this.setError(appwriteMapperError(serviceId, error));
       this.logger.error(`[${serviceId.valueOf()}] ${errorMessage}`, this.getError());

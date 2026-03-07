@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 
+import { Databases, Query } from 'appwrite';
+
 import {
   AppwriteDatabaseCollection,
+  AppwriteServices,
   CrudServiceDB,
   UserCreateDTO
 } from '@tcc/types';
@@ -25,5 +28,27 @@ export class DatabaseUser
 
   public override async create<UserCreateDTO>(data: UserCreateDTO): Promise<void> {
     await super.create(this.collection, data);
+  }
+
+  public async login(email: string, password: string): Promise<Partial<UserCreateDTO>> {
+    const result = await this.handleCall(
+      this.getDatabases(),
+      (databases: Databases) => databases.listDocuments(
+        this.databaseId,
+        this.collection.valueOf(),
+        [
+          Query.equal('email', email),
+          Query.equal('password', password),
+          Query.select(['email', 'password'])
+        ]
+      ),
+      AppwriteServices.DATABASE,
+      'Busca de credenciais realizada com sucesso',
+      'Erro ao buscar credenciais no banco'
+    );
+
+    return result.documents.length > 0
+      ? result.documents[0] as unknown as Partial<UserCreateDTO>
+      : {};
   }
 }
