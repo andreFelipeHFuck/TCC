@@ -3,7 +3,10 @@ import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 
-import { ButtonColor } from '@tcc/types';
+import { 
+  ButtonType,
+  ButtonColor
+} from '@tcc/types';
 
 @Component({
   selector: 'lib-button',
@@ -13,6 +16,8 @@ import { ButtonColor } from '@tcc/types';
   styleUrl: './button.scss',
 })
 export class Button {
+  type = input<ButtonType>('standard');
   title = input.required<string>();
   color = input<ButtonColor>('primary');
+  icon = input<string>();
 }
