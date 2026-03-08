@@ -1,0 +1,7 @@
+@use 'sass:map';
+@use '../../../../../design-system/src/scss/index.scss' as v;
+
+:host {
+  display: inline-block;
+}
+
