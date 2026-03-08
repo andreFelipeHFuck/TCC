@@ -22,3 +22,6 @@ export * from './lib/grpc/generated';
 
 // BIG QUERY TYPES
 export * from './lib/big-query-types';
+
+// BUTTONS TYPES
+export * from './lib/components/buttons-types';

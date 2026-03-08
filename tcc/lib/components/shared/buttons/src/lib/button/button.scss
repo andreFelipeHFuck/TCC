@@ -1,7 +1,27 @@
 @use 'sass:map';
-@use '../../../../../design-system/src/scss/index.scss' as v;
+@use '../../../../../material/src/index.scss' as v;
 
 :host {
   display: inline-block;
 }
 
+button {
+  width: 256px;
+  height: 56px;
+  font-size: map.get(v.$typography, 'body-heading-heading-xs');
+
+  &.primary {
+    background-color: map.get(v.$brand, 'brand-400') !important;
+    color: map.get(v.$colors, 'white') !important;
+  }
+
+  &.success {
+    background-color: map.get(v.$success, 'success-500') !important;
+    color: map.get(v.$colors, 'white') !important;
+  }
+
+  &.warn, &.error {
+    background-color: map.get(v.$danger, 'danger-500') !important;
+    color: map.get(v.$colors, 'white') !important;
+  }
+}
