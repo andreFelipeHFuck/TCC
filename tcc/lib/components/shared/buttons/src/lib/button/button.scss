@@ -6,22 +6,39 @@
 }
 
 button {
-  width: 256px;
-  height: 56px;
+color: map.get(v.$colors, 'white') !important;
   font-size: map.get(v.$typography, 'body-heading-heading-xs');
+  font-weight: 700;
 
   &.primary {
     background-color: map.get(v.$brand, 'brand-400') !important;
-    color: map.get(v.$colors, 'white') !important;
   }
 
-  &.success {
-    background-color: map.get(v.$success, 'success-500') !important;
-    color: map.get(v.$colors, 'white') !important;
+  &.google { 
+    background-color: map.get(v.$dark-gray, 'dark-gray-300') !important; 
   }
 
-  &.warn, &.error {
-    background-color: map.get(v.$danger, 'danger-500') !important;
-    color: map.get(v.$colors, 'white') !important;
-  }
+}
+
+.standard {
+  width: 256px;
+  height: 56px;
+}
+
+.square {
+   width: 364px;
+   height: 60px ;
+   border-radius: map.get(v.$radius, 'md');
+   display: flex;
+   flex-direction: row;
+   gap: 20px;
+   align-items: center;
+}
+
+// 
+
+.button-icon {
+  width: 37px;
+  height: 37px ;
+  margin-left: 24px;
 }
