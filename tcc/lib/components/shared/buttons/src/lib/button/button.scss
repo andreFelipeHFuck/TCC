@@ -6,7 +6,7 @@
 }
 
 button {
-color: map.get(v.$colors, 'white') !important;
+  color: map.get(v.$colors, 'white') !important;
   font-size: map.get(v.$typography, 'body-heading-heading-xs');
   font-weight: 700;
 

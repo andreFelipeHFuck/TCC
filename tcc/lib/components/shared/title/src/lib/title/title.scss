@@ -1,0 +1,9 @@
+@use 'sass:map';
+@use '../../../../../material/src/index.scss' as v;
+
+.title {
+    color: map.get(v.$colors, 'black');
+    font-size: map.get(v.$typography, 'body-heading-heading-sm');
+    font-weight: 700;
+    margin: 0;
+}
