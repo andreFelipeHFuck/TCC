@@ -16,7 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
-import { Logger } from '@tcc/types';
+import { FormResult, Logger } from '@tcc/types';
 import { Input } from '../shared/input/input';
 import { Button } from '@tcc/components/buttons';
 
@@ -39,10 +39,7 @@ import { Button } from '@tcc/components/buttons';
 export class AuthForm {
   private readonly logger: Logger = inject(Logger);
 
-  formResult = output<Partial<{
-    email: string | null;
-    password: string | null;
-}>>();
+  formResult = output<FormResult>();
 
   hidePassword = true;
 
@@ -61,9 +58,8 @@ export class AuthForm {
 
   onSubmit() {
     if (this.authForm.valid) {
-      this.logger.info(JSON.stringify(this.authForm.value));
-
-      const value = this.authForm.value;
+      const value = this.authForm.value as FormResult;
+      this.logger.info(`Formulário obtido com sucesso: ${JSON.stringify(value)}`);
       this.formResult.emit(value);
     }
   }

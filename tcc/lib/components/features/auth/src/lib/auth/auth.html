@@ -9,7 +9,7 @@
     </header>
 
     <main class="form">
-        <lib-auth-form/>
+        <lib-auth-form (formResult)="emitForm($event)"/>
 
         <p class="or-spacing">
             OU
@@ -20,7 +20,6 @@
             title="Entrar pelo Google" 
             color="google"
             icon="google.png"
-            (ormResult)="emitirForm($event)"
         />
     </main>
 
