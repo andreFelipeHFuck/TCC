@@ -1,9 +1,9 @@
 import { 
   Component, 
-  computed, 
   inject, 
   signal 
 } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { AuthUser } from '@tcc/appwrite';
 
@@ -21,7 +21,9 @@ import {
   imports: [
     Title,
     Button,
-    AuthForm
+    AuthForm,
+    RouterLink,
+    RouterLinkActive
   ],
   templateUrl: './auth.html',
   styleUrl: './auth.scss',
@@ -42,7 +44,7 @@ export class Auth {
       return true;
     }
 
-    private  login(email: string, password: string) {
+    private login(email: string, password: string) {
       this.logger.info(`${this.component} Iniciando login...`);
       
       this.authService.login(email, password);
