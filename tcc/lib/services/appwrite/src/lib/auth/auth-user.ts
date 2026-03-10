@@ -23,8 +23,8 @@ export class AuthUser {
   async createUser(user: User) {
     const userCreateDTO: UserCreateDTO = appwriteUserToUserCreateDTO(user);
 
-    // await this.auth.create(userCreateDTO.name, userCreateDTO.email, userCreateDTO.password);
-    // await this.databaseUser.create(userCreateDTO);
+    await this.auth.create(userCreateDTO.name, userCreateDTO.email, userCreateDTO.password);
+    await this.databaseUser.create(userCreateDTO);
 
     await this.login(userCreateDTO.email, userCreateDTO.password);
   }
@@ -35,14 +35,11 @@ export class AuthUser {
   async login(email: string, password: string) {
     this.logger.info(`${this.service} Iniciando verificação de autenticação dupla...`);
 
-    // 1. Verifica no Appwrite Auth (Gera sessão)
     const authSession = await this.auth.login(email, password);
     const authUser = await this.auth.get();
 
-    // 2. Verifica no Banco de Dados
     const dbUser = await this.databaseUser.login(email, password);
 
-    // 3. Comparação
     if (!dbUser) {
       this.logger.error(`${this.service} Usuário autenticado no Auth, mas NÃO encontrado no Banco de Dados.`);
       return { authUser, dbUser: null, consistent: false };
