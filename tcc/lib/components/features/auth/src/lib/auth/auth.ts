@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { Title } from '@tcc/components/title';
 import { Button } from "@tcc/components/buttons"
-import { Auth as AuthForm } from "@tcc/components/forms"
+import { AuthForm } from "@tcc/components/forms"
+import { Logger } from '@tcc/types';
 
 @Component({
   selector: 'lib-auth',
@@ -14,4 +15,10 @@ import { Auth as AuthForm } from "@tcc/components/forms"
   templateUrl: './auth.html',
   styleUrl: './auth.scss',
 })
-export class Auth {}
+export class Auth {
+    private readonly logger = inject(Logger);
+
+    emitirForm(form: any){
+      this.logger.info('Formulario enviado com sucesso' + form);
+    }
+}

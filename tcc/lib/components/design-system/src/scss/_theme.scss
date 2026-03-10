@@ -1,0 +1,13 @@
+@use '@angular/material' as mat;
+
+// Define as customizações específicas para o Form Field
+$custom-form-field-overrides: (
+  focus-outline-color: #232028,
+  focus-label-text-color: #9f94ae,
+  caret-color: #ff19cd,
+  outline-color: #6c6c6c,
+  label-text-color: #151218
+);
+
+// Aplica as mudanças globalmente
+@include mat.form-field-overrides($custom-form-field-overrides);

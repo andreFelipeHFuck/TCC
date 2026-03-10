@@ -11,12 +11,15 @@ import {
 @Component({
   selector: 'lib-button',
   standalone: true,
-  imports: [CommonModule, MatButtonModule],
+  imports: [
+    CommonModule, 
+    MatButtonModule
+  ],
   templateUrl: './button.html',
   styleUrl: './button.scss',
 })
 export class Button {
-  type = input<ButtonType>('standard');
+  typeButton = input<ButtonType>('standard');
   title = input.required<string>();
   color = input<ButtonColor>('primary');
   icon = input<string>();

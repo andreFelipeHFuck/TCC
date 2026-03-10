@@ -86,7 +86,6 @@ $typography: (
 
 
 /* Spacing */
-
 $spacing: (
    "none": 0px,
    "xs": 4px,
@@ -94,10 +93,13 @@ $spacing: (
    "md": 12px,
    "lg": 16px,
    "xl": 20px, 
+   "top": 80px,
+   "form": 32px
 );
 
-/* Radius */
+$margin: 24px;
 
+/* Radius */
 $radius: (
     "none": 0px,
     "md": 8px,
