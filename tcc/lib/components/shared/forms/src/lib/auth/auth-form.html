@@ -1,0 +1,31 @@
+<div class="auth-container">
+  <form 
+    [formGroup]="authForm" 
+    (ngSubmit)="onSubmit()"
+  >
+
+    <lib-input 
+      [label]="'E-mail'"
+      [control]="emailControl"
+      [type]="'email'"
+      [placeholder]="'exemplo@email.com'"
+    />
+
+    <lib-input 
+      [label]="'Senha'"
+      [control]="passwordControl"
+      [type]="'password'"
+      [placeholder]="''"
+    />
+
+    <lib-button 
+      [typeButton]="'standard'"
+      type="submit"
+      title="Login" 
+      [color]="'primary'"
+      disabled="authForm.invalid"
+    />
+  </form>
+</div>
+
+ 

@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Auth } from './auth';
+import { AuthForm } from './auth-form';
 
-describe('Auth', () => {
-  let component: Auth;
-  let fixture: ComponentFixture<Auth>;
+describe('AuthForm', () => {
+  let component: AuthForm;
+  let fixture: ComponentFixture<AuthForm>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Auth],
+      imports: [AuthForm],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Auth);
+    fixture = TestBed.createComponent(AuthForm);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
