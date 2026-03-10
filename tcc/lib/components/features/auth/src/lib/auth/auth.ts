@@ -24,8 +24,7 @@ import {
     Title,
     Button,
     AuthForm,
-    RouterLink,
-    RouterLinkActive
+    RouterLink
   ],
   templateUrl: './auth.html',
   styleUrl: './auth.scss',

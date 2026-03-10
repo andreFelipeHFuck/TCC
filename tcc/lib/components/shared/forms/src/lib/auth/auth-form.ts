@@ -1,22 +1,15 @@
 import { 
   Component, 
-  inject, 
   output
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { 
-  ReactiveFormsModule,
   FormGroup,
   FormControl,
-  Validators
+  Validators,
+  ReactiveFormsModule
 } from '@angular/forms';
 
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-
-import { FormResult, Logger } from '@tcc/types';
+import { FormResult } from '@tcc/types';
 import { Input } from '../shared/input/input';
 import { Button } from '@tcc/components/buttons';
 
@@ -24,12 +17,7 @@ import { Button } from '@tcc/components/buttons';
   selector: 'lib-auth-form',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
     Input,
     Button
   ],
@@ -37,8 +25,6 @@ import { Button } from '@tcc/components/buttons';
   styleUrl: './auth-form.scss',
 })
 export class AuthForm {
-  private readonly logger: Logger = inject(Logger);
-
   formResult = output<FormResult>();
 
   hidePassword = true;
@@ -59,7 +45,6 @@ export class AuthForm {
   onSubmit() {
     if (this.authForm.valid) {
       const value = this.authForm.value as FormResult;
-      this.logger.info(`Formulário obtido com sucesso: ${JSON.stringify(value)}`);
       this.formResult.emit(value);
     }
   }

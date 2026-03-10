@@ -1,0 +1,21 @@
+@use 'sass:map';
+@use '../../../../../material/src/index.scss' as v;
+
+.register{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: map.get(v.$spacing, 'xl');
+}
+
+.form{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: map.get(v.$spacing, 'xl');
+}
+
+.or-spacing{
+    font-size: map.get(v.$typography, 'body-heading-heading-xs');
+    font-weight: 600;
+}
