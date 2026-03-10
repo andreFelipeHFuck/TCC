@@ -33,7 +33,9 @@
       "@tcc/auth": ["lib/components/features/auth/src/index.ts"],
       "@tcc/components/buttons": ["lib/components/shared/buttons/src/index.ts"],
       "@tcc/components/title": ["lib/components/shared/title/src/index.ts"],
-      "@tcc/components/forms": ["lib/components/shared/forms/src/index.ts"]
+      "@tcc/components/forms": ["lib/components/shared/forms/src/index.ts"],
+      "@tcc/components/mobile-page": ["lib/components/shared/mobile-page/src/index.ts"],
+      "@tcc/mobile-page": ["lib/components/shared/mobile-page/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
