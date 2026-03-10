@@ -1,4 +1,5 @@
-export type FormType = 'email'
+export type FormType = 'text'
+                       | 'email'
                        | 'password';
 
 export type FormAppearance = 'outline' 
