@@ -1,5 +1,28 @@
 
   @switch (type()) {
+    @case ('text') {
+      <mat-form-field 
+          class="input-text"
+          [appearance]="appearance()"
+          hideRequiredMarker
+      >
+          <mat-label>
+            {{ label() }}
+          </mat-label>
+          <input 
+            matInput 
+            [type]="type()" 
+            [placeholder]="placeholder()" 
+            [formControl]="control()!"
+          >
+
+          @if(control().invalid) {
+            <mat-error>
+              {{ errorMessage() }}
+            </mat-error>
+          }
+      </mat-form-field>
+    }
     @case ('email') {
       <mat-form-field 
           class="input-text"
@@ -48,7 +71,3 @@
     </mat-form-field>
     } 
   }
-   
-
-
-
