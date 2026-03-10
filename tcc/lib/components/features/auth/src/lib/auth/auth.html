@@ -1,37 +1,32 @@
 <section class="login">
-    <header>
+    <header class="title">
         <lib-title 
             title="Bem vindo de volta"
         />
         <p>
-            Faça o lgoin para continuar
+            Faça o login para continuar
         </p>
     </header>
 
-    <main>
+    <main class="form">
+        <lib-auth-form/>
+
+        <p class="or-spacing">
+            OU
+        </p>
+
         <lib-button 
-            type="square"
+            typeButton="square"
             title="Entrar pelo Google" 
             color="google"
             icon="google.png"
+            (ormResult)="emitirForm($event)"
         />
-
-        
     </main>
 
-    <footer>
+    <footer class="footer">
         <p>
-            Não possui conta ainda?
-            <a href="">
-                Cadastre-se
-            </a>
+            Não possui conta ainda? <a href="">Cadastre-se</a>
         </p>
     </footer>
 </section>
-    
-<lib-auth/>
-
-
-
-
-
