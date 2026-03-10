@@ -1,0 +1,8 @@
+@use 'sass:map';
+@use '../../material/src/index.scss' as v;
+
+.mobile-page{
+    margin-top: map.get(v.$spacing, 'top');
+    margin-left: v.$margin;
+    margin-right: v.$margin;
+}

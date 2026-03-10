@@ -7,6 +7,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { AuthUser } from '@tcc/appwrite';
 
+import { MobilePage } from "@tcc/components/mobile-page"
 import { Title } from '@tcc/components/title';
 import { Button } from "@tcc/components/buttons"
 import { AuthForm } from "@tcc/components/forms"
@@ -19,6 +20,7 @@ import {
 @Component({
   selector: 'lib-auth',
   imports: [
+    MobilePage,
     Title,
     Button,
     AuthForm,

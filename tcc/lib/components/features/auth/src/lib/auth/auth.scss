@@ -6,9 +6,6 @@
     flex-direction: column;
     justify-content: center;
     gap: 60px;
-    margin-top: map.get(v.$spacing, 'top');
-    margin-left: v.$margin;
-    margin-right: v.$margin;
 }
 
 .title {
