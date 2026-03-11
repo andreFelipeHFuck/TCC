@@ -1,4 +1,5 @@
 export type FormType = 'text'
+                       | 'number'
                        | 'email'
                        | 'password';
 
