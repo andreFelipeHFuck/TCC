@@ -1,0 +1,12 @@
+@use 'sass:map';
+@use '../../../../../material/src/index.scss' as v;
+
+.register-container{
+  form {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: map.get(v.$spacing, 'form');
+  }
+}

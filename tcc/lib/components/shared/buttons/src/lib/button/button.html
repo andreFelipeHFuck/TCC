@@ -1,0 +1,24 @@
+@switch (typeButton()) {
+    @case ('standard') {
+        <button 
+            mat-raised-button 
+            class="standard"
+            [ngClass]="color()"
+        >
+            {{ title() }}
+        </button>
+    }
+    @case ('square') {
+        <button 
+            class="square"
+            [ngClass]="color()"
+        >
+            <img 
+              [src]="icon()" 
+              alt="icone"
+              class="button-icon"
+            >
+            {{ title() }}
+        </button>
+    }
+}

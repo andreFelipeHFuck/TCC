@@ -1,0 +1,33 @@
+<lib-mobile-page>
+    <section class="login">
+        <header class="title">
+            <lib-title 
+                title="Bem vindo de volta"
+            />
+            <p>
+                Faça o login para continuar
+            </p>
+        </header>
+
+        <main class="form">
+            <lib-auth-form (formResult)="emitForm($event)"/>
+
+            <p class="or-spacing">
+                OU
+            </p>
+
+            <lib-button 
+                typeButton="square"
+                title="Entrar pelo Google" 
+                color="google"
+                icon="google.png"
+            />
+        </main>
+
+        <footer class="footer">
+            <p>
+                Não possui conta ainda? <a routerLink="/auth/register">Cadastre-se</a>
+            </p>
+        </footer>
+    </section>
+</lib-mobile-page>

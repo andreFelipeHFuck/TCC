@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Account, Client, ID, Models } from 'appwrite';
+import { Account, ID, Models } from 'appwrite';
 
 import { Appwrite } from '../appwrite';
 import { AppwriteServices } from '@tcc/types';
