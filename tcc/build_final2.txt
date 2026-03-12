@@ -1,0 +1,37 @@
+
+ NX   Running target build for project buttons and 1 task it depends on:
+
+
+(node:41503) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+> nx run types:build  [existing outputs match the cache, left as is]
+
+
+> nx run buttons:build:production
+
+[34mBuilding Angular Package[39m
+[37m[39m
+[37m------------------------------------------------------------------------------[39m
+[37mBuilding entry point '@tcc/buttons'[39m
+[37m------------------------------------------------------------------------------[39m
+- Compiling with Angular sources in full compilation mode.
+[31m✖[39m Compiling with Angular sources in full compilation mode.
+[0m[7m[1m[31m NX [39m[22m[27m[0m  [31mCannot destructure property 'pos' of 'file.referencedFiles[index]' as it is undefined.[39m
+Pass --verbose to see the stacktrace.
+
+
+
+ NX   Running target build for project buttons and 1 task it depends on failed
+
+Failed tasks:
+
+- buttons:build:production
+
+Hint: run the command with --verbose for more details.
+
+
+ NX   Nx Cloud encountered some problems
+
+This workspace is more than three days old and is not connected. Workspaces must be connected within 3 days of creation. Claim your workspace at https://cloud.nx.app. (code: 401)
+

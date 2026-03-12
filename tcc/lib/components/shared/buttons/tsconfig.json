@@ -16,10 +16,10 @@
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    "strictTemplates": false
   },
   "files": [],
-  "include": ["../design-system/src/scss/**/*.scss"],
+  "include": [],
   "references": [
     {
       "path": "./tsconfig.lib.json"

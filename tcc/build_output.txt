@@ -1,0 +1,139 @@
+[NX CLOUD] Verifying current cloud bundle
+[NX CLOUD] A local bundle currently exists:  {
+  version: '2603.11.1',
+  fullPath: '/home/andre/andre/TCC/TCC/tcc/.nx/cache/cloud/2603.11.1'
+}
+[NX CLOUD] Last verification was within the past 30 minutes, will not verify this time
+[NX CLOUD] Done:  /home/andre/andre/TCC/TCC/tcc/.nx/cache/cloud/2603.11.1
+Was not able to require.resolve module nx/src/utils/app-root from the following paths: /home/andre/andre/TCC/TCC/tcc/node_modules/nx/node_modules,/home/andre/andre/TCC/TCC/tcc/node_modules. This may be expected.
+Was not able to require.resolve module nx/src/utils/app-root from the following paths: /home/andre/andre/TCC/TCC/tcc/node_modules/nx/node_modules,/home/andre/andre/TCC/TCC/tcc/node_modules. This may be expected.
+Was not able to require.resolve module nx/src/tasks-runner/task-io-service from the following paths: /home/andre/andre/TCC/TCC/tcc/node_modules/nx/node_modules,/home/andre/andre/TCC/TCC/tcc/node_modules. This may be expected.
+[Nx Cloud Debug] Skipping foreground heartbeat since CI environment is not detected.
+
+ NX   Running target build for project web and 4 tasks it depends on:
+
+
+[NX CLOUD] Verifying current cloud bundle
+[NX CLOUD] A local bundle currently exists:  {
+  version: '2603.11.1',
+  fullPath: '/home/andre/andre/TCC/TCC/tcc/.nx/cache/cloud/2603.11.1'
+}
+[NX CLOUD] Last verification was within the past 30 minutes, will not verify this time
+[NX CLOUD] Done:  /home/andre/andre/TCC/TCC/tcc/.nx/cache/cloud/2603.11.1
+(node:31794) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[Nx Cloud Debug] Attempting to acquire filesystem lock with path:  /tmp/client-instance-id.lock
+[Nx Cloud Debug] Failed to create folder lock at path: /tmp/client-instance-id.lock
+[Nx Cloud] Unable to detect a VCS context from the environment.
+
+ NX   RunStart
+
+
+{
+  "branch": null,
+  "runGroup": "e0a63ca4d6232a80a85373b7f3517948c1a086eb",
+  "ciExecutionId": null,
+  "ciExecutionEnv": "",
+  "hashes": [
+    "13669225680645539238",
+    "4807608305256216531",
+    "6536589631557440685",
+    "17947428923046679416",
+    "17270612154004626660"
+  ],
+  "machineInfo": {
+    "machineId": "ByQ/ZwBdn1XIBu1i6YaxSA==",
+    "platform": "linux",
+    "version": "#1 SMP PREEMPT_DYNAMIC Thu Jun  5 18:30:46 UTC 2025",
+    "cpuCores": 8
+  },
+  "vcsContext": null,
+  "clientInstanceSource": "CLOUD_RUNNER",
+  "clientInstanceId": "957c1443-8ec9-42d0-821e-45c0ad36e290"
+}
+
+
+> nx run types:build  [existing outputs match the cache, left as is]
+
+> nx run types:build
+
+[1m[33mThe project types is using the 'generatePackageJson' option which is deprecated for library projects. It should only be used for applications.[39m[22m
+[1m[33mFor libraries, configure the project to use the '@nx/dependency-checks' ESLint rule instead (https://nx.dev/nx-api/eslint-plugin/documents/dependency-checks).[39m[22m
+
+ NX   Connection to Nx Cloud failed with status code 401
+
+This workspace is more than three days old and is not connected. Workspaces must be connected within 3 days of creation. Claim your workspace at https://cloud.nx.app.
+
+
+ NX   Nx Cloud: Cache miss 17270612154004626660.
+
+
+ NX   Nx Cloud: Cache miss 17947428923046679416.
+
+
+> nx run appwrite-adapter:build
+
+[1m[33mThe project appwrite-adapter is using the 'generatePackageJson' option which is deprecated for library projects. It should only be used for applications.[39m[22m
+[1m[33mFor libraries, configure the project to use the '@nx/dependency-checks' ESLint rule instead (https://nx.dev/nx-api/eslint-plugin/documents/dependency-checks).[39m[22m
+
+[0m[7m[1m[31m NX [39m[22m[27m[0m  [31mInvalid config file due to following: No inputs were found in config file 'tsconfig.json'. Specified 'include' paths were '["**/*"]' and 'exclude' paths were '[]'.[39m
+
+Error: Invalid config file due to following: No inputs were found in config file 'tsconfig.json'. Specified 'include' paths were '["**/*"]' and 'exclude' paths were '[]'.
+    at setupTypeScript (/home/andre/andre/TCC/TCC/tcc/node_modules/@nx/esbuild/node_modules/@nx/js/src/utils/typescript/run-type-check.js:64:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async runTypeCheck (/home/andre/andre/TCC/TCC/tcc/node_modules/@nx/esbuild/node_modules/@nx/js/src/utils/typescript/run-type-check.js:35:70)
+    at async runTypeCheck (/home/andre/andre/TCC/TCC/tcc/node_modules/@nx/esbuild/src/executors/esbuild/esbuild.impl.js:179:34)
+    at async esbuildExecutor (/home/andre/andre/TCC/TCC/tcc/node_modules/@nx/esbuild/src/executors/esbuild/esbuild.impl.js:126:32)
+    at async getLastValueFromAsyncIterableIterator (/home/andre/andre/TCC/TCC/tcc/node_modules/nx/src/utils/async-iterator.js:15:19)
+    at async iteratorToProcessStatusCode (/home/andre/andre/TCC/TCC/tcc/node_modules/nx/src/command-line/run/run.js:39:25)
+    at async handleErrors (/home/andre/andre/TCC/TCC/tcc/node_modules/nx/src/utils/handle-errors.js:8:24)
+    at async process.<anonymous> (/home/andre/andre/TCC/TCC/tcc/node_modules/nx/bin/run-executor.js:59:28)
+
+
+> nx run buttons:build:production
+
+[34mBuilding Angular Package[39m
+[37m[39m
+[37m------------------------------------------------------------------------------[39m
+[37mBuilding entry point '@tcc/buttons'[39m
+[37m------------------------------------------------------------------------------[39m
+- Compiling with Angular sources in full compilation mode.
+[31m✖[39m Compiling with Angular sources in full compilation mode.
+
+[0m[7m[1m[31m NX [39m[22m[27m[0m  [31mCannot destructure property 'pos' of 'file.referencedFiles[index]' as it is undefined.[39m
+
+TypeError: Cannot destructure property 'pos' of 'file.referencedFiles[index]' as it is undefined.
+    at getReferencedFileLocation (/home/andre/andre/TCC/TCC/tcc/node_modules/typescript/lib/typescript.js:126740:10)
+    at fileIncludeReasonToDiagnostics (/home/andre/andre/TCC/TCC/tcc/node_modules/typescript/lib/typescript.js:133580:31)
+    at processReason (/home/andre/andre/TCC/TCC/tcc/node_modules/typescript/lib/typescript.js:130143:62)
+    at Array.forEach (<anonymous>)
+    at createDiagnosticExplainingFile (/home/andre/andre/TCC/TCC/tcc/node_modules/typescript/lib/typescript.js:130095:42)
+    at /home/andre/andre/TCC/TCC/tcc/node_modules/typescript/lib/typescript.js:130046:11
+    at Array.forEach (<anonymous>)
+    at Object.getCombinedDiagnostics (/home/andre/andre/TCC/TCC/tcc/node_modules/typescript/lib/typescript.js:130044:70)
+    at getProgramDiagnostics (/home/andre/andre/TCC/TCC/tcc/node_modules/typescript/lib/typescript.js:127993:57)
+    at getSemanticDiagnosticsForFile (/home/andre/andre/TCC/TCC/tcc/node_modules/typescript/lib/typescript.js:128024:7)
+
+
+
+
+ NX   Running target build for project web and 4 tasks it depends on failed
+
+Failed tasks:
+
+- appwrite-adapter:build
+- buttons:build:production
+
+Hint: run the command with --verbose for more details.
+
+
+ NX   Storing terminal outputs for buttons:build:production with hash 17270612154004626660
+
+
+ NX   Storing terminal outputs for appwrite-adapter:build with hash 17947428923046679416
+
+
+ NX   Nx Cloud encountered some problems
+
+This workspace is more than three days old and is not connected. Workspaces must be connected within 3 days of creation. Claim your workspace at https://cloud.nx.app. (code: 401)
+
