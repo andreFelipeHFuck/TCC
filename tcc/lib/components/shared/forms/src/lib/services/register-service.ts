@@ -11,6 +11,7 @@ import {
 } from '@angular/forms';
 
 import { 
+  Logger,
   User 
 } from '@tcc/types';
 
@@ -20,7 +21,11 @@ import { Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class RegisterService {
+  private readonly component = '[REGISTER SERVICE]';
+
   private fb: FormBuilder = inject(FormBuilder);
+
+  private readonly logger = inject(Logger);
 
   formResult = new Subject<User>();
   
@@ -65,21 +70,40 @@ export class RegisterService {
           Validators.required,
           Validators.minLength(3)
         ]),
-        numStreet: new FormControl('', [
+        streetNumber: new FormControl('', [
           Validators.required
         ])
       })
   });
 
-  onSubmit() {
-    if (this.registerForm.valid) {
-      const value = this.registerForm.value as User;
-      this.formResult.next(value);
-    }
-
+  private formToUser(form: FormGroup): User {
+    return {
+      $id: '',
+      name: form.get('user')?.get('name')?.value,
+      email: form.get('user')?.get('email')?.value,
+      password: form.get('user')?.get('password')?.value,
+      photo: '',
+      userType: 'driver',
+      address: {
+        cep: form.get('address')?.get('cep')?.value,
+        state: form.get('address')?.get('state')?.value,
+        city: form.get('address')?.get('city')?.value,
+        neighborhood: form.get('address')?.get('neighborhood')?.value,
+        street: form.get('address')?.get('street')?.value,
+        streetNumber: Number(form.get('address')?.get('streetNumber')?.value)
+      }
+    };
   }
 
- 
+  onSubmit() {
+    this.logger.info(`${this.component} Formulário obtido com sucesso: ${JSON.stringify(this.registerForm.value)}`);
 
-  
+    if (this.registerForm.valid) {
+      const user: User = this.formToUser(this.registerForm);
+
+      this.logger.info(`${this.component} Formulário convertido para User: ${JSON.stringify(user)}`);
+      
+      this.formResult.next(user);
+    }
+  }
 }

@@ -1,7 +1,6 @@
 import { 
   Component, 
-  inject, 
-  signal 
+  inject
 } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
@@ -34,8 +33,6 @@ export class Auth {
     private readonly logger = inject(Logger);
 
     public component = '[AUTH INTERFACE]';
-
-    formResult = signal<FormResult>({email: '', password: ''});
 
     private validateForm(form: FormResult): boolean {
       if(!form) return false;
