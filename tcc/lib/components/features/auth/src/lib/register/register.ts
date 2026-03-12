@@ -1,11 +1,18 @@
 import {
   Component, 
   inject, 
-  signal 
+  signal, 
+  OnInit,
+  DestroyRef
 } from '@angular/core';
 
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
+import { 
+  Logger, 
+  User 
+} from '@tcc/types';
 import { AuthUser } from '@tcc/appwrite';
-import { Logger } from '@tcc/types';
 
 import { MobilePage } from '@tcc/components/mobile-page';
 import { Title } from '@tcc/components/title';
@@ -30,16 +37,46 @@ import { ReactiveFormsModule } from '@angular/forms';
   templateUrl: './register.html',
   styleUrl: './register.scss',
 })
-export class Register {
+export class Register implements OnInit {
   private readonly authService = inject(AuthUser);
   public readonly registerService = inject(RegisterService);
   private readonly logger = inject(Logger);
+  private readonly destroyRef = inject(DestroyRef);
 
   public component = '[REGISTER INTERFACE]';
 
   formResult = signal<string>("");
 
-  emitForm(form: any) {
-    this.formResult.set(form);
+  private validateForm(form: User): boolean
+   {
+    if(!form) return false;
+    if(!form.address) return false;
+
+    return true;
+  }
+
+  private create(user: User) {
+    this.logger.info(`${this.component} Iniciando cadastro do usuário ...`);
+
+    this.authService.createUser(user);
+
+    this.logger.info(`${this.component} Cadastro do usuário concluído com sucesso`);
+  }
+
+  ngOnInit() {
+    this.registerService.formResult
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((user: User) => {
+         this.handleFormResult(user);
+      });
+  }
+
+  private handleFormResult(user: User) {
+    if (this.validateForm(user)) {
+      this.logger.info(`${this.component} Formulário obtido com sucesso: ${JSON.stringify(user)}`);
+      this.create(user);
+    } else {
+      this.logger.error(`${this.component} Formulário inválido`);
+    }
   }
 }

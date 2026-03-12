@@ -53,6 +53,6 @@ export class AddressForm {
 
   numStreetControl() {
     const addressGroup = this.registerService.registerForm.controls['address'] as FormGroup;
-    return addressGroup.controls['numStreet'] as FormControl;
+    return addressGroup.controls['streetNumber'] as FormControl;
   }
 }
