@@ -1,8 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Account, ID, Models } from 'appwrite';
+import { 
+  Account, 
+  ID, 
+  Models 
+} from 'appwrite';
 
 import { Appwrite } from '../appwrite';
-import { AppwriteServices } from '@tcc/types';
+import {
+  AppwriteServices, 
+  AuthenticationRequest 
+} from '@tcc/types';
 
 
 @Injectable({
@@ -63,7 +70,27 @@ export class Auth extends Appwrite {
     );
   }
 
-  initSessionProxy() { }
+  private async generateToken(): Promise<string> {
+    /**
+     * @todo Aumentar o tempo de expiração do Token
+     */
+    const token =  await this.handleCall(
+      this.account,
+      (account: Account) => account.createJWT(),
+      this.service,
+      'Token gerado com sucesso',
+      'Erro ao gerar token'
+    );
 
-  finishSessionProxy() { }
+    return token.jwt;
+  }
+
+  async initSessionProxy(request: AuthenticationRequest) { 
+    const token = await this.generateToken();
+
+
+  }
+
+//   finishSessionProxy() { }
+// }
 }

@@ -1,14 +1,18 @@
-import { inject, Injectable } from '@angular/core';
-
+import { 
+  Injectable, 
+  inject, 
+  signal 
+} from '@angular/core';
 
 import {
   Logger,
   User,
   UserCreateDTO
 } from '@tcc/types';
+import { appwriteUserToUserCreateDTO } from '@tcc/appwrite-adapter';
+
 import { Auth } from './auth';
 import { DatabaseUser } from '../database/database-user';
-import { appwriteUserToUserCreateDTO } from '@tcc/appwrite-adapter';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +24,20 @@ export class AuthUser {
 
   protected service = '[APPWRITE USER AUTH SERVICE]'
 
+  // User | null
+  currentUser = signal<User | null>(null);
+
+  async getUser(id: string) {
+    const user = await this.databaseUser.get(id);
+    
+    return user;
+  }
+
+  private async fillInUser(id: string) {
+    const dataUser = await this.databaseUser.get(id);
+
+  }
+
   async createUser(user: User) {
     const userCreateDTO: UserCreateDTO = appwriteUserToUserCreateDTO(user);
 
@@ -27,6 +45,20 @@ export class AuthUser {
     await this.databaseUser.create(userCreateDTO);
 
     await this.login(userCreateDTO.email, userCreateDTO.password);
+  }
+
+  async checkSession(): Promise<boolean> {
+    const session = await this.auth.get();
+    // const dataUser = await this.databaseUser.get();
+
+    // || !dataUser
+    if (!session ) {
+      this.currentUser.set(null);
+      return false;
+    }
+
+    // this.currentUser.set(dataUser);
+    return true;
   }
 
   /**
@@ -41,16 +73,18 @@ export class AuthUser {
     const dbUser = await this.databaseUser.login(email, password);
 
     if (!dbUser) {
-      this.logger.error(`${this.service} Usuário autenticado no Auth, mas NÃO encontrado no Banco de Dados.`);
+      this.logger.error(`${this.service} Usuário autenticado no Auth, mas NÃO encontrado no Banco de Dados`);
+      this.currentUser.set(null);
       return { authUser, dbUser: null, consistent: false };
     }
 
-    const isConsistent = authUser.email === dbUser;
+    const isConsistent = authUser.email === dbUser.email;
 
     if (isConsistent) {
-      this.logger.info(`${this.service} Autenticação consistente entre Auth e Database.`);
+      this.logger.info(`${this.service} Autenticação consistente entre Auth e Database`);
     } else {
-      this.logger.warn(`${this.service} Autenticação realizada, mas os emails divergiram entre os serviços.`);
+      this.logger.warn(`${this.service} Autenticação realizada, mas os emails divergiram entre os serviços`);
+      this.currentUser.set(null);
     }
 
     return { authSession, authUser, dbUser, isConsistent };

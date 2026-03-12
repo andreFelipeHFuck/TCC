@@ -11,8 +11,6 @@ import { APPWRITE_DATABASE_ID, AuthUser, DatabaseUser } from '@tcc/appwrite';
 })
 export class User {
   private readonly authUser: AuthUser = inject(AuthUser);
-  private readonly databaseUser: DatabaseUser = inject(DatabaseUser);
-  private readonly databaseId: string = inject(APPWRITE_DATABASE_ID);
 
   messageError = signal<string>('');
 
@@ -42,5 +40,14 @@ export class User {
     const result = await this.authUser.createUser(user);
 
     console.log(`[APP USER] criação de usuário: ${result}`);
+  }
+
+  public async getUser() {
+    const id: string = '69b2275a00325ce161dd';
+
+    const result = await this.authUser.getUser(id);
+
+    this.messageError.set(JSON.stringify(result));
+
   }
 }
