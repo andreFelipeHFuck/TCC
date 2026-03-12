@@ -1,7 +1,7 @@
 {
   "name": "appwrite-adapter",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/adapters/appwrite-adapter/src",
+  "sourceRoot": "lib/adapters/appwrite-adapter/src",
   "projectType": "library",
   "tags": [],
   "targets": {
@@ -9,10 +9,10 @@
       "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/adapters/appwrite-adapter",
-        "main": "libs/adapters/appwrite-adapter/src/index.ts",
-        "tsConfig": "libs/adapters/appwrite-adapter/tsconfig.lib.json",
-        "assets": ["libs/adapters/appwrite-adapter/*.md"],
+        "outputPath": "dist/lib/adapters/appwrite-adapter",
+        "main": "lib/adapters/appwrite-adapter/src/index.ts",
+        "tsConfig": "lib/adapters/appwrite-adapter/tsconfig.lib.json",
+        "assets": ["lib/adapters/appwrite-adapter/*.md"],
         "format": ["cjs"],
         "generatePackageJson": true
       }

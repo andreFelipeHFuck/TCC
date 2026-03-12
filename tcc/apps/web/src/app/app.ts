@@ -9,7 +9,7 @@ import { Auth } from '@tcc/auth';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, Auth],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

@@ -1,90 +1,58 @@
-import { Component, inject, output } from '@angular/core';
 import { 
-  FormBuilder,
+  Component, 
+  inject, 
+  output 
+} from '@angular/core';
+import { 
   FormControl, 
-  FormGroup, 
-  ReactiveFormsModule, 
-  Validators
+  FormGroup,
 } from '@angular/forms';
 
 import { Address } from '@tcc/types';
 
 import { Input } from '../shared/input/input';
-import { Button } from '@tcc/components/buttons';
+import { RegisterService } from '../services/register-service';
 
 @Component({
   selector: 'lib-address-form',
   imports: [
-    ReactiveFormsModule,
-    Input,
-    Button,
+    Input
   ],
   templateUrl: './address-form.html',
   styleUrl: './address-form.scss',
 })
 export class AddressForm {
-  private fb: FormBuilder = inject(FormBuilder);
+  private registerService = inject(RegisterService);
 
   formResult = output<Address>();
 
-  addressForm: FormGroup = this.fb.group({
-     address: this.fb.group({
-      cep: new FormControl('', [
-        Validators.required, 
-        Validators.minLength(8), 
-        Validators.maxLength(8)
-      ]),
-      state: new FormControl('', [
-        Validators.required,
-        Validators.minLength(3)
-      ]),
-      city: new FormControl('', [
-        Validators.required,
-        Validators.minLength(3)
-      ]),
-      neighborhood: new FormControl('', [
-        Validators.required,
-        Validators.minLength(3)
-      ]),
-      street: new FormControl('', [
-        Validators.required,
-        Validators.minLength(3)
-      ]),
-      numStreet: new FormControl('', [
-        Validators.required
-      ])
-    })
-  });
-
   cepControl() {
-    const userGroup = this.addressForm.controls['address'] as FormGroup;
-    return userGroup.controls['cep'] as FormControl;
+    const addressGroup = this.registerService.registerForm.controls['address'] as FormGroup;
+    return addressGroup.controls['cep'] as FormControl;
+  }
+
+  stateControl() {
+    const addressGroup = this.registerService.registerForm.controls['address'] as FormGroup;
+    return addressGroup.controls['state'] as FormControl;
   }
 
   cityControl() {
-    const userGroup = this.addressForm.controls['address'] as FormGroup;
-    return userGroup.controls['city'] as FormControl;
+    const addressGroup = this.registerService.registerForm.controls['address'] as FormGroup;
+    return addressGroup.controls['city'] as FormControl;
   }
 
   neighborhoodControl() {
-    const userGroup = this.addressForm.controls['address'] as FormGroup;
-    return userGroup.controls['neighborhood'] as FormControl;
+    const addressGroup = this.registerService.registerForm.controls['address'] as FormGroup;
+    return addressGroup.controls['neighborhood'] as FormControl;
   }
 
   streetControl() {
-    const userGroup = this.addressForm.controls['address'] as FormGroup;
-    return userGroup.controls['street'] as FormControl;
+    const addressGroup = this.registerService.registerForm.controls['address'] as FormGroup;
+    return addressGroup.controls['street'] as FormControl;
   }
 
   numStreetControl() {
-    const userGroup = this.addressForm.controls['address'] as FormGroup;
-    return userGroup.controls['numStreet'] as FormControl;
-  }
-
-  onSubmit(){
-    if (this.addressForm.valid) {
-      const value = this.addressForm.value;
-      this.formResult.emit(value);
-    }
+    const addressGroup = this.registerService.registerForm.controls['address'] as FormGroup;
+    return addressGroup.controls['numStreet'] as FormControl;
   }
 }

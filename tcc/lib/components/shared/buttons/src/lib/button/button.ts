@@ -22,5 +22,5 @@ export class Button {
   typeButton = input<ButtonType>('standard');
   title = input.required<string>();
   color = input<ButtonColor>('primary');
-  icon = input<string>();
+  icon = input<string>('');
 }
