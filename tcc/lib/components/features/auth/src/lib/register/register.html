@@ -19,7 +19,22 @@
             </p>
 
             <div class="register">
-                <lib-register-form/>
+                <div class="register-container">
+                    <form 
+                        [formGroup]="registerService.registerForm" 
+                    >
+                        <lib-register-form />
+                        <lib-address-form />
+
+                        <lib-button 
+                            [typeButton]="'standard'"
+                            [color]="'primary'"
+                            type="submit"
+                            title="Cadastrar" 
+                            disabled="registerService.registerForm.invalid"
+                        />
+                    </form>
+                </div>
             </div>
 
             

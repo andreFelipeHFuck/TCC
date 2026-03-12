@@ -1,0 +1,12 @@
+Building Angular Package
+
+------------------------------------------------------------------------------
+Building entry point '@tcc/buttons'
+------------------------------------------------------------------------------
+- Compiling with Angular sources in partial compilation mode.
+[31m✖[39m Compiling with Angular sources in partial compilation mode.
+[96mlib/components/shared/buttons/src/lib/button/button.ts[0m:[93m9[0m:[93m8[0m - [91merror[0m[90m TS2307: [0mCannot find module '@tcc/types' or its corresponding type declarations.
+
+[7m9[0m } from '@tcc/types';
+[7m [0m [91m       ~~~~~~~~~~~~[0m
+

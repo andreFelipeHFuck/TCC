@@ -1,1 +1,41 @@
-<p>address-form works!</p>
+<lib-input
+  [label]="'CEP'"
+  [control]="cepControl()"
+  [type]="'text'"
+  [placeholder]="'XXXXX-XXX'"
+/>
+
+<lib-input
+  [label]="'Estado'"
+  [control]="stateControl()"
+  [type]="'text'"
+  [placeholder]="'Santa Catarina'"
+/>
+
+<lib-input
+  [label]="'Cidade'"
+  [control]="cityControl()"
+  [type]="'text'"
+  [placeholder]="'Joinville'"
+/>
+
+<lib-input
+  [label]="'Bairro'"
+  [control]="neighborhoodControl()"
+  [type]="'text'"
+  [placeholder]="'Itaum'"
+/>
+
+<lib-input
+  [label]="'Rua'"
+  [control]="streetControl()"
+  [type]="'text'"
+  [placeholder]="'Imperador'"
+/>
+
+<lib-input
+  [label]="'N° Rua'"
+  [control]="numStreetControl()"
+  [type]="'text'"
+  [placeholder]="'Imperador'"
+/>

@@ -1,42 +1,27 @@
-<div class="register-container">
-     <form 
-        [formGroup]="registerForm" 
-        (ngSubmit)="onSubmit()"
-    >
-        <lib-input
-          [label]="'Nome'"
-          [control]="nameControl()"
-          [type]="'email'"
-          [placeholder]="'Digite seu nome'"
-        />
+<lib-input
+  [label]="'Nome'"
+  [control]="nameControl()"
+  [type]="'email'"
+  [placeholder]="'Digite seu nome'"
+/>
 
-        <lib-input
-          [label]="'E-mail'"
-          [control]="emailControl()"
-          [type]="'email'"
-          [placeholder]="'exemplo@email.com'"
-        />
+<lib-input
+  [label]="'E-mail'"
+  [control]="emailControl()"
+  [type]="'email'"
+  [placeholder]="'exemplo@email.com'"
+/>
 
-        <lib-input
-          [label]="'Senha'"
-          [control]="passwordControl()"
-          [type]="'password'"
-          [placeholder]="''"
-        />
+<lib-input
+  [label]="'Senha'"
+  [control]="passwordControl()"
+  [type]="'password'"
+  [placeholder]="''"
+/>
 
-        <lib-input
-           [label]="'Confirmar Senha'"
-          [control]="confirmPasswordControl()"
-          [type]="'password'"
-          [placeholder]="''"
-        />
-
-        <lib-button 
-          [typeButton]="'standard'"
-          [color]="'primary'"
-          type="submit"
-          title="Cadastrar" 
-          disabled="registerForm.invalid"
-        />
-    </form>
-</div>
+<lib-input
+  [label]="'Confirmar Senha'"
+  [control]="confirmPasswordControl()"
+  [type]="'password'"
+  [placeholder]="''"
+/>
