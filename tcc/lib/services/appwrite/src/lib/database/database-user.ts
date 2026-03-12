@@ -31,16 +31,17 @@ export class DatabaseUser
     await super.create(this.collection, data);
   }
 
-  public async login(email: string, password: string): Promise<string | null> {
+  public async login(email: string, password: string): Promise<{id: string, email: string} | null> {
     const result = await this.handleCall(
       this.getDatabases(),
       (databases: Databases) => databases.listDocuments(
         this.databaseId,
         this.collection.valueOf(),
         [
+          Query.limit(1),
           Query.equal('email', email),
           Query.equal('password', password),
-          Query.select(['email', 'password'])
+          Query.select(['id', 'email'])
         ]
       ),
       AppwriteServices.DATABASE,
@@ -52,6 +53,8 @@ export class DatabaseUser
       return null;
     }
 
-    return result.documents[0]['email'];
+    const user = result.documents[0];
+
+    return { id: user['$id'], email: user['email'] };
   }
 }
