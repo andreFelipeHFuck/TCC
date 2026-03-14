@@ -6,7 +6,7 @@ export interface BodyRequest {
     // user_email
     // user_type
     token: string;
-    expires_at: Date;
+    expires_at: string;
 }
 
 export interface UserSummary {
