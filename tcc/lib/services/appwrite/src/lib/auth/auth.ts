@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { 
   Account, 
   ID, 
@@ -7,8 +7,9 @@ import {
 
 import { Appwrite } from '../appwrite';
 import {
-  AppwriteServices, 
-  AuthenticationRequest 
+  AppwriteServices,  
+  AuthenticationRequest,  
+  UserSummary
 } from '@tcc/types';
 
 
@@ -16,7 +17,6 @@ import {
   providedIn: 'root',
 })
 export class Auth extends Appwrite {
-
   constructor() {
     super();
     this.service = AppwriteServices.AUTH;
@@ -85,10 +85,24 @@ export class Auth extends Appwrite {
     return token.jwt;
   }
 
-  async initSessionProxy(request: AuthenticationRequest) { 
-    const token = await this.generateToken();
+  private async generateAuthenticationRequest(userSummary: UserSummary): Promise<AuthenticationRequest> {
+    const authenticationRequest: AuthenticationRequest = {
+      authToken: await this.generateToken(),
+      expiresAt: new Date(),
+      userSummary
+    };
 
+    return authenticationRequest;
+  }
 
+  async initSessionProxy(userSummary: UserSummary) { 
+    const authenticationRequest = await this.generateAuthenticationRequest(userSummary);
+
+    this.logger.info(`${this.service} Iniciando sessão proxy...`);
+
+    this.logger.info(`${authenticationRequest}`);
+
+    this.logger.info(`${this.service} Sessão proxy iniciada com sucesso`);
   }
 
 //   finishSessionProxy() { }

@@ -9,7 +9,7 @@ import {
   User,
   UserCreateDTO
 } from '@tcc/types';
-import { appwriteUserToUserCreateDTO } from '@tcc/appwrite-adapter';
+import { appwriteUserToUserCreateDTO, userCreateDTOToUser } from '@tcc/appwrite-adapter';
 
 import { Auth } from './auth';
 import { DatabaseUser } from '../database/database-user';
@@ -24,18 +24,26 @@ export class AuthUser {
 
   protected service = '[APPWRITE USER AUTH SERVICE]'
 
-  // User | null
   currentUser = signal<User | null>(null);
+  
+  private async fillInUser(id: string): Promise<void> {
+    const dataUser = await this.databaseUser.get<UserCreateDTO>(id);
 
-  async getUser(id: string) {
-    const user = await this.databaseUser.get(id);
-    
-    return user;
+    if (!dataUser) {
+      this.logger.error(`${this.service} Dados do usuário não encontrados no banco para o ID: ${id}`);
+      this.currentUser.set(null);
+      return;
+    }
+
+    const user = userCreateDTOToUser(dataUser);
+    user.$id = id;
+
+    this.currentUser.set(user);
+    this.logger.info(`${this.service} Signal currentUser preenchido com sucesso.`);
   }
 
-  private async fillInUser(id: string) {
-    const dataUser = await this.databaseUser.get(id);
-
+  getUser(): User | null {
+    return this.currentUser();
   }
 
   async createUser(user: User) {
@@ -49,15 +57,13 @@ export class AuthUser {
 
   async checkSession(): Promise<boolean> {
     const session = await this.auth.get();
-    // const dataUser = await this.databaseUser.get();
-
-    // || !dataUser
+    
     if (!session ) {
       this.currentUser.set(null);
       return false;
     }
 
-    // this.currentUser.set(dataUser);
+    await this.fillInUser(session.$id);
     return true;
   }
 
@@ -82,6 +88,7 @@ export class AuthUser {
 
     if (isConsistent) {
       this.logger.info(`${this.service} Autenticação consistente entre Auth e Database`);
+      await this.fillInUser(dbUser.id);
     } else {
       this.logger.warn(`${this.service} Autenticação realizada, mas os emails divergiram entre os serviços`);
       this.currentUser.set(null);

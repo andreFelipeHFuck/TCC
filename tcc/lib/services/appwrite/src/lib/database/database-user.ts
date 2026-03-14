@@ -5,9 +5,7 @@ import { Databases, Query } from 'appwrite';
 import {
   AppwriteDatabaseCollection,
   AppwriteServices,
-  AppwriteUser,
   CrudServiceDB,
-  UserCreateDTO
 } from '@tcc/types';
 import { Database } from './database';
 
@@ -23,11 +21,11 @@ export class DatabaseUser
     this.collection = AppwriteDatabaseCollection.USER;
   }
 
-  public override async get<UserCreateDTO>(id: string): Promise<UserCreateDTO> {
-    return await super.get<UserCreateDTO>(this.collection, id);
+  public override async get<T>(id: string): Promise<T> {
+    return await super.get<T>(this.collection, id);
   }
 
-  public override async create<UserCreateDTO>(data: UserCreateDTO): Promise<void> {
+  public override async create<T>(data: T): Promise<void> {
     await super.create(this.collection, data);
   }
 
