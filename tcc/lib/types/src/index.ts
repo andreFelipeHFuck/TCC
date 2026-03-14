@@ -23,6 +23,9 @@ export * from './lib/grpc/generated';
 // BIG QUERY TYPES
 export * from './lib/big-query-types';
 
+// CSMS TYPES
+export * from './lib/csms';
+
 // BUTTONS TYPES
 export * from './lib/components/button-types';
 

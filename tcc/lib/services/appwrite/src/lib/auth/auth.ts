@@ -5,18 +5,18 @@ import {
   Models 
 } from 'appwrite';
 
+import { AppwriteServices, } from '@tcc/types';
+
 import { Appwrite } from '../appwrite';
-import {
-  AppwriteServices,  
-  AuthenticationRequest,  
-  UserSummary
-} from '@tcc/types';
+import { AuthCsms } from './auth-csms';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class Auth extends Appwrite {
+  private readonly authCsms = inject(AuthCsms);
+  
   constructor() {
     super();
     this.service = AppwriteServices.AUTH;
@@ -70,7 +70,7 @@ export class Auth extends Appwrite {
     );
   }
 
-  private async generateToken(): Promise<string> {
+  async generateToken(): Promise<string> {
     /**
      * @todo Aumentar o tempo de expiração do Token
      */
@@ -84,14 +84,4 @@ export class Auth extends Appwrite {
 
     return token.jwt;
   }
-
-  async initSessionProxy(userSummary: UserSummary) { 
-    this.logger.info(`${this.service} Iniciando sessão proxy...`);
-
-
-    this.logger.info(`${this.service} Sessão proxy iniciada com sucesso`);
-  }
-
-//   finishSessionProxy() { }
-// }
 }
