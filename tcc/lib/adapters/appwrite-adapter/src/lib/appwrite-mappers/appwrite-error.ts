@@ -37,8 +37,8 @@ export function appwriteMapperError(service: AppwriteServices, error: unknown): 
             return appwriteMapperErrorDATABASE(error);
         // case AppwriteServices.STORAGE:
         //     return appwriteMapperErrorSTORAGE(error);
-        // case AppwriteServices.FUNCTIONS:
-        //     return appwriteMapperErrorFUNCTIONS(error);
+        case AppwriteServices.FUNCTIONS:
+            return appwriteMapperErrorFUNCTIONS(error);
         default:
             return new UnknowError();
     }
@@ -75,6 +75,23 @@ function appwriteMapperErrorAUTH(error: unknown): AppwriteError {
     }
 
     return new UnknowError('Erro inesperado de autenticação');
+}
+
+function appwriteMapperErrorFUNCTIONS(error: unknown): AppwriteError {
+    if (isAppwriteErrorLike(error)) {
+        const appwriteError = error as AppwriteError;
+        return new UnknowError(appwriteError.message);
+
+        // switch (String(appwriteError.code)) {
+        //     case '401':
+        //         return new UnauthorizedError('Usuário não autorizado');
+
+        //     default:
+        //         return new UnknowError(String(appwriteError.message));
+        // }
+    }
+
+    return new UnknowError();
 }
 
 function appwriteMapperErrorDATABASE(error: unknown): AppwriteError {

@@ -22,7 +22,7 @@ export class AuthCsms {
 
   private readonly logger = inject(Logger);
 
-  protected service = 'APPWRITE PROXY AUTH SERVICE';
+  protected service = 'APPWRITE CSMS AUTH SERVICE';
 
   async initSessionProxy() { 
     // const user = this.authUser.getUser();
@@ -34,10 +34,10 @@ export class AuthCsms {
     // }
 
     const authBody: AuthCsmsFunctionBody = {
-      userId: '69a6e7d2e94aa809e9ef', //user.$id,
-      userName: 'andre', //user.name,
+      user_id: '69a6e7d2e94aa809e9ef', //user.$id,
+      user_name: 'andre', //user.name,
       token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...', //token,
-      expiresAt: new Date(Date.now() + 15 * 60 * 1000)
+      expires_at: new Date(Date.now() + 15 * 60 * 1000).toISOString()
     };
 
     this.logger.info(`[${this.service}] Iniciando sessão proxy...`);
