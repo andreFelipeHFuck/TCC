@@ -14,9 +14,7 @@ import { AuthCsms } from './auth-csms';
 @Injectable({
   providedIn: 'root',
 })
-export class Auth extends Appwrite {
-  private readonly authCsms = inject(AuthCsms);
-  
+export class Auth extends Appwrite {  
   constructor() {
     super();
     this.service = AppwriteServices.AUTH;

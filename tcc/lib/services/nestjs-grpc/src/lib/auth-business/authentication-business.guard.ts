@@ -7,8 +7,8 @@ import { ConsoleLogger } from '@tcc/utils';
 
 @Injectable()
 export class AuthRpcGuard implements CanActivate {
-     constructor(
-            @Inject('LOGGER_TOKEN') private readonly logger: ConsoleLogger
+    constructor(
+        @Inject('LOGGER_TOKEN') private readonly logger: ConsoleLogger
     ) {}
 
     canActivate(context: ExecutionContext): boolean  {

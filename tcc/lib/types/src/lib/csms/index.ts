@@ -1,1 +1,1 @@
-export { AuthCsmsFunctionBody } from './auth';
+export type { AuthCsmsFunctionBody } from './auth';
