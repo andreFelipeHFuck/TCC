@@ -1,10 +1,10 @@
 import { UserType } from "../db";
 
 export type AuthCsmsFunctionBody = {
-    userId: string;
-    userName: string;
-    userEmail?: string;
-    userType?: UserType;
+    user_id: string;
+    user_name: string;
+    user_email?: string;
+    user_type?: string;
     token: string;
-    expiresAt: Date;
+    expires_at: string;
 }

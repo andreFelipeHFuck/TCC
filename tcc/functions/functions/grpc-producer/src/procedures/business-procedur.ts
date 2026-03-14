@@ -17,7 +17,7 @@ function validateBody(req: any): BodyRequest | null {
     const validate: boolean = typeof user_id === 'string' 
                               && typeof user_name === 'string' 
                               && typeof token === 'string' 
-                              && expires_at instanceof Date;
+                              && typeof expires_at === 'string';
     
     if (validate) {
         return { user_id, user_name, token, expires_at };
@@ -28,7 +28,7 @@ function validateBody(req: any): BodyRequest | null {
 function generateAutehnticationRequest(body: BodyRequest): GrpcRequest{
     const request = {
         auth_token: body.token,
-        expires_at: dateToTimestamp(body.expires_at),
+        expires_at: dateToTimestamp(new Date(body.expires_at)),
         user_summary: {
             user_id: body.user_id,
             user_name: body.user_name,
@@ -67,7 +67,7 @@ export function sendAuthentication(
 
     if (!validatedBody) {
         return Promise.reject(
-            new Error('Requisição inválida: user_id e user_name são obrigatórios')
+            new Error('user_id e user_name são obrigatórios')
         );
     }
     console.log('[APPWRITE FUNCTION GRPC PRODUCER] Corpo da requisição validado: ' + JSON.stringify(validatedBody));
