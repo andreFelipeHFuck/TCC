@@ -85,22 +85,9 @@ export class Auth extends Appwrite {
     return token.jwt;
   }
 
-  private async generateAuthenticationRequest(userSummary: UserSummary): Promise<AuthenticationRequest> {
-    const authenticationRequest: AuthenticationRequest = {
-      authToken: await this.generateToken(),
-      expiresAt: new Date(),
-      userSummary
-    };
-
-    return authenticationRequest;
-  }
-
   async initSessionProxy(userSummary: UserSummary) { 
-    const authenticationRequest = await this.generateAuthenticationRequest(userSummary);
-
     this.logger.info(`${this.service} Iniciando sessão proxy...`);
 
-    this.logger.info(`${authenticationRequest}`);
 
     this.logger.info(`${this.service} Sessão proxy iniciada com sucesso`);
   }

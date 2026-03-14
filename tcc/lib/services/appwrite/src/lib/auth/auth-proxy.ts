@@ -21,22 +21,6 @@ export class AuthProxy {
 
   protected service = '[APPWRITE PROXY AUTH SERVICE]';
 
-  private async generateUserSummary(): Promise<UserSummary | null> {
-    const user = await this.authUser.getUser();
-    
-    if(!user) {
-      this.logger.error(`${this.service} Usuário não encontrado`);
-      return null;
-    }
-
-    const userSummary: UserSummary = {
-      userId: user.$id,
-      userName: user.name,
-    };
-    
-    return userSummary;
-  }
-
   async initSessionProxy() {
     const checkSession = await this.authUser.checkSession();
     
