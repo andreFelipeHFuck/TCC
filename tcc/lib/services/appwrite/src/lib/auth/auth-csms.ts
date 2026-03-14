@@ -25,18 +25,18 @@ export class AuthCsms {
   protected service = 'APPWRITE PROXY AUTH SERVICE';
 
   async initSessionProxy() { 
-    const user = this.authUser.getUser();
-    const token = await this.auth.generateToken();
+    // const user = this.authUser.getUser();
+    // const token = await this.auth.generateToken();
 
-    if (!user) {
-      this.logger.error(`${this.service} Usuário não encontrado no estado local após verificação de sessão`);
-      return;
-    }
+    // if (!user) {
+    //   this.logger.error(`${this.service} Usuário não encontrado no estado local após verificação de sessão`);
+    //   return;
+    // }
 
     const authBody: AuthCsmsFunctionBody = {
-      userId: user.$id,
-      userName: user.name,
-      token: token,
+      userId: '69a6e7d2e94aa809e9ef', //user.$id,
+      userName: 'andre', //user.name,
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...', //token,
       expiresAt: new Date(Date.now() + 15 * 60 * 1000)
     };
 
