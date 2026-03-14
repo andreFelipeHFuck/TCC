@@ -1,7 +1,8 @@
 import { Component, computed, inject, signal } from '@angular/core';
 
-import { AppwriteError, User as UserType } from '@tcc/types';
-import { APPWRITE_DATABASE_ID, AuthUser, DatabaseUser } from '@tcc/appwrite';
+import { User as UserType } from '@tcc/types';
+
+import { AuthProxy, AuthUser } from '@tcc/appwrite';
 
 @Component({
   selector: 'app-user',
@@ -11,6 +12,7 @@ import { APPWRITE_DATABASE_ID, AuthUser, DatabaseUser } from '@tcc/appwrite';
 })
 export class User {
   private readonly authUser: AuthUser = inject(AuthUser);
+  private readonly authProxy: AuthProxy = inject(AuthProxy);
 
   messageError = signal<string>('');
 
@@ -43,11 +45,5 @@ export class User {
   }
 
   public async getUser() {
-    const id: string = '69b2275a00325ce161dd';
-
-    const result = await this.authUser.getUser(id);
-
-    this.messageError.set(JSON.stringify(result));
-
   }
 }
