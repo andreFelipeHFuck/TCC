@@ -13,4 +13,4 @@ export * from './lib/database/database-user';
 export * from './lib/auth/auth-user';
 
 // PROXY
-export * from './lib/auth/auth-proxy';
+export * from './lib/auth/auth-csms';
