@@ -22,7 +22,8 @@ import { appwriteCreateConnection } from './appwrite-connections/appwrite-connec
 })
 export class Appwrite extends ConnectionServices<AppwriteError> {
   private readonly appwriteConfig: AppwriteConfig = inject(APPWRITE_CONFIG);
-  private readonly logger = inject(Logger);
+  
+  protected readonly logger = inject(Logger);
 
   protected service: AppwriteServices = AppwriteServices.CONNECTION;
 
@@ -104,7 +105,7 @@ export class Appwrite extends ConnectionServices<AppwriteError> {
     serviceId: AppwriteServices,
     successMessage: string,
     errorMessage: string,
-    silent: boolean = false
+    silent = false
   ) {
 
     if (this.client === 'NONE' || service === 'NONE') {
