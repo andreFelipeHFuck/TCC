@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AuthProxy } from './auth-proxy';
+import { AuthCsms } from './auth-csms';
 
-describe('AuthProxy', () => {
-  let service: AuthProxy;
+describe('AuthCsms', () => {
+  let service: AuthCsms;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(AuthProxy);
+    service = TestBed.inject(AuthCsms);
   });
 
   it('should be created', () => {
