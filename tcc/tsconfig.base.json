@@ -27,6 +27,7 @@
       "@tcc/bigQuery": ["lib/services/bigQuery/src/index.ts"],
       "@tcc/big-query-adapter": ["lib/adapters/big-query-adapter/src/index.ts"],
       "@tcc/nestjs-grpc": ["lib/services/nestjs-grpc/src/index.ts"],
+      "@tcc/redis": ["lib/services/redis/src/index.ts"],
       "@tcc/nest-logger": ["lib/services/nest-logger/src/index.ts"],
       "@tcc/shared-angular": ["lib/services/shared/src/index.ts"],
       "@tcc/auth": ["lib/components/features/auth/src/index.ts"],
