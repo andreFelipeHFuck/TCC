@@ -1,5 +1,3 @@
-import { UserType } from "../db";
-
 export type AuthCsmsFunctionBody = {
     user_id: string;
     user_name: string;
