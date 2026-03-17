@@ -29,4 +29,5 @@ message AuthenticationResponse {
     bool success = 1;
     string session_id = 2;
     google.protobuf.Timestamp processed_at = 3;
+    string auth_token = 4;
 }

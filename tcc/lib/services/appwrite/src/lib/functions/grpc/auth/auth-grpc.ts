@@ -5,10 +5,12 @@ import {
   Functions 
 } from 'appwrite';
 
-import { AppwriteServices } from '@tcc/types';
+import { 
+  AppwriteServices, 
+  AuthCsmsFunctionBody 
+} from '@tcc/types';
 
 import { Appwrite } from '../../../appwrite';
-import { AuthCsmsFunctionBody } from 'lib/types/src/lib/csms/auth';
 
 @Injectable({
   providedIn: 'root',
