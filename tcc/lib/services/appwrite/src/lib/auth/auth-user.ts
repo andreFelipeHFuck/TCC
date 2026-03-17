@@ -25,7 +25,7 @@ export class AuthUser {
   protected service = '[APPWRITE USER AUTH SERVICE]'
 
   currentUser = signal<User | null>(null);
-  
+
   private async fillInUser(id: string): Promise<void> {
     const dataUser = await this.databaseUser.get<UserCreateDTO>(id);
 
@@ -42,7 +42,46 @@ export class AuthUser {
     this.logger.info(`${this.service} Signal currentUser preenchido com sucesso.`);
   }
 
+  private async checkSession() {
+    const authUser = await this.auth.get();
+
+    if (!authUser) {
+      this.logger.error(`${this.service} Usuário não autenticado`);
+      this.currentUser.set(null);
+      return;
+    }
+
+    this.logger.debug(`${this.service} Usuário autenticado no Auth: ${authUser.email}`);
+
+    const dbUser = await this.databaseUser.getByEmail(authUser.email);
+
+    if (!dbUser) {
+      this.logger.error(`${this.service} Usuário autenticado no Auth, mas NÃO encontrado no Banco de Dados`);
+      this.currentUser.set(null);
+      return;
+    }
+
+    const isConsistent = authUser.email === dbUser.email;
+
+    if (isConsistent) {
+      this.logger.info(`${this.service} Autenticação consistente entre Auth e Database`);
+      await this.fillInUser(dbUser.id);
+    } else {
+      this.logger.warn(`${this.service} Autenticação realizada, mas os emails divergiram entre os serviços`);
+      this.currentUser.set(null);
+    }
+  }
+
+  /**
+   * Retorna os dados do usuário logado
+   * 
+   * @todo dados do usuário logado
+   */
   getUser(): User | null {
+    this.logger.debug(`${this.service} Verificando se o usuário está logado, ${JSON.stringify(this.currentUser())}`);
+    if(!this.currentUser()){
+      this.checkSession();
+    }
     return this.currentUser();
   }
 
@@ -55,18 +94,6 @@ export class AuthUser {
     await this.login(userCreateDTO.email, userCreateDTO.password);
   }
 
-  async checkSession(): Promise<boolean> {
-    const session = await this.auth.get();
-    
-    if (!session ) {
-      this.currentUser.set(null);
-      return false;
-    }
-
-    await this.fillInUser(session.$id);
-    return true;
-  }
-
   /**
    * Verifica se a autenticação é válida tanto no Auth quanto no Database
    */
@@ -74,6 +101,7 @@ export class AuthUser {
     this.logger.info(`${this.service} Iniciando verificação de autenticação dupla...`);
 
     const authSession = await this.auth.login(email, password);
+
     const authUser = await this.auth.get();
 
     const dbUser = await this.databaseUser.login(email, password);
