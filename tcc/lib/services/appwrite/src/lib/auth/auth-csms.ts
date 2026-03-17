@@ -24,19 +24,20 @@ export class AuthCsms {
 
   protected service = 'APPWRITE CSMS AUTH SERVICE';
 
-  async initSessionProxy() { 
-    // const user = this.authUser.getUser();
-    // const token = await this.auth.generateToken();
-
-    // if (!user) {
-    //   this.logger.error(`${this.service} Usuário não encontrado no estado local após verificação de sessão`);
-    //   return;
-    // }
+  async initSession() { 
+    const user = this.authUser.getUser();
+    
+    if (!user) {
+      this.logger.error(`[${this.service}] Usuário não encontrado no estado local após verificação de sessão`);
+      return;
+    }
+  
+    const token = await this.auth.generateToken();
 
     const authBody: AuthCsmsFunctionBody = {
-      user_id: '69a6e7d2e94aa809e9ef', //user.$id,
-      user_name: 'andre', //user.name,
-      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...', //token,
+      user_id: user.$id,
+      user_name: user.name,
+      token: token,
       expires_at: new Date(Date.now() + 15 * 60 * 1000).toISOString()
     };
 

@@ -1,8 +1,17 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
+
+/**
+ * @todo criar um serviço para o backend para o SDK do Appwrite que possa fazer validar o JWS
+ * @todo criar um serviço agnostico para BaaS para poder validar tanto usando Appwrite quanto Firebase
+ */
+
 import { Injectable, CanActivate, ExecutionContext, Inject } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { status } from '@grpc/grpc-js';
 
 import * as jwt from 'jsonwebtoken';
+import * as sdk from 'node-appwrite';
 
 import { 
     AuthenticationRequest, 
@@ -81,22 +90,8 @@ export class AuthRpcGuard implements CanActivate {
     }
     */
 
-    canActivate(context: ExecutionContext): boolean  {
-        const rpcContext = context.switchToRpc();
-        const metadata = rpcContext.getContext();
-
-        const data = rpcContext.getData<AuthenticationRequest>();
-        const authHeader = metadata.get('authorization');
-
-       if(!authHeader) {
-          throw new RpcException({
-                code: status.INVALID_ARGUMENT,
-                message: 'Token de autenticação ausente ou inválido.',
-            });
-        }
-
-        try {
-            const decoded: any = jwt.decode(authHeader);
+    /*
+       const decoded: any = jwt.decode(authHeader);
             const call = context.switchToRpc().getData();
             const userId = call.userSummary.userId;
 
@@ -122,7 +117,26 @@ export class AuthRpcGuard implements CanActivate {
             }
             
             return true;
+    */
+
+    async canActivate(context: ExecutionContext): Promise<boolean>  {
+        const rpcContext = context.switchToRpc();
+        const data = rpcContext.getData<AuthenticationRequest>();
+ 
+        try {
+            const client = new sdk.Client()
+                  .setEndpoint("http://localhost/v1")
+                  .setProject("69598d0e0005838fd88f")
+                  .setJWT(data.authToken);
+
+            const session = new sdk.Account(client);
+            const sessionData = await session.get();
+
+            this.logger.info(`${this.guard.valueOf()}: Sessão do usuário: ${JSON.stringify(sessionData)}`);
+            
+            return false;
         } catch(error) {
+            this.logger.info(`${this.guard.valueOf()}: Erro ao iniciar a sessão ${JSON.stringify(error)}`);
             throw new RpcException({
                 code: status.INVALID_ARGUMENT,
                 message: 'Token de autenticação ausente ou inválido.',
