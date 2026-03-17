@@ -37,8 +37,7 @@
       "@tcc/components/mobile-page": [
         "lib/components/shared/mobile-page/src/index.ts"
       ],
-      "@tcc/mobile-page": ["lib/components/shared/mobile-page/src/index.ts"],
-      "@tcc/redis": ["lib/services/redis/src/index.ts"]
+      "@tcc/mobile-page": ["lib/components/shared/mobile-page/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

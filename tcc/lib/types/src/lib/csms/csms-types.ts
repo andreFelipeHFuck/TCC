@@ -5,11 +5,11 @@ export enum CsmsServices {
 };
 
 export enum CsmsGuards {
-    UNKNOWN = 'CSNS UNKNOWN GUARD',
-    AUTH = 'CSNS AUTH GUARD',
+    UNKNOWN = 'CSMS UNKNOWN GUARD',
+    AUTH = 'CSMS AUTH GUARD',
 };
 
 export enum CsmsController {
-    UNKNOWN = 'CSNS UNKNOWN CONTROLLER',
+    UNKNOWN = 'CSMS UNKNOWN CONTROLLER',
     AUTH = 'CSNS AUTH CONTROLLER',
 };
