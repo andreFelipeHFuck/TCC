@@ -65,6 +65,7 @@ export interface AuthenticationResponse {
   success: boolean;
   sessionId: string;
   processedAt: Date | undefined;
+  authToken: string;
 }
 
 function createBaseAuthenticationRequest(): AuthenticationRequest {
@@ -258,7 +259,7 @@ export const UserSummary: MessageFns<UserSummary> = {
 };
 
 function createBaseAuthenticationResponse(): AuthenticationResponse {
-  return { success: false, sessionId: "", processedAt: undefined };
+  return { success: false, sessionId: "", processedAt: undefined, authToken: "" };
 }
 
 export const AuthenticationResponse: MessageFns<AuthenticationResponse> = {
@@ -271,6 +272,9 @@ export const AuthenticationResponse: MessageFns<AuthenticationResponse> = {
     }
     if (message.processedAt !== undefined) {
       Timestamp.encode(toTimestamp(message.processedAt), writer.uint32(26).fork()).join();
+    }
+    if (message.authToken !== "") {
+      writer.uint32(34).string(message.authToken);
     }
     return writer;
   },
@@ -306,6 +310,14 @@ export const AuthenticationResponse: MessageFns<AuthenticationResponse> = {
           message.processedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
           continue;
         }
+        case 4: {
+          if (tag !== 34) {
+            break;
+          }
+
+          message.authToken = reader.string();
+          continue;
+        }
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -328,6 +340,11 @@ export const AuthenticationResponse: MessageFns<AuthenticationResponse> = {
         : isSet(object.processed_at)
         ? fromJsonTimestamp(object.processed_at)
         : undefined,
+      authToken: isSet(object.authToken)
+        ? globalThis.String(object.authToken)
+        : isSet(object.auth_token)
+        ? globalThis.String(object.auth_token)
+        : "",
     };
   },
 
@@ -342,6 +359,9 @@ export const AuthenticationResponse: MessageFns<AuthenticationResponse> = {
     if (message.processedAt !== undefined) {
       obj.processedAt = message.processedAt.toISOString();
     }
+    if (message.authToken !== "") {
+      obj.authToken = message.authToken;
+    }
     return obj;
   },
 
@@ -353,6 +373,7 @@ export const AuthenticationResponse: MessageFns<AuthenticationResponse> = {
     message.success = object.success ?? false;
     message.sessionId = object.sessionId ?? "";
     message.processedAt = object.processedAt ?? undefined;
+    message.authToken = object.authToken ?? "";
     return message;
   },
 };

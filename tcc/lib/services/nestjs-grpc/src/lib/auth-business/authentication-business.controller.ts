@@ -6,26 +6,21 @@ import {
 } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 
-import { 
-    Metadata, 
-    ServerUnaryCall 
-} from '@grpc/grpc-js';
-
-import { AuthRpcGuard } from './authentication-business.guard';
-import { ConsoleLogger } from '@tcc/utils';
-import { AuthenticationBusinessService } from './authentication-business.service';
-
 import {
     CsmsController,
     AuthenticationRequest,
     AuthenticationResponse
 } from '@tcc/types'
+import { ConsoleLogger } from '@tcc/utils';
+
+import { AuthRpcGuard } from './authentication-business.guard';
+import { AuthenticationBusinessService } from './authentication-business.service';
 
 @Injectable()
 @Controller()
 export class AuthBusinessController {
     constructor(
-        private readonly authServic: AuthenticationBusinessService,
+        private readonly authService: AuthenticationBusinessService,
         @Inject('LOGGER_TOKEN') private readonly logger: ConsoleLogger
     ) {}
 
@@ -33,17 +28,14 @@ export class AuthBusinessController {
 
     @UseGuards(AuthRpcGuard)
     @GrpcMethod('AuthenticationService', 'SendAuthentication')
-    sendAuthentication(
-        data: AuthenticationRequest,
-        metadata: Metadata,
-        call: ServerUnaryCall<any, any>
-    ): AuthenticationResponse {
+    async sendAuthentication(
+        data: AuthenticationRequest & { decodedSessionId?: string }
+    ): Promise<AuthenticationResponse> {
         this.logger.info(`[${this.controller.valueOf()}] Autenticando usuário: ${JSON.stringify(data)}`);
 
-    return {
-      success: true,
-      sessionId: `nest_sess_${Date.now()}`,
-      processedAt: new Date(Date.now()),
-    };
- }
+        // O sessionId foi extraído e validado pelo Guard (AuthRpcGuard)
+        const sessionId = data.decodedSessionId;
+
+        return await this.authService.createSession(sessionId);
+    }
 }
