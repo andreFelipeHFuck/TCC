@@ -25,10 +25,10 @@ export class AuthCsms {
   protected service = 'APPWRITE CSMS AUTH SERVICE';
 
   async initSession() { 
-    const user = this.authUser.getUser();
+    const user = await this.authUser.getUser();
     
     if (!user) {
-      this.logger.error(`[${this.service}] Usuário não encontrado no estado local após verificação de sessão`);
+      this.logger.error(`[${this.service}]: Usuário não encontrado no estado local após verificação de sessão, ${user}`);
       return;
     }
   

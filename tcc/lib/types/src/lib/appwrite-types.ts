@@ -1,4 +1,9 @@
-import { Account, Client, Databases, Functions } from 'appwrite';
+import { 
+    Account, 
+    Client, 
+    Databases, 
+    Functions 
+} from 'appwrite';
 
 export type AppwriteClient = Client | 'NONE';
 export type AppwriteAccount = Account | 'NONE';
@@ -24,7 +29,7 @@ export enum AppwriteDatabaseCollection {
  */
 export interface AppwriteConfig {
     endpoint: string,
-    project: string,
+    projectId: string,
     databaseId: string
 };
 

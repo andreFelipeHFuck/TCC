@@ -6,6 +6,7 @@ import {
   AppwriteDatabaseCollection,
   AppwriteServices,
   CrudServiceDB,
+  UserAuth
 } from '@tcc/types';
 import { Database } from './database';
 
@@ -25,9 +26,7 @@ export class DatabaseUser
     return await super.get<T>(this.collection, id);
   }
 
-  public async getByEmail(email: string) {
-    this.logger.debug(`${this.service} Buscando usuário pelo email: ${email}`);
-
+  public async getByEmail(email: string): Promise<UserAuth> {
     const result = await this.handleCall(
       this.getDatabases(),
       (databases: Databases) => databases.listDocuments(
@@ -36,7 +35,18 @@ export class DatabaseUser
         [
           Query.limit(1),
           Query.equal('email', email),
-          Query.select(['id', 'email'])
+          Query.select([
+            '$id',
+            'name',
+            'email',
+            'photo',
+            'userType',
+            'state',
+            'city',
+            'neighborhood',
+            'cep',
+            'street'
+          ])
         ]
       ),
       AppwriteServices.DATABASE,
@@ -45,19 +55,33 @@ export class DatabaseUser
     );
 
     if (!result.documents.length) {
-      return null;
+      return 'NONE';
     }
 
     const user = result.documents[0];
 
-    return { id: user['$id'], email: user['email'] };
+    return { 
+      $id: user['$id'], 
+      name: user['name'],
+      email: user['email'],
+      photo: user['photo'],
+      userType: user['userType'],
+      address: {
+        state: user['state'],
+        city: user['city'],
+        neighborhood: user['neighborhood'],
+        street: user['street'],
+        cep: user['cep'],
+        streetNumber: user['streetNumber']
+      }
+     };
   }
 
   public override async create<T>(data: T): Promise<void> {
     await super.create(this.collection, data);
   }
 
-  public async login(email: string, password: string): Promise<{id: string, email: string} | null> {
+  public async login(email: string, password: string): Promise<UserAuth> {
     const result = await this.handleCall(
       this.getDatabases(),
       (databases: Databases) => databases.listDocuments(
@@ -67,7 +91,18 @@ export class DatabaseUser
           Query.limit(1),
           Query.equal('email', email),
           Query.equal('password', password),
-          Query.select(['id', 'email'])
+          Query.select([
+            '$id',
+            'name',
+            'email',
+            'photo',
+            'userType',
+            'state',
+            'city',
+            'neighborhood',
+            'cep',
+            'street'
+          ])
         ]
       ),
       AppwriteServices.DATABASE,
@@ -76,11 +111,25 @@ export class DatabaseUser
     );
 
     if (!result.documents.length) {
-      return null;
+      return 'NONE';
     }
 
     const user = result.documents[0];
 
-    return { id: user['$id'], email: user['email'] };
+    return { 
+      $id: user['$id'], 
+      name: user['name'],
+      email: user['email'],
+      photo: user['photo'],
+      userType: user['userType'],
+      address: {
+        state: user['state'],
+        city: user['city'],
+        neighborhood: user['neighborhood'],
+        street: user['street'],
+        cep: user['cep'],
+        streetNumber: user['streetNumber']
+      }
+     };;
   }
 }

@@ -14,7 +14,7 @@ export function appwriteCreateCliente(config: AppwriteConfig): Client {
 
     client
         .setEndpoint(config.endpoint)
-        .setProject(config.project);
+        .setProject(config.projectId);
 
     return client;
 }

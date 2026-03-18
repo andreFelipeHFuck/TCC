@@ -23,7 +23,7 @@ export const appConfig: ApplicationConfig = {
 
     ...appwriteProvide({
       endpoint: environment.appwrite.endpoint,
-      project: environment.appwrite.projectId,
+      projectId: environment.appwrite.projectId,
       databaseId: environment.appwrite.databaseId
     }),
 
