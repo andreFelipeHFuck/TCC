@@ -72,6 +72,16 @@ export class AuthUser {
     }
   }
 
+  async isLoggedIn(): Promise<boolean> {
+    const user = await this.auth.get();
+
+    if (!user) {
+      return false;
+    }
+
+    return true;
+  }
+
   /**
    * Retorna os dados do usuário logado
    * 
