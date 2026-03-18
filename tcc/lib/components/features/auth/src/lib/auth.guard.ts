@@ -1,14 +1,30 @@
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 
-// export const guestGuard = () => {
-//     const router = inject(Router);
+import { AuthUser } from '@tcc/appwrite';
 
-//     return router.parseUrl('/../../');
-// }
-
-export const authGuard = () => {
+export const guestGuard = async () => {
     const router = inject(Router);
+    const authUser = inject(AuthUser);
+
+    const isLoggeIn = await authUser.isLoggedIn();
+
+    if(isLoggeIn) {
+        return router.parseUrl('/');
+    }
+
+    return true;
+}
+
+export  const authGuard = async () => {
+    const router = inject(Router);
+    const authUser = inject(AuthUser);
+
+    const isLoggeIn = await authUser.isLoggedIn();
+
+    if(isLoggeIn) {
+        return true;
+    }
 
     return router.parseUrl('/auth/login');
 }
