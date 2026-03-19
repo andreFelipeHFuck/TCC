@@ -27,7 +27,7 @@ export class AuthCsms {
   async initSession() { 
     const user = await this.authUser.getUser();
     
-    if (!user) {
+    if (user == 'NONE') {
       this.logger.error(`[${this.service}]: Usuário não encontrado no estado local após verificação de sessão, ${user}`);
       return;
     }
@@ -41,7 +41,7 @@ export class AuthCsms {
       expires_at: new Date(Date.now() + 15 * 60 * 1000).toISOString()
     };
 
-    this.logger.info(`[${this.service}] Iniciando sessão proxy...`);
+    this.logger.info(`[${this.service}] Iniciando sessão no CSMS...`);
 
     this.authGrpc.authSession(authBody);
   }
