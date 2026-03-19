@@ -8,6 +8,7 @@ export interface User {
     name: string,
     photo: string,
     email: string,
+    password?: string,
     userType: UserType,
     address: Address,
     idTokens?: IdToken[]
