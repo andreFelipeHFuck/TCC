@@ -8,7 +8,7 @@ export const appRoutes: Route[] = [
     {
         path: '',
         component: User,
-        canActivate: [authGuard]
+        //canActivate: [authGuard]
     },
     {
         path: 'auth',

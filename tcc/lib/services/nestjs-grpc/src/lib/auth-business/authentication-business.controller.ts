@@ -29,13 +29,10 @@ export class AuthBusinessController {
     @UseGuards(AuthRpcGuard)
     @GrpcMethod('AuthenticationService', 'SendAuthentication')
     async sendAuthentication(
-        data: AuthenticationRequest & { decodedSessionId?: string }
+        data: AuthenticationRequest
     ): Promise<AuthenticationResponse> {
-        this.logger.info(`[${this.controller.valueOf()}] Autenticando usuário: ${JSON.stringify(data)}`);
+        //this.logger.info(`[${this.controller.valueOf()}] Autenticando usuário: ${JSON.stringify(data)}`);
 
-        // O sessionId foi extraído e validado pelo Guard (AuthRpcGuard)
-        const sessionId = data.decodedSessionId;
-
-        return await this.authService.createSession(sessionId);
+        return await this.authService.createSession(data);
     }
 }

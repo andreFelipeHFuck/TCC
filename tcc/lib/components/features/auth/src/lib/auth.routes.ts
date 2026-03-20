@@ -8,11 +8,11 @@ export const authRoutes: Routes = [
     {
         path: 'login',
         component: Auth,
-        canActivate: [guestGuard]
+        //canActivate: [guestGuard]
     },
     {
         path: 'register',
         component: Register,
-        canActivate: [guestGuard]
+        //canActivate: [guestGuard]
     },
 ]
