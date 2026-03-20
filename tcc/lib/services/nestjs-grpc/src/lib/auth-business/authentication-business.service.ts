@@ -1,16 +1,24 @@
-import { Injectable } from "@nestjs/common";
+import { 
+    Inject, 
+    Injectable
+} from "@nestjs/common";
 
-import { AuthenticationResponse } from "@tcc/types";
-import { AuthenticationBusiness } from "@tcc/models";
+import { Logger } from "@tcc/types";
 
+import { AuthenticationRequest, AuthenticationResponse } from "@tcc/types";
+
+import { CsmsServices } from '@tcc/types'
 import { RedisStoreService } from "@tcc/redis";
 
 @Injectable()
 export class AuthenticationBusinessService {
     constructor(
         private readonly redisStoreService: RedisStoreService,
-        private readonly authenticationBusiness: AuthenticationBusiness
+        @Inject('LOGGER_TOKEN') private readonly logger: Logger
+        
     ) {}
+
+    private readonly session = CsmsServices.AUTH;
 
     /**
      * @todo Refatoração do serviço de autentificação do sistema
@@ -28,8 +36,8 @@ export class AuthenticationBusinessService {
      * 
      * Refatorações:
      * 
-     * 1 - Escolha da chave a ser usada e refatoração a partir da chave;
-     * 2 - Construção de um modelo consumidor produtor idepentente de linguagem para o sistema;
+     *  X 1 - Escolha da chave a ser usada e refatoração a partir da chave;
+     * 
      * 3 - Criação de um método que permita validar e retornar o resultado de forma idepotente;
      * 4 - Método para armazenar o resultado;
      * 5 - Maneiras de renovar essa sessão em caso de expiração.
@@ -37,26 +45,20 @@ export class AuthenticationBusinessService {
      * 
      */
 
-    private async isActiveSession(sessionId: string): Promise<boolean> {
-        if (!sessionId) {
-            return false;
+    async createSession(data: AuthenticationRequest): Promise<AuthenticationResponse> {
+        //const sessionData = await this.redisStoreService.getSession(data.sessionId);
+
+        await this.redisStoreService.saveSession(data.sessionId, data);
+
+        const sessionData = await this.redisStoreService.getSession(data.sessionId);
+
+        this.logger.debug(`${this.session.valueOf()} - ${JSON.stringify(sessionData)}`);
+
+        return {
+            success: true,
+            sessionId: data.sessionId,
+            processedAt: data.expiresAt
         }
-        
-        const session = await this.redisStoreService.getSession(sessionId);
-        return !!session;
-    }
-
-    async createSession(incomingSessionId?: string): Promise<AuthenticationResponse> {
-        const active = incomingSessionId ? await this.isActiveSession(incomingSessionId) : false;
-        
-        const session = this.authenticationBusiness.generateSession(active, incomingSessionId);
-    
-        const sessionId = this.authenticationBusiness.getSessionId();
-        const userData = this.authenticationBusiness.getAuthenticationResponse();
-
-        await this.redisStoreService.saveSession(sessionId, userData);
-
-        return session;
     }
 }
   

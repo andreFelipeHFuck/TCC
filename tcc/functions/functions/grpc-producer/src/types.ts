@@ -6,6 +6,7 @@ export interface BodyRequest {
     // user_email
     // user_type
     token: string;
+    session_id: string;
     expires_at: string;
 }
 

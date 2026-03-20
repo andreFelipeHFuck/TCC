@@ -7,7 +7,6 @@ export class RedisStoreService {
     constructor(@Inject(CACHE_MANAGER) private cacheManager: Cache) {}
 
     async saveSession(sessionId: string, userData: unknown, ttl?: number): Promise<boolean> {
-        // As of cache-manager v6+, the interface provides `stores` which is an array of Keyv instances.
         const firstStore = (this.cacheManager as unknown as { stores: unknown[] }).stores?.[0] || (this.cacheManager as unknown as { store: unknown }).store;
         const store = firstStore as unknown as { client?: { set: (key: string, value: string, options?: unknown) => Promise<string | null> } };
         const key = `sess:${sessionId}`;

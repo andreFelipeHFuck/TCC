@@ -13,14 +13,15 @@ import {
 const protoDescriptor = packageDefinitions(ProceduresTypes.BUSINESS) as any;
 
 function validateBody(req: any): BodyRequest | null {
-    const {  user_id, user_name , token, expires_at } = req.body || {};
+    const {  user_id, user_name , token, session_id, expires_at } = req.body || {};
     const validate: boolean = typeof user_id === 'string' 
                               && typeof user_name === 'string' 
                               && typeof token === 'string' 
+                              && typeof session_id === 'string' 
                               && typeof expires_at === 'string';
     
     if (validate) {
-        return { user_id, user_name, token, expires_at };
+        return { user_id, user_name, token, session_id, expires_at };
     }
     return null;
 }
@@ -32,7 +33,8 @@ function generateAutehnticationRequest(body: BodyRequest): GrpcRequest{
         user_summary: {
             user_id: body.user_id,
             user_name: body.user_name,
-        }
+        },
+        session_id: body.session_id
     }
 
     return request;

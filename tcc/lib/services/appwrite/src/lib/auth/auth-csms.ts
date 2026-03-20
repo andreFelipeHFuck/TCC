@@ -3,6 +3,8 @@ import {
   inject
 } from '@angular/core';
 
+import { v4 as uuidv4 } from 'uuid';
+
 import { 
   Logger, 
   AuthCsmsFunctionBody 
@@ -38,6 +40,7 @@ export class AuthCsms {
       user_id: user.$id,
       user_name: user.name,
       token: token,
+      session_id: uuidv4(),
       expires_at: new Date(Date.now() + 15 * 60 * 1000).toISOString()
     };
 
