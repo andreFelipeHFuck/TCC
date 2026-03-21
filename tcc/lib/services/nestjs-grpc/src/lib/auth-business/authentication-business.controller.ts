@@ -31,7 +31,6 @@ export class AuthBusinessController {
     async sendAuthentication(
         data: AuthenticationRequest
     ): Promise<AuthenticationResponse> {
-        //this.logger.info(`[${this.controller.valueOf()}] Autenticando usuário: ${JSON.stringify(data)}`);
 
         return await this.authService.createSession(data);
     }
