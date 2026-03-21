@@ -7,7 +7,8 @@ import {
 
 import { 
   AppwriteServices, 
-  AuthCsmsFunctionBody 
+  AuthCsmsFunctionBody, 
+  AuthenticationResponse
 } from '@tcc/types';
 
 import { Appwrite } from '../../../appwrite';
@@ -24,7 +25,7 @@ export class AuthGrpc extends Appwrite {
     this.service = AppwriteServices.FUNCTIONS;
   }
 
-  async authSession(authBody: AuthCsmsFunctionBody) {
+  async authSession(authBody: AuthCsmsFunctionBody): Promise<AuthenticationResponse> {
     const body: string = JSON.stringify(authBody);
 
     this.logger.info(`[${this.function}] Body: ${body}`);
@@ -47,5 +48,6 @@ export class AuthGrpc extends Appwrite {
     );
 
     this.logger.info(`[${this.function}] Result: ${JSON.stringify(result.responseBody)}`);
+    return JSON.parse(result.responseBody) as AuthenticationResponse;
   }
 }
