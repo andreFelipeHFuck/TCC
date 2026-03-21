@@ -3,12 +3,10 @@ import {
   inject
 } from '@angular/core';
 
-import { v4 as uuidv4 } from 'uuid';
-
 import { 
-  Logger, 
-  AuthCsmsFunctionBody 
+  Logger
 } from '@tcc/types';
+import { AuthBusiness } from '@tcc/models';
 
 import { Auth } from './auth';
 import { AuthUser } from './auth-user';
@@ -18,6 +16,8 @@ import { AuthGrpc } from '../functions/grpc/auth/auth-grpc';
   providedIn: 'root',
 })
 export class AuthCsms {
+  private readonly authBusiness = new AuthBusiness();
+
   private readonly auth = inject(Auth);
   private readonly authUser = inject(AuthUser);
   private readonly authGrpc = inject(AuthGrpc);
@@ -36,16 +36,20 @@ export class AuthCsms {
   
     const token = await this.auth.generateToken();
 
-    const authBody: AuthCsmsFunctionBody = {
-      user_id: user.$id,
-      user_name: user.name,
-      token: token,
-      session_id: uuidv4(),
-      expires_at: new Date(Date.now() + 15 * 60 * 1000).toISOString()
-    };
+    const expiresAt = new Date(Date.now() + 15 * 60 * 1000);
+    const authBody = this.authBusiness.generateAuthenticationRequest(
+      user.$id,
+      user.name,
+      token,
+      expiresAt
+    );
+
+    if (authBody === 'NONE') {
+      this.logger.error(`[${this.service}]: Falha ao gerar Authentication Request válido`);
+      return;
+    }
 
     this.logger.info(`[${this.service}] Iniciando sessão no CSMS...`);
-
     this.authGrpc.authSession(authBody);
   }
 
