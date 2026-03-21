@@ -46,6 +46,6 @@ export class AuthGrpc extends Appwrite {
       'Erro ao executar autenticação gRPC'
     );
 
-    this.logger.info(`[${this.function}] Result: ${JSON.stringify(result)}`);
+    this.logger.info(`[${this.function}] Result: ${JSON.stringify(result.responseBody)}`);
   }
 }

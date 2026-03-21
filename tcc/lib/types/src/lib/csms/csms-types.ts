@@ -1,7 +1,7 @@
 export enum CsmsServices {
-    UNKNOWN = 'CSNS UNKNOWN SERVICE',
-    AUTH = 'CSNS AUTH SERVICE',
-    REDIS = 'CSNS REDIS SERVICE',
+    UNKNOWN = 'CSMS UNKNOWN SERVICE',
+    AUTH = 'CSMS AUTH SERVICE',
+    REDIS = 'CSMS REDIS SERVICE',
 };
 
 export enum CsmsGuards {
