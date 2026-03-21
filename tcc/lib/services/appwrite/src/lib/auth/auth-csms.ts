@@ -50,7 +50,8 @@ export class AuthCsms {
     }
 
     this.logger.info(`[${this.service}] Iniciando sessão no CSMS...`);
-    this.authGrpc.authSession(authBody);
+    const result = await this.authGrpc.authSession(authBody);
+    this.logger.info(`[${this.service}] Sessão iniciada com sucesso: ${JSON.stringify(result)}`);
   }
 
 //   finishSessionProxy() { }
