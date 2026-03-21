@@ -5,9 +5,8 @@ import { Databases, Query } from 'appwrite';
 import {
   AppwriteDatabaseCollection,
   AppwriteServices,
-  AppwriteUser,
   CrudServiceDB,
-  UserCreateDTO
+  UserAuth
 } from '@tcc/types';
 import { Database } from './database';
 
@@ -23,24 +22,87 @@ export class DatabaseUser
     this.collection = AppwriteDatabaseCollection.USER;
   }
 
-  public override async get<UserCreateDTO>(id: string): Promise<UserCreateDTO> {
-    return await super.get<UserCreateDTO>(this.collection, id);
+  public override async get<T>(id: string): Promise<T> {
+    return await super.get<T>(this.collection, id);
   }
 
-  public override async create<UserCreateDTO>(data: UserCreateDTO): Promise<void> {
-    await super.create(this.collection, data);
-  }
-
-  public async login(email: string, password: string): Promise<string | null> {
+  public async getByEmail(email: string): Promise<UserAuth> {
     const result = await this.handleCall(
       this.getDatabases(),
       (databases: Databases) => databases.listDocuments(
         this.databaseId,
         this.collection.valueOf(),
         [
+          Query.limit(1),
+          Query.equal('email', email),
+          Query.select([
+            '$id',
+            'name',
+            'email',
+            'photo',
+            'userType',
+            'state',
+            'city',
+            'neighborhood',
+            'cep',
+            'street'
+          ])
+        ]
+      ),
+      AppwriteServices.DATABASE,
+      'Busca de credenciais pelo email realizada com sucesso',
+      'Erro ao buscar credenciais no banco a partir do email'
+    );
+
+    if (!result.documents.length) {
+      return 'NONE';
+    }
+
+    const user = result.documents[0];
+
+    return { 
+      $id: user['$id'], 
+      name: user['name'],
+      email: user['email'],
+      photo: user['photo'],
+      userType: user['userType'],
+      address: {
+        state: user['state'],
+        city: user['city'],
+        neighborhood: user['neighborhood'],
+        street: user['street'],
+        cep: user['cep'],
+        streetNumber: user['streetNumber']
+      }
+     };
+  }
+
+  public override async create<T>(data: T): Promise<void> {
+    await super.create(this.collection, data);
+  }
+
+  public async login(email: string, password: string): Promise<UserAuth> {
+    const result = await this.handleCall(
+      this.getDatabases(),
+      (databases: Databases) => databases.listDocuments(
+        this.databaseId,
+        this.collection.valueOf(),
+        [
+          Query.limit(1),
           Query.equal('email', email),
           Query.equal('password', password),
-          Query.select(['email', 'password'])
+          Query.select([
+            '$id',
+            'name',
+            'email',
+            'photo',
+            'userType',
+            'state',
+            'city',
+            'neighborhood',
+            'cep',
+            'street'
+          ])
         ]
       ),
       AppwriteServices.DATABASE,
@@ -49,9 +111,25 @@ export class DatabaseUser
     );
 
     if (!result.documents.length) {
-      return null;
+      return 'NONE';
     }
 
-    return result.documents[0]['email'];
+    const user = result.documents[0];
+
+    return { 
+      $id: user['$id'], 
+      name: user['name'],
+      email: user['email'],
+      photo: user['photo'],
+      userType: user['userType'],
+      address: {
+        state: user['state'],
+        city: user['city'],
+        neighborhood: user['neighborhood'],
+        street: user['street'],
+        cep: user['cep'],
+        streetNumber: user['streetNumber']
+      }
+     };;
   }
 }

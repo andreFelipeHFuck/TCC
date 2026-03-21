@@ -1,8 +1,14 @@
-import { Account, Client, Databases } from 'appwrite';
+import { 
+    Account, 
+    Client, 
+    Databases, 
+    Functions 
+} from 'appwrite';
 
 export type AppwriteClient = Client | 'NONE';
 export type AppwriteAccount = Account | 'NONE';
 export type AppwriteDatabases = Databases | 'NONE';
+export type AppwriteFunctions = Functions | 'NONE';
 
 export enum AppwriteServices {
     UNKNOWN = 'APPWRITE UNKNOWN SERVICE',
@@ -23,7 +29,7 @@ export enum AppwriteDatabaseCollection {
  */
 export interface AppwriteConfig {
     endpoint: string,
-    project: string,
+    projectId: string,
     databaseId: string
 };
 
@@ -31,4 +37,5 @@ export interface AppwriteUser {
     email: string;
     password: string;
 }
+
 

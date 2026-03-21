@@ -54,6 +54,7 @@ export interface AuthenticationRequest {
   authToken: string;
   expiresAt: Date | undefined;
   userSummary: UserSummary | undefined;
+  sessionId: string;
 }
 
 export interface UserSummary {
@@ -68,7 +69,7 @@ export interface AuthenticationResponse {
 }
 
 function createBaseAuthenticationRequest(): AuthenticationRequest {
-  return { authToken: "", expiresAt: undefined, userSummary: undefined };
+  return { authToken: "", expiresAt: undefined, userSummary: undefined, sessionId: "" };
 }
 
 export const AuthenticationRequest: MessageFns<AuthenticationRequest> = {
@@ -81,6 +82,9 @@ export const AuthenticationRequest: MessageFns<AuthenticationRequest> = {
     }
     if (message.userSummary !== undefined) {
       UserSummary.encode(message.userSummary, writer.uint32(26).fork()).join();
+    }
+    if (message.sessionId !== "") {
+      writer.uint32(34).string(message.sessionId);
     }
     return writer;
   },
@@ -116,6 +120,14 @@ export const AuthenticationRequest: MessageFns<AuthenticationRequest> = {
           message.userSummary = UserSummary.decode(reader, reader.uint32());
           continue;
         }
+        case 4: {
+          if (tag !== 34) {
+            break;
+          }
+
+          message.sessionId = reader.string();
+          continue;
+        }
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -142,6 +154,11 @@ export const AuthenticationRequest: MessageFns<AuthenticationRequest> = {
         : isSet(object.user_summary)
         ? UserSummary.fromJSON(object.user_summary)
         : undefined,
+      sessionId: isSet(object.sessionId)
+        ? globalThis.String(object.sessionId)
+        : isSet(object.session_id)
+        ? globalThis.String(object.session_id)
+        : "",
     };
   },
 
@@ -156,6 +173,9 @@ export const AuthenticationRequest: MessageFns<AuthenticationRequest> = {
     if (message.userSummary !== undefined) {
       obj.userSummary = UserSummary.toJSON(message.userSummary);
     }
+    if (message.sessionId !== "") {
+      obj.sessionId = message.sessionId;
+    }
     return obj;
   },
 
@@ -169,6 +189,7 @@ export const AuthenticationRequest: MessageFns<AuthenticationRequest> = {
     message.userSummary = (object.userSummary !== undefined && object.userSummary !== null)
       ? UserSummary.fromPartial(object.userSummary)
       : undefined;
+    message.sessionId = object.sessionId ?? "";
     return message;
   },
 };

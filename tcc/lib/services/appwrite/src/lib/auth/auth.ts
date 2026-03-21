@@ -1,15 +1,18 @@
-import { Injectable } from '@angular/core';
-import { Account, ID, Models } from 'appwrite';
+import { inject, Injectable } from '@angular/core';
+import { 
+  Account, 
+  ID, 
+  Models 
+} from 'appwrite';
+
+import { AppwriteServices, } from '@tcc/types';
 
 import { Appwrite } from '../appwrite';
-import { AppwriteServices } from '@tcc/types';
-
 
 @Injectable({
   providedIn: 'root',
 })
-export class Auth extends Appwrite {
-
+export class Auth extends Appwrite {  
   constructor() {
     super();
     this.service = AppwriteServices.AUTH;
@@ -63,7 +66,18 @@ export class Auth extends Appwrite {
     );
   }
 
-  initSessionProxy() { }
+  async generateToken(): Promise<string> {
+    /**
+     * @todo Aumentar o tempo de expiração do Token
+     */
+    const token =  await this.handleCall(
+      this.account,
+      (account: Account) => account.createJWT(),
+      this.service,
+      'Token gerado com sucesso',
+      'Erro ao gerar token'
+    );
 
-  finishSessionProxy() { }
+    return token.jwt;
+  }
 }

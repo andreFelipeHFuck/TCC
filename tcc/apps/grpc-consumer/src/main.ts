@@ -16,7 +16,6 @@ async function bootstrap() {
     transport: Transport.GRPC,
     options: {
       package: AUTH_GRPC_CONFIG.package,
-      // Aqui resolvemos o path real relativo à execução da APP
       protoPath: join(__dirname, AUTH_GRPC_CONFIG.protoPath),
       url: '0.0.0.0:50051',
     },

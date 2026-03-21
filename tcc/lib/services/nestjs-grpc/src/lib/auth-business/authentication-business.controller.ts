@@ -4,46 +4,34 @@ import {
     Injectable, 
     UseGuards 
 } from '@nestjs/common';
-
-import { 
-    GrpcMethod, 
-    RpcException 
-} from '@nestjs/microservices';
-import { 
-    Metadata, 
-    ServerUnaryCall 
-} from '@grpc/grpc-js';
-import { status } from '@grpc/grpc-js';
-
-import { AuthRpcGuard } from './authentication-business.guard';
+import { GrpcMethod } from '@nestjs/microservices';
 
 import {
+    CsmsController,
     AuthenticationRequest,
     AuthenticationResponse
 } from '@tcc/types'
 import { ConsoleLogger } from '@tcc/utils';
 
+import { AuthRpcGuard } from './authentication-business.guard';
+import { AuthenticationBusinessService } from './authentication-business.service';
 
 @Injectable()
 @Controller()
 export class AuthBusinessController {
     constructor(
+        private readonly authService: AuthenticationBusinessService,
         @Inject('LOGGER_TOKEN') private readonly logger: ConsoleLogger
     ) {}
 
+    private readonly controller = CsmsController.AUTH;
+
     @UseGuards(AuthRpcGuard)
     @GrpcMethod('AuthenticationService', 'SendAuthentication')
-    sendAuthentication(
-        data: AuthenticationRequest,
-        metadata: Metadata,
-        call: ServerUnaryCall<any, any>
-    ): AuthenticationResponse {
-        this.logger.info(`[RPC AUTH BUSINESS] Autenticando usuário: ${JSON.stringify(data)}`);
+    async sendAuthentication(
+        data: AuthenticationRequest
+    ): Promise<AuthenticationResponse> {
 
-    return {
-      success: true,
-      sessionId: `nest_sess_${Date.now()}`,
-      processedAt: new Date(Date.now()),
-    };
- }
+        return await this.authService.createSession(data);
+    }
 }

@@ -6,10 +6,9 @@ export type UserType = 'driver' | 'administrator';
 export interface User {
     $id: string,
     name: string,
-    /** EnergyTransferPeriod criar um tipo photo no banco */
     photo: string,
     email: string,
-    password: string,
+    password?: string,
     userType: UserType,
     address: Address,
     idTokens?: IdToken[]
@@ -18,7 +17,7 @@ export interface User {
 export interface UserCreateDTO extends Address {
     name: string,
     email: string,
-    password: string,
+    password?: string,
     photo: string,
     userType: UserType,
 }

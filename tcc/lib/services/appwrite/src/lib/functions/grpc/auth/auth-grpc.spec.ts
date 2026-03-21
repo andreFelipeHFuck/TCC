@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AuthProxy } from './auth-proxy';
+import { AuthGrpc } from './auth-grpc';
 
-describe('AuthProxy', () => {
-  let service: AuthProxy;
+describe('AuthGrpc', () => {
+  let service: AuthGrpc;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(AuthProxy);
+    service = TestBed.inject(AuthGrpc);
   });
 
   it('should be created', () => {

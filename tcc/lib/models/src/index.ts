@@ -1,4 +1,2 @@
 export * from './lib/models';
-
-// AUTH BUSINESS MODEL
-export * from './lib/auth-business/auth-business';
+export * from './lib/auth-business/atuh-business';

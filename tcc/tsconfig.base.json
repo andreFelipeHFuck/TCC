@@ -27,13 +27,16 @@
       "@tcc/bigQuery": ["lib/services/bigQuery/src/index.ts"],
       "@tcc/big-query-adapter": ["lib/adapters/big-query-adapter/src/index.ts"],
       "@tcc/nestjs-grpc": ["lib/services/nestjs-grpc/src/index.ts"],
+      "@tcc/redis": ["lib/services/redis/src/index.ts"],
       "@tcc/nest-logger": ["lib/services/nest-logger/src/index.ts"],
       "@tcc/shared-angular": ["lib/services/shared/src/index.ts"],
       "@tcc/auth": ["lib/components/features/auth/src/index.ts"],
       "@tcc/components/buttons": ["lib/components/shared/buttons/src/index.ts"],
       "@tcc/components/title": ["lib/components/shared/title/src/index.ts"],
       "@tcc/components/forms": ["lib/components/shared/forms/src/index.ts"],
-      "@tcc/components/mobile-page": ["lib/components/shared/mobile-page/src/index.ts"],
+      "@tcc/components/mobile-page": [
+        "lib/components/shared/mobile-page/src/index.ts"
+      ],
       "@tcc/mobile-page": ["lib/components/shared/mobile-page/src/index.ts"]
     }
   },

@@ -16,7 +16,7 @@ import { Auth } from '@tcc/auth';
 export class App {
   protected appwrite = appwriteCreateConnection({
     endpoint: environment.appwrite.endpoint,
-    project: environment.appwrite.projectId,
+    projectId: environment.appwrite.projectId,
     databaseId: environment.appwrite.databaseId
   });
 }

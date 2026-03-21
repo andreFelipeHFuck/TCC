@@ -12,6 +12,7 @@ message AuthenticationRequest {
     string auth_token = 1;
     google.protobuf.Timestamp expires_at = 2;
     UserSummary user_summary = 3;
+    string session_id = 4;
 }
 
 enum Roles {

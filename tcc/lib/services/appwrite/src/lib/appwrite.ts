@@ -5,6 +5,7 @@ import {
   AppwriteAccount,
   AppwriteClient,
   AppwriteDatabases,
+  AppwriteFunctions,
   AppwriteConfig,
   AppwriteError,
   AppwriteServices,
@@ -22,13 +23,15 @@ import { appwriteCreateConnection } from './appwrite-connections/appwrite-connec
 })
 export class Appwrite extends ConnectionServices<AppwriteError> {
   private readonly appwriteConfig: AppwriteConfig = inject(APPWRITE_CONFIG);
-  private readonly logger = inject(Logger);
+  
+  protected readonly logger = inject(Logger);
 
   protected service: AppwriteServices = AppwriteServices.CONNECTION;
 
   protected client: AppwriteClient = 'NONE';
   protected account: AppwriteAccount = 'NONE';
   protected databases: AppwriteDatabases = 'NONE';
+  protected functions: AppwriteFunctions = 'NONE';
 
   constructor() {
     super();
@@ -43,7 +46,7 @@ export class Appwrite extends ConnectionServices<AppwriteError> {
   async init(): Promise<void> {
 
     try {
-      [this.client, this.account, this.databases] = appwriteCreateConnection(this.appwriteConfig);
+      [this.client, this.account, this.databases, this.functions] = appwriteCreateConnection(this.appwriteConfig);
       this.setReady();
 
       this.logger.info(`[${this.service.valueOf()}] Conexão inicializada com sucesso`);
@@ -87,11 +90,21 @@ export class Appwrite extends ConnectionServices<AppwriteError> {
     return 'NONE';
   }
 
+  getFunctions(): AppwriteFunctions {
+    if (this.functions != 'NONE') {
+      return this.functions;
+    }
+
+    this.setError(appwriteMapperError(AppwriteServices.CONNECTION, new Error('Functions não inicializado')));
+
+    return 'NONE';
+  }
+
   /**
    * Método que trata os erros que podem ocorrer durante a execução de uma promise do Appwrite
    * 
-   * @param promise Promise que será executada
    * @param service Serviço que será executado
+   * @param promise Promise que será executada
    * @param serviceName Nome do serviço que será executado
    * @param successMessage Mensagem de sucesso
    * @param errorMessage Mensagem de erro
@@ -104,7 +117,7 @@ export class Appwrite extends ConnectionServices<AppwriteError> {
     serviceId: AppwriteServices,
     successMessage: string,
     errorMessage: string,
-    silent: boolean = false
+    silent = false
   ) {
 
     if (this.client === 'NONE' || service === 'NONE') {
