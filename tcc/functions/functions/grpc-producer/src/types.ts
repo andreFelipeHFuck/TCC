@@ -21,7 +21,8 @@ export interface GrpcRequest {
         seconds: number, 
         nanos: number 
     }, 
-    user_summary: UserSummary 
+    user_summary: UserSummary,
+    session_id: string 
 }
 
 export interface AppwriteContext {

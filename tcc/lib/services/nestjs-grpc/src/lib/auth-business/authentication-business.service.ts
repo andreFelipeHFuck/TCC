@@ -18,7 +18,7 @@ export class AuthenticationBusinessService {
         
     ) {}
 
-    private readonly session = CsmsServices.AUTH;
+    private readonly service = CsmsServices.AUTH;
 
     /**
      * @todo Refatoração do serviço de autentificação do sistema
@@ -86,6 +86,7 @@ export class AuthenticationBusinessService {
     async createSession(data: AuthenticationRequest): Promise<AuthenticationResponse> {
         // Validação preventiva basilar
         if (!data || !data.sessionId) {
+            this.logger.error(`[${this.service.valueOf()}] Dados inválidos para criação de sessão: ${JSON.stringify(data)}`);
             return {
                 success: false,
                 sessionId: data?.sessionId ?? '',
@@ -98,6 +99,7 @@ export class AuthenticationBusinessService {
             const exists = !!currentData;
 
             if(!exists) {
+                this.logger.info(`[${this.service.valueOf()}] Criando sessão: ${JSON.stringify(data)}`);
                 const save = await this.redisStoreService.saveSession(data.sessionId, data);
                 return {
                     success: save,
@@ -109,6 +111,7 @@ export class AuthenticationBusinessService {
             const updata = await this.updateSession(currentData, data);
 
             if(!updata) {
+                this.logger.error(`[${this.service.valueOf()}] Erro ao atualizar sessão: ${JSON.stringify(data)}`);
                 return {
                     success: false,
                     sessionId: data.sessionId,
@@ -116,6 +119,7 @@ export class AuthenticationBusinessService {
                 };
             }
 
+            this.logger.info(`Sessão ${data.sessionId} atualizada com sucesso, dados: ${JSON.stringify(data)}`);
             return {
                 success: true,
                 sessionId: currentData.sessionId, // Retorna dados oficiais salvos
