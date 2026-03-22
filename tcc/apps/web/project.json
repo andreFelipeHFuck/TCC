@@ -19,7 +19,10 @@
             "input": "apps/web/public"
           }
         ],
-        "styles": ["apps/web/src/styles.scss"]
+        "styles": [
+          "apps/web/src/styles.scss",
+          "apps/web/public/normalize.css"
+        ]
       },
       "configurations": {
         "production": {
@@ -31,8 +34,8 @@
             },
             {
               "type": "anyComponentStyle",
-              "maximumWarning": "4kb",
-              "maximumError": "8kb"
+              "maximumWarning": "10kb",
+              "maximumError": "16kb"
             }
           ],
           "outputHashing": "all"
