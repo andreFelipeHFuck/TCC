@@ -3,8 +3,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
   appName: 'frontend',
-  webDir: '../../dist/apps/web',
-  bundledWebRuntime: false,
+  webDir: '../../dist/apps/web/browser',
   server: {
     androidScheme: 'https',
   },
