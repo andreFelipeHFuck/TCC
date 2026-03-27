@@ -1,1 +1,1 @@
-export * from './lib/capacitor-session.service';
+export * from './lib/capacitor-session';
