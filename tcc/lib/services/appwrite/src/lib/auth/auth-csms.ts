@@ -52,13 +52,16 @@ export class AuthCsms {
     this.logger.info(`[${this.service}] Iniciando sessão no CSMS...`);
     const result = await this.authGrpc.authSession(authBody);
 
+    this.logger.info(`[${this.service}] Resultado da sessão: ${JSON.stringify(result)}`);
+
     if (result.success && result.sessionId) {
       this.logger.info(`[${this.service}] Sessão obtida, salvando no cache persistente: ${result.sessionId}`);
       await this.capacitorSession.setSession(result);
-    }else{
-      this.logger.error(`[${this.service}]: Falha ao obter sessão no CSMS`);
-      return false;
     }
+    // else{
+    //   this.logger.error(`[${this.service}]: Falha ao obter sessão no CSMS`);
+    //   return false;
+    // }
 
     this.logger.info(`[${this.service}] Sessão iniciada com sucesso: ${JSON.stringify(result)}`);
     return true;
@@ -74,7 +77,7 @@ export class AuthCsms {
 
     const cachedSession = await this.capacitorSession.getSession();
     if (cachedSession) {
-      this.logger.info(`[${this.service}]: Sessão prévia encontrada no cache: ${cachedSession}`);
+      this.logger.info(`[${this.service}]: Sessão prévia encontrada no cache ${JSON.stringify(cachedSession)}`);
       return true;
     }
 

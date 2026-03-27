@@ -48,6 +48,11 @@ export class AuthGrpc extends Appwrite {
     );
 
     this.logger.info(`[${this.function}] Result: ${JSON.stringify(result.responseBody)}`);
-    return JSON.parse(result.responseBody) as AuthenticationResponse;
+    const response = JSON.parse(result.responseBody)['reply'];
+    return {
+      success: response.success,
+      sessionId: response.session_id,
+      processedAt: new Date(response.processed_at)
+    } as AuthenticationResponse;
   }
 }
