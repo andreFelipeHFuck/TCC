@@ -11,6 +11,7 @@ import { AuthBusiness } from '@tcc/models';
 import { Auth } from './auth';
 import { AuthUser } from './auth-user';
 import { AuthGrpc } from '../functions/grpc/auth/auth-grpc';
+import { CapacitorSessionService } from '@tcc/capacitor-session';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,7 @@ export class AuthCsms {
   private readonly auth = inject(Auth);
   private readonly authUser = inject(AuthUser);
   private readonly authGrpc = inject(AuthGrpc);
+  private readonly capacitorSession = inject(CapacitorSessionService);
 
   private readonly logger = inject(Logger);
 
@@ -44,6 +46,11 @@ export class AuthCsms {
       expiresAt
     );
 
+    const cachedSession = await this.capacitorSession.getSession();
+    if (cachedSession) {
+      this.logger.info(`[${this.service}]: Sessão prévia encontrada no cache: ${cachedSession}`);
+    }
+
     if (authBody === 'NONE') {
       this.logger.error(`[${this.service}]: Falha ao gerar Authentication Request válido`);
       return;
@@ -51,6 +58,12 @@ export class AuthCsms {
 
     this.logger.info(`[${this.service}] Iniciando sessão no CSMS...`);
     const result = await this.authGrpc.authSession(authBody);
+
+    if (result.success && result.sessionId) {
+      this.logger.info(`[${this.service}] Sessão obtida, salvando no cache persistente: ${result.sessionId}`);
+      await this.capacitorSession.setSession(result.sessionId);
+    }
+
     this.logger.info(`[${this.service}] Sessão iniciada com sucesso: ${JSON.stringify(result)}`);
   }
 
