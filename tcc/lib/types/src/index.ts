@@ -14,9 +14,6 @@ export * from './lib/connections';
 // APPWRITE TYPES 
 export * from './lib/appwrite-types';
 
-// CAPACITOR TYPES
-export * from './lib/capacitor';
-
 // DB TYPES
 export * from './lib/db';
 
