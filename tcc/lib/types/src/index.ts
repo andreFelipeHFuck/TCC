@@ -10,9 +10,12 @@ export * from './lib/logger-types';
 
 // CONNECTIONS ABSTRACT CLASS
 export * from './lib/connections';
-1
+
 // APPWRITE TYPES 
 export * from './lib/appwrite-types';
+
+// CAPACITOR TYPES
+export * from './lib/capacitor';
 
 // DB TYPES
 export * from './lib/db';
