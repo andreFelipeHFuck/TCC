@@ -11,16 +11,15 @@ import { SendAuthentication } from './send-authentication.js';
 const protoDescriptor = packageDefinitions(ProceduresTypes.BUSINESS) as any;
 
 function validateBody(req: any): BodyRequest | null {
-    const { function_type, ...res} = req.body || {};
-    const validate: boolean = typeof function_type === 'string'
-                       && Object.keys(res).length > 0;
+    const { auth_type, ...res} = req.body || {};
+    const validate: boolean = typeof auth_type === 'string';
 
     if (!validate) {
         return null;
     }
 
     return {
-        function_type,
+        auth_type,
         request: res
     }
 }
@@ -28,15 +27,15 @@ function validateBody(req: any): BodyRequest | null {
 function sendRequest(client: any, body: BodyRequest) {
     console.log(`[${PRODUCER}] Iniciando função gRPC Producer ...`);
 
-    const { function_type, request } = body;
+    const { auth_type, request } = body;
 
-    switch (function_type) {
+    switch (auth_type) {
         case 'AUTH':
             return SendAuthentication(client, request);
         // case 'LOGOUT':
         //     return client.SendLogout(request);
         default:
-            throw new Error(`[${PRODUCER}] Tipo de função inválido: ${function_type}`);
+            throw new Error(`[${PRODUCER}] Tipo de função inválido: ${auth_type}`);
     }
 }
 

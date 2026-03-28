@@ -59,6 +59,7 @@ export interface LogoutResponse {
 }
 
 export interface AuthenticationRequest {
+  authType: string;
   authToken: string;
   expiresAt: Date | undefined;
   userSummary: UserSummary | undefined;
@@ -199,7 +200,7 @@ export const LogoutResponse: MessageFns<LogoutResponse> = {
 };
 
 function createBaseAuthenticationRequest(): AuthenticationRequest {
-  return { authToken: "", expiresAt: undefined, userSummary: undefined, sessionId: "" };
+  return { authType: "", authToken: "", expiresAt: undefined, userSummary: undefined, sessionId: "" };
 }
 
 export const AuthenticationRequest: MessageFns<AuthenticationRequest> = {
@@ -215,6 +216,9 @@ export const AuthenticationRequest: MessageFns<AuthenticationRequest> = {
     }
     if (message.sessionId !== "") {
       writer.uint32(34).string(message.sessionId);
+    }
+    if (message.authType !== "") {
+      writer.uint32(42).string(message.authType);
     }
     return writer;
   },
@@ -258,6 +262,14 @@ export const AuthenticationRequest: MessageFns<AuthenticationRequest> = {
           message.sessionId = reader.string();
           continue;
         }
+        case 5: {
+          if (tag !== 42) {
+            break;
+          }
+
+          message.authType = reader.string();
+          continue;
+        }
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -289,6 +301,11 @@ export const AuthenticationRequest: MessageFns<AuthenticationRequest> = {
         : isSet(object.session_id)
         ? globalThis.String(object.session_id)
         : "",
+      authType: isSet(object.authType)
+        ? globalThis.String(object.authType)
+        : isSet(object.auth_type)
+        ? globalThis.String(object.auth_type)
+        : "",
     };
   },
 
@@ -306,6 +323,9 @@ export const AuthenticationRequest: MessageFns<AuthenticationRequest> = {
     if (message.sessionId !== "") {
       obj.sessionId = message.sessionId;
     }
+    if (message.authType !== "") {
+      obj.authType = message.authType;
+    }
     return obj;
   },
 
@@ -320,6 +340,7 @@ export const AuthenticationRequest: MessageFns<AuthenticationRequest> = {
       ? UserSummary.fromPartial(object.userSummary)
       : undefined;
     message.sessionId = object.sessionId ?? "";
+    message.authType = object.authType ?? "";
     return message;
   },
 };

@@ -20,7 +20,7 @@ function generateRequest(request: any) {
     const validate: boolean = validateRequest(request);
 
     if(!validate) 
-        throw Error(`[${PRODUCER}] Requisição inválida, body invalido: ${JSON.stringify(request)}`);
+        throw Error(`[${PRODUCER}] Requisição inválida, request invalido: ${JSON.stringify(request)}`);
 
     const req = {
         auth_token: request.token,
