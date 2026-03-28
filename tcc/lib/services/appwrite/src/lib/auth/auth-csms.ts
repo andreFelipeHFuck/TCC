@@ -5,7 +5,8 @@ import {
 
 import { 
   Logger,
-  UserAuth
+  UserAuth,
+  AuthType
 } from '@tcc/types';
 import { AuthBusiness } from '@tcc/models';
 
@@ -49,6 +50,7 @@ export class AuthCsms {
 
     const expiresAt = new Date(Date.now() + 15 * 60 * 1000);
     const authBody = this.authBusiness.generateAuthenticationRequest(
+      AuthType.AUTH,
       user.$id,
       user.name,
       token,
@@ -81,12 +83,14 @@ export class AuthCsms {
     const user = await this.verifyUser();
     
     if (user != 'NONE') {
+      await this.capacitorSession.removeSession();
       const cachedSession = await this.capacitorSession.getSession();
       if (cachedSession) {
         this.logger.info(`[${this.service}]: Sessão prévia encontrada no cache ${JSON.stringify(cachedSession)}`);
         return true;
       }
 
+      this.logger.info(`[${this.service}]: Iniciando sessão no CSMS...`);
       const session = await this.createSession(user);
       return session;
     }
