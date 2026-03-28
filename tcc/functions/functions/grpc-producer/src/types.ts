@@ -8,7 +8,7 @@ export enum GrpcFunctionType {
 }
 
 export interface BodyRequest {
-    function_type: GrpcFunctionType;
+    auth_type: GrpcFunctionType;
     request: object;
 }
 
