@@ -1,3 +1,8 @@
+export enum AuthType {
+    LOGIN = 'LOGIN',
+    LOGOUT = 'LOGOUT'
+}
+
 export type AuthCsmsFunctionBody = {
     user_id: string;
     user_name: string;
