@@ -7,6 +7,8 @@ import * as grpc from '@grpc/grpc-js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+export const PRODUCER = 'APPWRITE FUNCTION GRPC PRODUCER';
+
 export enum ProceduresTypes  {
     UNKNOWN = 0,
     BUSINESS = 1

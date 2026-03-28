@@ -6,6 +6,15 @@ import "google/protobuf/timestamp.proto";
 
 service AuthenticationService {
     rpc SendAuthentication (AuthenticationRequest) returns (AuthenticationResponse) {}
+    rpc Logout (LogoutRequest) returns (LogoutResponse) {}
+}
+
+message LogoutRequest {
+    string session_id = 1;
+}
+
+message LogoutResponse {
+    bool success = 1;
 }
 
 message AuthenticationRequest {

@@ -10,18 +10,18 @@ export class AuthBusiness {
     private sessionId = '';
 
     private authenticationRequest: AuthenticationRequest | 'NONE' = 'NONE';
-    private authenticatioResponse: AuthenticationResponse | 'NONE' = 'NONE';
+    private authenticationResponse: AuthenticationResponse | 'NONE' = 'NONE';
 
     public getAuthenticationRequest(): AuthenticationRequest | 'NONE' {
         return this.authenticationRequest;
     } 
 
     public getAuthenticationResponse(): AuthenticationResponse | 'NONE' {
-        return this.authenticatioResponse;
+        return this.authenticationResponse;
     }
 
     public setAuthenticationResponse(authenticationResponse: AuthenticationResponse): void {
-        this.authenticatioResponse = authenticationResponse;
+        this.authenticationResponse = authenticationResponse;
     }
 
     private generateSessionId(): void {
