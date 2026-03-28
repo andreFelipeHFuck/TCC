@@ -48,11 +48,23 @@ export class AuthGrpc extends Appwrite {
     );
 
     this.logger.info(`[${this.function}] Result: ${JSON.stringify(result.responseBody)}`);
-    const response = JSON.parse(result.responseBody)['reply'];
+    const response = JSON.parse(result.responseBody)?.reply || {};
+    
+    // Safely parse processedAt (handles ISO string or gRPC Timestamp object)
+    const rawDate = response.processed_at || response.processedAt;
+    let processedAt: Date;
+
+    if (rawDate && typeof rawDate === 'object' && 'seconds' in rawDate) {
+      processedAt = new Date(rawDate.seconds * 1000 + Math.floor((rawDate.nanos || 0) / 1000000));
+    } else {
+      processedAt = new Date(rawDate || Date.now());
+    }
+
     return {
-      success: response.success,
-      sessionId: response.session_id,
-      processedAt: new Date(response.processed_at)
-    } as AuthenticationResponse;
+      success: !!(response.success),
+      sessionId: response.session_id || response.sessionId || '',
+      processedAt: processedAt,
+      expiresAt: processedAt // Convenience alias
+    } as any;
   }
 }

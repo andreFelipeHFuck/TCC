@@ -79,15 +79,30 @@ export class AuthCsms {
     return true;
   }
 
+  private isSessionExpired(session: any): boolean {
+    if (!session || !session.processedAt) return true;
+
+    const sessionDate = new Date(session.processedAt);
+    const now = new Date();
+    const diffInMinutes = (now.getTime() - sessionDate.getTime()) / (1000 * 60);
+
+    return diffInMinutes >= 15;
+  }
+
   async initSession(): Promise<boolean> { 
     const user = await this.verifyUser();
     
     if (user != 'NONE') {
-      await this.capacitorSession.removeSession();
       const cachedSession = await this.capacitorSession.getSession();
+      
       if (cachedSession) {
-        this.logger.info(`[${this.service}]: Sessão prévia encontrada no cache ${JSON.stringify(cachedSession)}`);
-        return true;
+        if (!this.isSessionExpired(cachedSession)) {
+          this.logger.info(`[${this.service}]: Sessão válida encontrada no cache ${JSON.stringify(cachedSession)}`);
+          return true;
+        }
+        
+        this.logger.info(`[${this.service}]: Sessão expirada encontrada, removendo...`);
+        await this.capacitorSession.removeSession();
       }
 
       this.logger.info(`[${this.service}]: Iniciando sessão no CSMS...`);
@@ -108,4 +123,6 @@ export class AuthCsms {
   //   }
     
   // }
+
+
 }
