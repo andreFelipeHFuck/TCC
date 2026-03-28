@@ -31,6 +31,17 @@ export class AuthCsms {
 
   protected service = 'APPWRITE CSMS AUTH SERVICE';
 
+  private async verifyUser(): Promise<UserAuth | 'NONE'> {
+    const user = await this.authUser.getUser();
+    
+    if (user == 'NONE') {
+      this.logger.error(`[${this.service}]: Usuário não encontrado no estado local após verificação de sessão, ${user}`);
+      return 'NONE';
+    }
+
+    return user;
+  }
+
   private async createSession(user: UserAuth): Promise<boolean> {
     if(user == 'NONE') return false;
 
@@ -57,34 +68,40 @@ export class AuthCsms {
     if (result.success && result.sessionId) {
       this.logger.info(`[${this.service}] Sessão obtida, salvando no cache persistente: ${result.sessionId}`);
       await this.capacitorSession.setSession(result);
+    }else{
+      this.logger.error(`[${this.service}]: Falha ao obter sessão no CSMS`);
+      return false;
     }
-    // else{
-    //   this.logger.error(`[${this.service}]: Falha ao obter sessão no CSMS`);
-    //   return false;
-    // }
 
     this.logger.info(`[${this.service}] Sessão iniciada com sucesso: ${JSON.stringify(result)}`);
     return true;
   }
 
   async initSession(): Promise<boolean> { 
-    const user = await this.authUser.getUser();
+    const user = await this.verifyUser();
     
-    if (user == 'NONE') {
-      this.logger.error(`[${this.service}]: Usuário não encontrado no estado local após verificação de sessão, ${user}`);
-      return false;
+    if (user != 'NONE') {
+      const cachedSession = await this.capacitorSession.getSession();
+      if (cachedSession) {
+        this.logger.info(`[${this.service}]: Sessão prévia encontrada no cache ${JSON.stringify(cachedSession)}`);
+        return true;
+      }
+
+      const session = await this.createSession(user);
+      return session;
     }
 
-    const cachedSession = await this.capacitorSession.getSession();
-    if (cachedSession) {
-      this.logger.info(`[${this.service}]: Sessão prévia encontrada no cache ${JSON.stringify(cachedSession)}`);
-      return true;
-    }
-
-    const session = await this.createSession(user);
-    return session;
+    return false;
   }
 
-//   finishSessionProxy() { }
-// }
+  //private async closeSession() {}
+
+  // finishSession() {
+  //   const user = await this.verifyUser();
+    
+  //   if (user !== 'NONE') {
+
+  //   }
+    
+  // }
 }
