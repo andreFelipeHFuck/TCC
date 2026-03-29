@@ -1,10 +1,8 @@
 import { JsonPipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 
-import { 
-  AuthUser,
-  AuthCsms
-} from '@tcc/appwrite';
+import { AUTH_SERVICE } from '@tcc/types';
+import { CsmsSystem } from '@tcc/core';
 
 @Component({
   selector: 'app-user',
@@ -15,8 +13,8 @@ import {
   styleUrl: './user.css',
 })
 export class User {
-  private readonly authUser: AuthUser = inject(AuthUser);
-  private readonly authCsms: AuthCsms = inject(AuthCsms);
+  private readonly authService = inject(AUTH_SERVICE);
+  private readonly csmsSystem = inject(CsmsSystem);
 
   messageError = signal<string>('');
   user = signal<any>(null);
@@ -24,10 +22,10 @@ export class User {
   isError = computed(() => this.messageError().length > 0);
 
   public async initSession() {
-    this.authCsms.initSession();
+    await this.csmsSystem.initSession();
   }
 
   public async finishSession() {
-    this.authCsms.finishSession();
+    await this.csmsSystem.finishSession();
   }
 }

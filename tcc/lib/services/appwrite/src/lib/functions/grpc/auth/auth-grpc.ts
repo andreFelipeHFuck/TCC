@@ -10,7 +10,8 @@ import {
   AuthCsmsFunctionBody, 
   AuthenticationResponse,
   LogoutCsmsFunctionBody,
-  LogoutResponse
+  LogoutResponse,
+  IGrpcDriver
 } from '@tcc/types';
 
 import { Appwrite } from '../../../appwrite';
@@ -18,7 +19,7 @@ import { Appwrite } from '../../../appwrite';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGrpc extends Appwrite {
+export class AuthGrpc extends Appwrite implements IGrpcDriver {
   private functionId = '69a6d85800289f4983da';
   private readonly function = 'APPWRITE CSMS AUTH FUNCTION'
 
