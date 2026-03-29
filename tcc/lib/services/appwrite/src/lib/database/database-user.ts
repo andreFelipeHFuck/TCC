@@ -6,7 +6,8 @@ import {
   AppwriteDatabaseCollection,
   AppwriteServices,
   CrudServiceDB,
-  UserAuth
+  UserAuth,
+  IDatabaseDriver
 } from '@tcc/types';
 import { Database } from './database';
 
@@ -15,7 +16,7 @@ import { Database } from './database';
 })
 export class DatabaseUser
   extends Database
-  implements CrudServiceDB {
+  implements CrudServiceDB, IDatabaseDriver {
 
   constructor() {
     super();
@@ -130,6 +131,6 @@ export class DatabaseUser
         cep: user['cep'],
         streetNumber: user['streetNumber']
       }
-     };;
+     };
   }
 }
