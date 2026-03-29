@@ -39,11 +39,11 @@ export class AuthSystem implements AuthService {
     try {
       const user = await this.authDriver.get();
 
-      if (!user) {
+      if (user === 'NONE') {
         return 'NONE';
       }
 
-      return { $id: user.$id, email: user.email };
+      return user;
     } catch (error) {
       this.logger.error(`${this.service} Erro ao obter usuário autenticado`);
       return 'NONE';
