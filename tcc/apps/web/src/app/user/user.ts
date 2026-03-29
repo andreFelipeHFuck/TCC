@@ -23,12 +23,11 @@ export class User {
 
   isError = computed(() => this.messageError().length > 0);
 
-  public async getUser() {
-    const user = await this.authUser.getUser();
-    this.user.set(user);
-  }
-
   public async initSession() {
     this.authCsms.initSession();
+  }
+
+  public async finishSession() {
+    this.authCsms.finishSession();
   }
 }

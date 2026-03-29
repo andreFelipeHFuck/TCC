@@ -35,7 +35,10 @@ function generateRequest(request: any) {
     return req;
 }
 
-export function SendAuthentication(client: any, request: any) {
+export function SendAuthentication(
+    client: any, 
+    request: any
+) {
    console.log(`[${PRODUCER}] Iniciando função gRPC SendAuthentication ...`);
 
     try {

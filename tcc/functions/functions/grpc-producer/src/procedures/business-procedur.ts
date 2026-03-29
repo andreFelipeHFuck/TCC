@@ -32,8 +32,8 @@ function sendRequest(client: any, body: BodyRequest) {
     switch (auth_type) {
         case 'AUTH':
             return SendAuthentication(client, request);
-        // case 'LOGOUT':
-        //     return client.SendLogout(request);
+        case 'LOGOUT':
+            return client.SendLogout(request);
         default:
             throw new Error(`[${PRODUCER}] Tipo de função inválido: ${auth_type}`);
     }

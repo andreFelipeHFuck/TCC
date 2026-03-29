@@ -59,11 +59,11 @@ export interface LogoutResponse {
 }
 
 export interface AuthenticationRequest {
-  authType: string;
   authToken: string;
   expiresAt: Date | undefined;
   userSummary: UserSummary | undefined;
   sessionId: string;
+  authType: string;
 }
 
 export interface UserSummary {
@@ -200,7 +200,7 @@ export const LogoutResponse: MessageFns<LogoutResponse> = {
 };
 
 function createBaseAuthenticationRequest(): AuthenticationRequest {
-  return { authType: "", authToken: "", expiresAt: undefined, userSummary: undefined, sessionId: "" };
+  return { authToken: "", expiresAt: undefined, userSummary: undefined, sessionId: "", authType: "" };
 }
 
 export const AuthenticationRequest: MessageFns<AuthenticationRequest> = {
