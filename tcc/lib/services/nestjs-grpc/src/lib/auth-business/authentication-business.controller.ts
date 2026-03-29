@@ -9,11 +9,13 @@ import { GrpcMethod } from '@nestjs/microservices';
 import {
     CsmsController,
     AuthenticationRequest,
-    AuthenticationResponse
+    AuthenticationResponse,
+    LogoutRequest,
+    LogoutResponse
 } from '@tcc/types'
 import { ConsoleLogger } from '@tcc/utils';
 
-import { AuthRpcGuard } from './authentication-business.guard';
+import { AuthRpcGuard, LogoutRpcGuard } from './authentication-business.guard';
 import { AuthenticationBusinessService } from './authentication-business.service';
 
 @Injectable()
@@ -33,5 +35,13 @@ export class AuthBusinessController {
     ): Promise<AuthenticationResponse> {
 
         return await this.authService.createSession(data);
+    }
+
+    @UseGuards(LogoutRpcGuard)
+    @GrpcMethod('AuthenticationService', 'Logout')
+    async logout(
+        data: LogoutRequest
+    ): Promise<LogoutResponse> {
+        return await this.authService.logout(data);
     }
 }
