@@ -18,12 +18,10 @@ export default async ({ req, res, log, error }: AppwriteContext) => {
         const  responnse = sendAuthentication(grpcEndpoint, req.body);
 
         const result = await responnse.result;
-        const authToken = responnse.authToken;
 
         log('[APPWRITE FUNCTION GRPC PRODUCER] Resposta recebida do gRPC: ' + JSON.stringify(result));
 
         return res.json({ 
-            authToken: authToken,
             reply: (result as any).message 
         }, 200);
     } catch (e: any) {
