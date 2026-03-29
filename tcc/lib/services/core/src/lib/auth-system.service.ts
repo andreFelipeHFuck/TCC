@@ -36,13 +36,18 @@ export class AuthSystem implements AuthService {
   protected service = '[CORE SYSTEM AUTH SERVICE]';
 
   async isLoggedIn(): Promise<UserLoggedIn> {
-    const user = await this.authDriver.get();
+    try {
+      const user = await this.authDriver.get();
 
-    if (!user) {
+      if (!user) {
+        return 'NONE';
+      }
+
+      return { $id: user.$id, email: user.email };
+    } catch (error) {
+      this.logger.error(`${this.service} Erro ao obter usuário autenticado`);
       return 'NONE';
     }
-
-    return { $id: user.$id, email: user.email };
   }
 
   async getUser(): Promise<UserAuth> {
