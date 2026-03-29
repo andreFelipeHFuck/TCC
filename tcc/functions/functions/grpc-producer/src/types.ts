@@ -1,10 +1,24 @@
 export const GRPC_SERVICE_ENDPOINT = '172.17.0.1:50051'
 
+export const FUNCTION = 'APPWRITE FUNCTION GRPC PRODUCER';
+
+export enum GrpcFunctionType {
+    AUTH = 'AUTH',
+    LOGOUT = 'LOGOUT'
+}
+
+export interface LogoutRequest {
+    session_id: string;
+}
+
 export interface BodyRequest {
+    auth_type: GrpcFunctionType;
+    request: object;
+}
+
+export interface SendAuthenticationRequest {
     user_id: string;
     user_name: string;
-    // user_email
-    // user_type
     token: string;
     session_id: string;
     expires_at: string;

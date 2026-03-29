@@ -50,11 +50,20 @@ export function rolesToJSON(object: Roles): string {
   }
 }
 
+export interface LogoutRequest {
+  sessionId: string;
+}
+
+export interface LogoutResponse {
+  success: boolean;
+}
+
 export interface AuthenticationRequest {
   authToken: string;
   expiresAt: Date | undefined;
   userSummary: UserSummary | undefined;
   sessionId: string;
+  authType: string;
 }
 
 export interface UserSummary {
@@ -68,8 +77,130 @@ export interface AuthenticationResponse {
   processedAt: Date | undefined;
 }
 
+function createBaseLogoutRequest(): LogoutRequest {
+  return { sessionId: "" };
+}
+
+export const LogoutRequest: MessageFns<LogoutRequest> = {
+  encode(message: LogoutRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.sessionId !== "") {
+      writer.uint32(10).string(message.sessionId);
+    }
+    return writer;
+  },
+
+  decode(input: BinaryReader | Uint8Array, length?: number): LogoutRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    const end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseLogoutRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1: {
+          if (tag !== 10) {
+            break;
+          }
+
+          message.sessionId = reader.string();
+          continue;
+        }
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): LogoutRequest {
+    return {
+      sessionId: isSet(object.sessionId)
+        ? globalThis.String(object.sessionId)
+        : isSet(object.session_id)
+        ? globalThis.String(object.session_id)
+        : "",
+    };
+  },
+
+  toJSON(message: LogoutRequest): unknown {
+    const obj: any = {};
+    if (message.sessionId !== "") {
+      obj.sessionId = message.sessionId;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<LogoutRequest>, I>>(base?: I): LogoutRequest {
+    return LogoutRequest.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<LogoutRequest>, I>>(object: I): LogoutRequest {
+    const message = createBaseLogoutRequest();
+    message.sessionId = object.sessionId ?? "";
+    return message;
+  },
+};
+
+function createBaseLogoutResponse(): LogoutResponse {
+  return { success: false };
+}
+
+export const LogoutResponse: MessageFns<LogoutResponse> = {
+  encode(message: LogoutResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.success !== false) {
+      writer.uint32(8).bool(message.success);
+    }
+    return writer;
+  },
+
+  decode(input: BinaryReader | Uint8Array, length?: number): LogoutResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    const end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseLogoutResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1: {
+          if (tag !== 8) {
+            break;
+          }
+
+          message.success = reader.bool();
+          continue;
+        }
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): LogoutResponse {
+    return { success: isSet(object.success) ? globalThis.Boolean(object.success) : false };
+  },
+
+  toJSON(message: LogoutResponse): unknown {
+    const obj: any = {};
+    if (message.success !== false) {
+      obj.success = message.success;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<LogoutResponse>, I>>(base?: I): LogoutResponse {
+    return LogoutResponse.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<LogoutResponse>, I>>(object: I): LogoutResponse {
+    const message = createBaseLogoutResponse();
+    message.success = object.success ?? false;
+    return message;
+  },
+};
+
 function createBaseAuthenticationRequest(): AuthenticationRequest {
-  return { authToken: "", expiresAt: undefined, userSummary: undefined, sessionId: "" };
+  return { authToken: "", expiresAt: undefined, userSummary: undefined, sessionId: "", authType: "" };
 }
 
 export const AuthenticationRequest: MessageFns<AuthenticationRequest> = {
@@ -85,6 +216,9 @@ export const AuthenticationRequest: MessageFns<AuthenticationRequest> = {
     }
     if (message.sessionId !== "") {
       writer.uint32(34).string(message.sessionId);
+    }
+    if (message.authType !== "") {
+      writer.uint32(42).string(message.authType);
     }
     return writer;
   },
@@ -128,6 +262,14 @@ export const AuthenticationRequest: MessageFns<AuthenticationRequest> = {
           message.sessionId = reader.string();
           continue;
         }
+        case 5: {
+          if (tag !== 42) {
+            break;
+          }
+
+          message.authType = reader.string();
+          continue;
+        }
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -159,6 +301,11 @@ export const AuthenticationRequest: MessageFns<AuthenticationRequest> = {
         : isSet(object.session_id)
         ? globalThis.String(object.session_id)
         : "",
+      authType: isSet(object.authType)
+        ? globalThis.String(object.authType)
+        : isSet(object.auth_type)
+        ? globalThis.String(object.auth_type)
+        : "",
     };
   },
 
@@ -176,6 +323,9 @@ export const AuthenticationRequest: MessageFns<AuthenticationRequest> = {
     if (message.sessionId !== "") {
       obj.sessionId = message.sessionId;
     }
+    if (message.authType !== "") {
+      obj.authType = message.authType;
+    }
     return obj;
   },
 
@@ -190,6 +340,7 @@ export const AuthenticationRequest: MessageFns<AuthenticationRequest> = {
       ? UserSummary.fromPartial(object.userSummary)
       : undefined;
     message.sessionId = object.sessionId ?? "";
+    message.authType = object.authType ?? "";
     return message;
   },
 };
@@ -383,6 +534,7 @@ export interface AuthenticationServiceImplementation<CallContextExt = {}> {
     request: AuthenticationRequest,
     context: CallContext & CallContextExt,
   ): Promise<DeepPartial<AuthenticationResponse>>;
+  logout(request: LogoutRequest, context: CallContext & CallContextExt): Promise<DeepPartial<LogoutResponse>>;
 }
 
 export interface AuthenticationServiceClient<CallOptionsExt = {}> {
@@ -390,6 +542,7 @@ export interface AuthenticationServiceClient<CallOptionsExt = {}> {
     request: DeepPartial<AuthenticationRequest>,
     options?: CallOptions & CallOptionsExt,
   ): Promise<AuthenticationResponse>;
+  logout(request: DeepPartial<LogoutRequest>, options?: CallOptions & CallOptionsExt): Promise<LogoutResponse>;
 }
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;

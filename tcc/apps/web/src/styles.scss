@@ -1,4 +1,6 @@
-@use 'lib/components/material/src/index.scss';
+@use '../../../lib/components/material/src/index.scss'; /* For variables/tokens */
+@use '../../../lib/components/material/src/lib/material/styles/theme-output.scss'; /* For CSS emission */
+
 
 html {
     font-family: 'Inter', sans-serif;

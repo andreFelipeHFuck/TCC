@@ -11,5 +11,5 @@ export enum CsmsGuards {
 
 export enum CsmsController {
     UNKNOWN = 'CSMS UNKNOWN CONTROLLER',
-    AUTH = 'CSNS AUTH CONTROLLER',
+    AUTH = 'CSMS AUTH CONTROLLER',
 };

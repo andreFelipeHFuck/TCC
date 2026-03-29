@@ -3,7 +3,7 @@ import {
     Injectable
 } from "@nestjs/common";
 
-import { Logger } from "@tcc/types";
+import { Logger, LogoutRequest, LogoutResponse } from "@tcc/types";
 
 import { AuthenticationRequest, AuthenticationResponse } from "@tcc/types";
 
@@ -19,39 +19,6 @@ export class AuthenticationBusinessService {
     ) {}
 
     private readonly service = CsmsServices.AUTH;
-
-    /**
-     * @todo Refatoração do serviço de autentificação do sistema
-     * 
-     * Premissa:
-     * 
-     * O sistema de autentificação deve ser idepotente perante as várias chamada a sua criação
-     *  - Toda vez que estiver ativo e for feito uma chamada solicitando a criação deste deve retornar o 
-     *  id session já existente
-     * - Contudo para isso é preciso que haja uma chave para o redis que permita essa idepotencia
-     *      - Opcções:
-     *              - Usar id do usuário
-     *              - Usar email do usuário
-     *              - Usar id de sessão criado pelo cliente
-     * 
-     * Refatorações:
-     * 
-     *  X 1 - Escolha da chave a ser usada e refatoração a partir da chave;
-     * 
-     *  X3 - Criação de um método que permita validar e retornar o resultado de forma idepotente;
-     * X4 - Método para armazenar o resultado;
-     * 5 - Maneiras de renovar essa sessão em caso de expiração.
-     *
-     * 
-     */
-
-    /**
-     * Casos de borda possíveis:
-     * 
-     * 1 - O sistema não suporta falhas na rede, quedas do servidor ou falta de memória RAM
-     * 2 - Se o atributyo da chave for vazio ou inexistente durante a chamada da função
-     * 
-     */
 
     private async updateSession(currentData: AuthenticationRequest, data: AuthenticationRequest): Promise<boolean> {
         const isMatch: boolean = currentData.sessionId === data.sessionId;
@@ -132,6 +99,38 @@ export class AuthenticationBusinessService {
                 success: false,
                 sessionId: data.sessionId,
                 processedAt: data.expiresAt
+            };
+        }
+    }
+
+    async deleteSession(data: LogoutRequest): Promise<LogoutResponse> {
+        if (!data || !data.sessionId) {
+            this.logger.error(`[${this.service.valueOf()}] Dados inválidos para encerramento de sessão: ${JSON.stringify(data)}`);
+            return {
+                success: false,
+            };
+        }   
+
+        try {
+            const currentData = await this.redisStoreService.getSession<AuthenticationRequest>(data.sessionId);
+            const exists = !!currentData;
+
+            if(!exists) {
+                this.logger.info(`[${this.service.valueOf()}] Sessão não encontrada: ${JSON.stringify(data)}`);
+                return {
+                    success: false,
+                };
+            }
+
+            await this.redisStoreService.invalidate(data.sessionId);
+            this.logger.info(`[${this.service.valueOf()}] Logout da sessão realizado com sucesso`);
+            return {
+                success: true,
+            };
+        } catch (error) {
+            this.logger.error('Erro na infraestrutura do Redis durante tentativa de resolver deleteSession', error as NodeJS.ErrnoException);
+            return {
+                success: false,
             };
         }
     }
