@@ -5,14 +5,15 @@ import {
   OnInit,
   DestroyRef
 } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { 
   Logger, 
-  User 
+  User,
+  AUTH_SERVICE
 } from '@tcc/types';
-import { AuthUser } from '@tcc/appwrite';
 
 import { MobilePage } from '@tcc/components/mobile-page';
 import { Title } from '@tcc/components/title';
@@ -38,10 +39,12 @@ import { ReactiveFormsModule } from '@angular/forms';
   styleUrl: './register.scss',
 })
 export class Register implements OnInit {
-  private readonly authService = inject(AuthUser);
+  private readonly router = inject(Router);
+  private readonly destroyRef = inject(DestroyRef);
+  
+  private readonly authService = inject(AUTH_SERVICE);
   public readonly registerService = inject(RegisterService);
   private readonly logger = inject(Logger);
-  private readonly destroyRef = inject(DestroyRef);
 
   public component = '[REGISTER INTERFACE]';
 
@@ -55,12 +58,13 @@ export class Register implements OnInit {
     return true;
   }
 
-  private create(user: User) {
+  private async create(user: User) {
     this.logger.info(`${this.component} Iniciando cadastro do usuário ...`);
 
-    this.authService.createUser(user);
+    await this.authService.createUser(user);
 
     this.logger.info(`${this.component} Cadastro do usuário concluído com sucesso`);
+    this.router.navigate(['/']);
   }
 
   ngOnInit() {

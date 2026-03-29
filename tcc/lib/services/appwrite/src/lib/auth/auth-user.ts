@@ -33,13 +33,18 @@ export class AuthUser implements AuthService {
  */
 
   async isLoggedIn(): Promise<UserLoggedIn> {
-    const user = await this.auth.get();
+    try {
+      const user = await this.auth.get();
 
-    if (!user) {
+      if (!user) {
+        return 'NONE';
+      }
+
+      return { $id: user.$id, email: user.email };
+    } catch (error) {
+      this.logger.error(`${this.service} Erro ao obter usuário autenticado`);
       return 'NONE';
     }
-
-    return { $id: user.$id, email: user.email };
   }
 
   async getUser(): Promise<UserAuth>{
