@@ -2,19 +2,13 @@ import {
   Component, 
   inject
 } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router } from '@angular/router';
 
-import { AuthUser } from '@tcc/appwrite';
-
-import { MobilePage } from "@tcc/components/mobile-page"
+import { Button } from '@tcc/components/buttons';
+import { AuthForm } from '@tcc/components/forms';
+import { MobilePage } from '@tcc/components/mobile-page';
 import { Title } from '@tcc/components/title';
-import { Button } from "@tcc/components/buttons"
-import { AuthForm } from "@tcc/components/forms"
-
-import { 
-  FormResult, 
-  Logger 
-} from '@tcc/types';
+import { AUTH_SERVICE, FormResult, Logger } from '@tcc/types';
 
 @Component({
   selector: 'lib-auth',
@@ -22,15 +16,15 @@ import {
     MobilePage,
     Title,
     Button,
-    AuthForm,
-    RouterLink
+    AuthForm
   ],
   templateUrl: './auth.html',
   styleUrl: './auth.scss',
 })
 export class Auth {
-    private readonly authService = inject(AuthUser);
+    private readonly authService = inject(AUTH_SERVICE);
     private readonly logger = inject(Logger);
+    private readonly router = inject(Router);
 
     public component = '[AUTH INTERFACE]';
 
@@ -42,20 +36,19 @@ export class Auth {
       return true;
     }
 
-    private login(email: string, password: string) {
+    private async login(email: string, password: string) {
       this.logger.info(`${this.component} Iniciando login...`);
       
-      this.authService.login(email, password);
+      const login = await this.authService.login(email, password);
 
       this.logger.info(`${this.component} Login realizado com sucesso`);
-
-      return true;
+      this.router.navigate(['/']);
     }
 
-    emitForm(form: FormResult){
+    async emitForm(form: FormResult){
       if(this.validateForm(form)){
         this.logger.info(`${this.component} Formulário obtido com sucesso: ${JSON.stringify(form)}`);
-        this.login(form.email!, form.password!);
+        await this.login(form.email!, form.password!);
       } else {
         this.logger.error(`${this.component} Formulário inválido`);
       }
