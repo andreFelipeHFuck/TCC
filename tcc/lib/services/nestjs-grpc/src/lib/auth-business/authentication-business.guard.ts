@@ -63,10 +63,10 @@ export class LogoutRpcGuard implements CanActivate {
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const rpcContext = context.switchToRpc();
         const data = rpcContext.getData<LogoutRequest>();
-        this.logger.info(`${this.guard.valueOf()}: Verificando mensagem de logout - SessionID: ${data.sessionId}`);
+        this.logger.info(`[${this.guard.valueOf()}]: Verificando mensagem de logout - SessionID: ${data.sessionId}`);
 
         if (!data.sessionId) {
-            this.logger.error(`${this.guard.valueOf()}: Mensagem de logout inválida - SessionID ausente.`);
+            this.logger.error(`[${this.guard.valueOf()}]: Mensagem de logout inválida - SessionID ausente.`);
             throw new RpcException({
                 code: status.INVALID_ARGUMENT,
                 message: 'O campo sessionId é obrigatório para encerrar a sessão.',

@@ -42,6 +42,6 @@ export class AuthBusinessController {
     async logout(
         data: LogoutRequest
     ): Promise<LogoutResponse> {
-        return await this.authService.logout(data);
+        return await this.authService.deleteSession(data);
     }
 }

@@ -3,7 +3,7 @@ import {
     Injectable
 } from "@nestjs/common";
 
-import { Logger, LogoutRequest } from "@tcc/types";
+import { Logger, LogoutRequest, LogoutResponse } from "@tcc/types";
 
 import { AuthenticationRequest, AuthenticationResponse } from "@tcc/types";
 
@@ -122,9 +122,10 @@ export class AuthenticationBusinessService {
                 };
             }
 
-            const del = await this.redisStoreService.deleteSession(data.sessionId);
+            await this.redisStoreService.invalidate(data.sessionId);
+            this.logger.info(`[${this.service.valueOf()}] Logout da sessão realizado com sucesso`);
             return {
-                success: del,
+                success: true,
             };
         } catch (error) {
             this.logger.error('Erro na infraestrutura do Redis durante tentativa de resolver deleteSession', error as NodeJS.ErrnoException);
