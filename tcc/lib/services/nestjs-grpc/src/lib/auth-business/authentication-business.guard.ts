@@ -1,21 +1,13 @@
-import * as dotenv from 'dotenv';
-dotenv.config();
-
-/**
- * @todo criar um serviço para o backend para o SDK do Appwrite que possa fazer validar o JWS
- * @todo criar um serviço agnostico para BaaS para poder validar tanto usando Appwrite quanto Firebase
- */
-
 import { Injectable, CanActivate, ExecutionContext, Inject } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
+import { ConfigService } from '@nestjs/config';
 import { status } from '@grpc/grpc-js';
 
-import * as jwt from 'jsonwebtoken';
 import * as sdk from 'node-appwrite';
 
 import { 
     AuthenticationRequest, 
-    CsmsGuards, 
+    CsmsGuards,
     LogoutRequest
 } from '@tcc/types'
 import { ConsoleLogger } from '@tcc/utils';
@@ -23,6 +15,7 @@ import { ConsoleLogger } from '@tcc/utils';
 @Injectable()
 export class AuthRpcGuard implements CanActivate {
     constructor(
+        private readonly configService: ConfigService,
         @Inject('LOGGER_TOKEN') private readonly logger: ConsoleLogger
     ) {}
 
@@ -34,12 +27,12 @@ export class AuthRpcGuard implements CanActivate {
  
         try {
             const client = new sdk.Client()
-                  .setEndpoint("http://localhost/v1")
-                  .setProject("69598d0e0005838fd88f")
+                  .setEndpoint(this.configService.getOrThrow<string>('APPWRITE_ENDPOINT'))
+                  .setProject(this.configService.getOrThrow<string>('APPWRITE_PROJECT_ID'))
                   .setJWT(data.authToken);
 
             const session = new sdk.Account(client);
-            const sessionData = await session.get();
+            await session.get();
             
             return true;
         } catch(error) {
