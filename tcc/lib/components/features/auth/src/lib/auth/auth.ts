@@ -2,9 +2,8 @@ import {
   Component, 
   inject
 } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router } from '@angular/router';
 
-import { AuthUser } from '@tcc/appwrite'; // Opcional: remover se não for usar tipo explícito
 import { Button } from '@tcc/components/buttons';
 import { AuthForm } from '@tcc/components/forms';
 import { MobilePage } from '@tcc/components/mobile-page';
@@ -17,8 +16,7 @@ import { AUTH_SERVICE, FormResult, Logger } from '@tcc/types';
     MobilePage,
     Title,
     Button,
-    AuthForm,
-    RouterLink
+    AuthForm
   ],
   templateUrl: './auth.html',
   styleUrl: './auth.scss',
@@ -26,6 +24,7 @@ import { AUTH_SERVICE, FormResult, Logger } from '@tcc/types';
 export class Auth {
     private readonly authService = inject(AUTH_SERVICE);
     private readonly logger = inject(Logger);
+    private readonly router = inject(Router);
 
     public component = '[AUTH INTERFACE]';
 
@@ -37,20 +36,19 @@ export class Auth {
       return true;
     }
 
-    private login(email: string, password: string) {
+    private async login(email: string, password: string) {
       this.logger.info(`${this.component} Iniciando login...`);
       
-      this.authService.login(email, password);
+      const login = await this.authService.login(email, password);
 
       this.logger.info(`${this.component} Login realizado com sucesso`);
-
-      return true;
+      this.router.navigate(['/']);
     }
 
-    emitForm(form: FormResult){
+    async emitForm(form: FormResult){
       if(this.validateForm(form)){
         this.logger.info(`${this.component} Formulário obtido com sucesso: ${JSON.stringify(form)}`);
-        this.login(form.email!, form.password!);
+        await this.login(form.email!, form.password!);
       } else {
         this.logger.error(`${this.component} Formulário inválido`);
       }

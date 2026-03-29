@@ -1,30 +1,33 @@
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthUser } from '@tcc/appwrite';
+import { AUTH_SERVICE } from '@tcc/types';
 
 export const guestGuard = async () => {
     const router = inject(Router);
-    const authUser = inject(AuthUser);
+    const authService = inject(AUTH_SERVICE);
 
-    const isLoggeIn = await authUser.isLoggedIn();
+    const isLoggedIn = await authService.isLoggedIn();
 
-    if(isLoggeIn) {
+    // Se o usuário já estiver logado (diferente de 'NONE'), ele não pode acessar rotas de guest (login/register)
+    if(isLoggedIn !== 'NONE') {
         return router.parseUrl('/');
     }
 
     return true;
 }
 
-export  const authGuard = async () => {
+export const authGuard = async () => {
     const router = inject(Router);
-    const authUser = inject(AuthUser);
+    const authService = inject(AUTH_SERVICE);
 
-    const isLoggeIn = await authUser.isLoggedIn();
+    const isLoggedIn = await authService.isLoggedIn();
 
-    if(isLoggeIn) {
+    // Se o usuário estiver logado (diferente de 'NONE'), ele pode acessar a rota protegida
+    if(isLoggedIn !== 'NONE') {
         return true;
     }
 
+    // Se não estiver logado, redireciona para o login
     return router.parseUrl('/auth/login');
 }
