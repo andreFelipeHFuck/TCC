@@ -1,10 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AUTH_SERVICE } from '@tcc/types';
 
 import { environment } from '../environments/environments';
-
-import { appwriteCreateConnection } from '@tcc/appwrite'
 import { RouterOutlet } from '@angular/router';
-import { Auth } from '@tcc/auth';
 
 @Component({
   selector: 'app-root',
@@ -14,9 +12,10 @@ import { Auth } from '@tcc/auth';
   styleUrl: './app.css',
 })
 export class App {
-  protected appwrite = appwriteCreateConnection({
-    endpoint: environment.appwrite.endpoint,
-    projectId: environment.appwrite.projectId,
-    databaseId: environment.appwrite.databaseId
-  });
+  constructor() {
+    // Expõe o serviço de autenticação no console (window.auth) para debugging em modo dev
+    if (!environment.production) {
+      (window as any).auth = inject(AUTH_SERVICE);
+    }
+  }
 }

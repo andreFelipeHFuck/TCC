@@ -34,7 +34,7 @@
       "@tcc/ocpp-socket": ["lib/socket/ocpp-socket/src/index.ts"],
       "@tcc/redis": ["lib/services/redis/src/index.ts"],
       "@tcc/services": ["lib/services/src/index.ts"],
-      "@tcc/shared-angular": ["lib/services/shared/src/index.ts"],
+      "@tcc/core": ["lib/services/core/src/index.ts"],
       "@tcc/types": ["lib/types/src/index.ts"],
       "@tcc/utils": ["lib/utils/src/index.ts"]
     }

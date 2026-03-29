@@ -4,17 +4,12 @@ import {
 } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
-import { AuthUser } from '@tcc/appwrite';
-
-import { MobilePage } from "@tcc/components/mobile-page"
+import { AuthUser } from '@tcc/appwrite'; // Opcional: remover se não for usar tipo explícito
+import { Button } from '@tcc/components/buttons';
+import { AuthForm } from '@tcc/components/forms';
+import { MobilePage } from '@tcc/components/mobile-page';
 import { Title } from '@tcc/components/title';
-import { Button } from "@tcc/components/buttons"
-import { AuthForm } from "@tcc/components/forms"
-
-import { 
-  FormResult, 
-  Logger 
-} from '@tcc/types';
+import { AUTH_SERVICE, FormResult, Logger } from '@tcc/types';
 
 @Component({
   selector: 'lib-auth',
@@ -29,7 +24,7 @@ import {
   styleUrl: './auth.scss',
 })
 export class Auth {
-    private readonly authService = inject(AuthUser);
+    private readonly authService = inject(AUTH_SERVICE);
     private readonly logger = inject(Logger);
 
     public component = '[AUTH INTERFACE]';

@@ -5,14 +5,17 @@ import {
   Models 
 } from 'appwrite';
 
-import { AppwriteServices, } from '@tcc/types';
+import { 
+  IAuthDriver, 
+  AppwriteServices 
+} from '@tcc/types';
 
 import { Appwrite } from '../appwrite';
 
 @Injectable({
   providedIn: 'root',
 })
-export class Auth extends Appwrite {  
+export class Auth extends Appwrite implements IAuthDriver {  
   constructor() {
     super();
     this.service = AppwriteServices.AUTH;
