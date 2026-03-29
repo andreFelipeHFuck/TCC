@@ -88,7 +88,7 @@ export class AuthGrpc extends Appwrite {
         }
       ),
       this.service,
-      'Execução de logout gRPC realizada com sucesso',
+      'Pedido de logout gRPC realizada com sucesso',
       'Erro ao executar logout gRPC'
     );
 
@@ -97,9 +97,6 @@ export class AuthGrpc extends Appwrite {
 
     return {
       success: !!(response.success),
-      sessionId: response.session_id || response.sessionId || '',
-      processedAt: new Date(response.processed_at || response.processedAt || Date.now()),
-      expiresAt: new Date(response.expires_at || response.expiresAt || Date.now())
     } as any;
   }
 }
