@@ -22,7 +22,7 @@ function generateRequest(request: any) {
     return req;
 }
 
-export function sendLogout(
+export function SendLogout(
     client: any,
     request: any
 ){
@@ -33,7 +33,7 @@ export function sendLogout(
         console.log(`[${PRODUCER}] Requisição gerada: ${JSON.stringify(request)}`);
     
         return new Promise((resolve, reject) => {
-            client.SendAuthentication(
+            client.Logout(
                 req
                 , (err: Error | null, response: any) => {
                 if (err) reject(err);

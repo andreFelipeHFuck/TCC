@@ -7,6 +7,7 @@ import {
 } from './procedures-types.js';
 import { BodyRequest } from '../types.js';
 import { SendAuthentication } from './send-authentication.js';
+import { SendLogout } from './send-logout.js';
 
 const protoDescriptor = packageDefinitions(ProceduresTypes.BUSINESS) as any;
 
@@ -33,7 +34,7 @@ function sendRequest(client: any, body: BodyRequest) {
         case 'AUTH':
             return SendAuthentication(client, request);
         case 'LOGOUT':
-            return client.SendLogout(request);
+            return SendLogout(client, request);
         default:
             throw new Error(`[${PRODUCER}] Tipo de função inválido: ${auth_type}`);
     }
