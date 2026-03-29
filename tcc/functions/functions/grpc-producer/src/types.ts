@@ -7,6 +7,10 @@ export enum GrpcFunctionType {
     LOGOUT = 'LOGOUT'
 }
 
+export interface LogoutRequest {
+    session_id: string;
+}
+
 export interface BodyRequest {
     auth_type: GrpcFunctionType;
     request: object;

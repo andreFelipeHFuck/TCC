@@ -8,7 +8,9 @@ import {
 import { 
   AppwriteServices, 
   AuthCsmsFunctionBody, 
-  AuthenticationResponse
+  AuthenticationResponse,
+  LogoutCsmsFunctionBody,
+  LogoutResponse
 } from '@tcc/types';
 
 import { Appwrite } from '../../../appwrite';
@@ -65,6 +67,39 @@ export class AuthGrpc extends Appwrite {
       sessionId: response.session_id || response.sessionId || '',
       processedAt: processedAt,
       expiresAt: processedAt // Convenience alias
+    } as any;
+  }
+
+  async logout(authBody: LogoutCsmsFunctionBody): Promise<LogoutResponse> {
+    const body: string = JSON.stringify(authBody);
+
+    this.logger.info(`[${this.function}] Body: ${body}`);
+
+    const result = await this.handleCall(
+      this.getFunctions(),
+      (functions: Functions) => functions.createExecution(
+        this.functionId,
+        body,
+        false,
+        '/',
+        ExecutionMethod.POST,
+        {
+          'Content-Type': 'application/json'
+        }
+      ),
+      this.service,
+      'Execução de logout gRPC realizada com sucesso',
+      'Erro ao executar logout gRPC'
+    );
+
+    this.logger.info(`[${this.function}] Result: ${JSON.stringify(result.responseBody)}`);
+    const response = JSON.parse(result.responseBody)?.reply || {};
+
+    return {
+      success: !!(response.success),
+      sessionId: response.session_id || response.sessionId || '',
+      processedAt: new Date(response.processed_at || response.processedAt || Date.now()),
+      expiresAt: new Date(response.expires_at || response.expiresAt || Date.now())
     } as any;
   }
 }

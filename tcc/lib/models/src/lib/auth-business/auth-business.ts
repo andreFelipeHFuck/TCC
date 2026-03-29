@@ -4,7 +4,8 @@ import {
     AuthenticationRequest,
     AuthenticationResponse,
     AuthCsmsFunctionBody,
-    AuthType
+    AuthType,
+    LogoutCsmsFunctionBody
 } from '@tcc/types';
 
 export class AuthBusiness {
@@ -75,5 +76,14 @@ export class AuthBusiness {
         }
 
         return this.convertToAuthCsmsFunctionBody(this.authenticationRequest);
+    }
+
+    public generateLogoutRequest( authType: AuthType, sessionId: string): LogoutCsmsFunctionBody | 'NONE' {
+        if(sessionId === '') return 'NONE';
+
+        return {
+            auth_type: authType.toString(),
+            session_id: sessionId
+        }
     }
 }

@@ -13,3 +13,8 @@ export type AuthCsmsFunctionBody = {
     session_id: string;
     expires_at: string;
 }
+
+export type LogoutCsmsFunctionBody = {
+    auth_type: string;
+    session_id: string;
+}
