@@ -113,16 +113,55 @@ export class AuthCsms {
     return false;
   }
 
-  //private async closeSession() {}
+  private async closeSession(sessionId: string) {
+    this.logger.info(`[${this.service}] Finalizando sessão no CSMS...`);
+    const logoutBody = this.authBusiness.generateLogoutRequest(AuthType.LOGOUT, sessionId);
 
-  // finishSession() {
-  //   const user = await this.verifyUser();
+    if (logoutBody === 'NONE') {
+      this.logger.error(`[${this.service}]: Falha ao gerar Logout Request válido`);
+      return false;
+    }
+
+    const result = await this.authGrpc.logout(logoutBody);
+
+    this.logger.info(`[${this.service}] Resultado do logout: ${JSON.stringify(result)}`);
+
+    if (result.success) {
+      this.logger.info(`[${this.service}] Sessão encerrada com sucesso`);
+      await this.capacitorSession.removeSession();
+    }else{
+      this.logger.error(`[${this.service}]: Falha ao encerrar sessão no CSMS`);
+      return false;
+    }
+
+    this.logger.info(`[${this.service}] Logout realizado com sucesso: ${JSON.stringify(result)}`);
+    return true;
+  }
+
+  async finishSession(): Promise<boolean> {
+    const user = await this.verifyUser();
     
-  //   if (user !== 'NONE') {
+    if (user !== 'NONE') {
+      const cachedSession = await this.capacitorSession.getSession();
 
-  //   }
-    
-  // }
+      if (cachedSession) {
+        const logoutSession = await this.closeSession(cachedSession.sessionId);
 
+        if(logoutSession) {
+          this.logger.info(`[${this.service}]: Sessão encerrada com sucesso`);
+          this.capacitorSession.removeSession();
+          return true;
+        }
 
+        this.logger.error(`[${this.service}]: Falha ao encerrar sessão no CSMS`);
+        return false;
+      }
+
+      this.logger.error(`[${this.service}]: Sessão não encontrada no cache`);
+      return false;
+    }
+
+    this.logger.error(`[${this.service}]: Usuário não encontrado no estado local após verificação de sessão`);
+    return false;
+  }
 }
