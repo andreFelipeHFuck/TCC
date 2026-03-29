@@ -7,7 +7,9 @@ import {
 
 import { 
   IAuthDriver, 
-  AppwriteServices 
+  AppwriteServices, 
+  UserSession,
+  UserLoggedIn
 } from '@tcc/types';
 
 import { Appwrite } from '../appwrite';
@@ -46,17 +48,27 @@ export class Auth extends Appwrite implements IAuthDriver {
     );
   }
 
-  async login(email: string, password: string): Promise<Models.Session> {
-    return await this.handleCall(
-      this.account,
-      (account: Account) => account.createEmailPasswordSession(
-        email,
-        password
-      ),
-      this.service,
-      'Login feito com sucesso',
-      'Erro ao fazer login'
-    );
+  async login(email: string, password: string): Promise<UserLoggedIn | 'NONE'> {
+    try {
+      const session = await this.handleCall(
+        this.account,
+        (account: Account) => account.createEmailPasswordSession(
+          email,
+          password
+        ),
+        this.service,
+        'Login feito com sucesso',
+        'Erro ao fazer login'
+      );
+
+      // Mapeamos o retorno do Appwrite para o formato agnóstico
+      return { 
+        $id: session.userId || session['$id'], 
+        email: email 
+      };
+    } catch (error) {
+      return 'NONE';
+    }
   }
 
   async logout() {
