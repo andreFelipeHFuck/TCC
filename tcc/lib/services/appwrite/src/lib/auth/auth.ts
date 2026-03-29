@@ -8,7 +8,6 @@ import {
 import { 
   IAuthDriver, 
   AppwriteServices, 
-  UserSession,
   UserLoggedIn
 } from '@tcc/types';
 
