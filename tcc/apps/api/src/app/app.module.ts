@@ -7,6 +7,9 @@ import { AuthRpcModule } from '@tcc/nestjs-grpc'
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+
 @Module({
   imports: [
     OcppSocketModule, 

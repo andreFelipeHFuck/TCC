@@ -1,3 +1,11 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
+
+/**
+ * @todo criar um serviço para o backend para o SDK do Appwrite que possa fazer validar o JWS
+ * @todo criar um serviço agnostico para BaaS para poder validar tanto usando Appwrite quanto Firebase
+ */
+
 import { Injectable, CanActivate, ExecutionContext, Inject } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { ConfigService } from '@nestjs/config';
@@ -15,7 +23,6 @@ import { ConsoleLogger } from '@tcc/utils';
 @Injectable()
 export class AuthRpcGuard implements CanActivate {
     constructor(
-        private readonly configService: ConfigService,
         @Inject('LOGGER_TOKEN') private readonly logger: ConsoleLogger
     ) {}
 
