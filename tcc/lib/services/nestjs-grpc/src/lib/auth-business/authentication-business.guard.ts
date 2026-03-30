@@ -8,14 +8,14 @@ dotenv.config();
 
 import { Injectable, CanActivate, ExecutionContext, Inject } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
+import { ConfigService } from '@nestjs/config';
 import { status } from '@grpc/grpc-js';
 
-import * as jwt from 'jsonwebtoken';
 import * as sdk from 'node-appwrite';
 
 import { 
     AuthenticationRequest, 
-    CsmsGuards, 
+    CsmsGuards,
     LogoutRequest
 } from '@tcc/types'
 import { ConsoleLogger } from '@tcc/utils';
@@ -34,12 +34,12 @@ export class AuthRpcGuard implements CanActivate {
  
         try {
             const client = new sdk.Client()
-                  .setEndpoint("http://localhost/v1")
-                  .setProject("69598d0e0005838fd88f")
+                  .setEndpoint(this.configService.getOrThrow<string>('APPWRITE_ENDPOINT'))
+                  .setProject(this.configService.getOrThrow<string>('APPWRITE_PROJECT_ID'))
                   .setJWT(data.authToken);
 
             const session = new sdk.Account(client);
-            const sessionData = await session.get();
+            await session.get();
             
             return true;
         } catch(error) {
