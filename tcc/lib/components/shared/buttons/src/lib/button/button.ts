@@ -1,4 +1,7 @@
-import { Component, input } from '@angular/core';
+import { 
+  Component, 
+  input 
+} from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -23,4 +26,5 @@ export class Button {
   title = input.required<string>();
   color = input<ButtonColor>('primary');
   icon = input<string>('');
+  disabled = input<boolean>(false);
 }

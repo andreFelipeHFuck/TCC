@@ -2,13 +2,22 @@ import {
   Component, 
   inject
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { 
+  Router, 
+  RouterLink 
+} from '@angular/router';
 
+import { Mobile } from '@tcc/components/mobile';
 import { Button } from '@tcc/components/buttons';
 import { AuthForm } from '@tcc/components/forms';
 import { MobilePage } from '@tcc/components/mobile-page';
 import { Title } from '@tcc/components/title';
-import { AUTH_SERVICE, FormResult, Logger } from '@tcc/types';
+import { 
+  AUTH_SERVICE, 
+  FormResult, 
+  Logger 
+} from '@tcc/types';
+import { AuthThumb } from './auth-thumb/auth-thumb';
 
 @Component({
   selector: 'lib-auth',
@@ -16,7 +25,9 @@ import { AUTH_SERVICE, FormResult, Logger } from '@tcc/types';
     MobilePage,
     Title,
     Button,
-    AuthForm
+    AuthForm,
+    RouterLink,
+    AuthThumb
   ],
   templateUrl: './auth.html',
   styleUrl: './auth.scss',
@@ -25,6 +36,8 @@ export class Auth {
     private readonly authService = inject(AUTH_SERVICE);
     private readonly logger = inject(Logger);
     private readonly router = inject(Router);
+    
+    public readonly mobile = inject(Mobile);
 
     public component = '[AUTH INTERFACE]';
 
@@ -39,7 +52,7 @@ export class Auth {
     private async login(email: string, password: string) {
       this.logger.info(`${this.component} Iniciando login...`);
       
-      const login = await this.authService.login(email, password);
+      await this.authService.login(email, password);
 
       this.logger.info(`${this.component} Login realizado com sucesso`);
       this.router.navigate(['/']);

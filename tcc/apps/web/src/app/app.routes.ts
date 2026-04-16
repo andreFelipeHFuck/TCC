@@ -1,14 +1,13 @@
 import { Route } from '@angular/router';
 
 import { authGuard } from '@tcc/auth';
-
 import { User } from './user/user';
 
 export const appRoutes: Route[] = [
     {
         path: '',
         component: User,
-        //canActivate: [authGuard]
+        canActivate: [authGuard]
     },
     {
         path: 'auth',

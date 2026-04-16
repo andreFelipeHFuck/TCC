@@ -1,0 +1,64 @@
+@use 'sass:map';
+@use '../../../../../material/src/index.scss' as v;
+
+$icon-size: 34px;
+
+.dropdown-menu {
+    position: absolute;
+    width: 336px;
+    display: flex;
+    flex-direction: column;
+    background-color: map.get(v.$light-gray, 'light-gray-400');
+    top: 100%;
+    right: 0;
+    margin-top: map.get(v.$spacing, "md") + v.$header-padding;
+}
+
+.dropdown-header {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    margin: map.get(v.$spacing, "md") 0;
+    margin-left: map.get(v.$spacing, "xl");
+    gap: map.get(v.$spacing, "xl");
+}
+
+.dropdown-diviser{
+    border: 1px solid map.get(v.$light-gray, "light-gray-600");
+}
+
+.dropdown-list{
+    display: flex;
+    flex-direction: column;
+    gap: map.get(v.$spacing, "lg");
+    margin-bottom: map.get(v.$spacing, "xl");
+    list-style: none;
+}
+
+.dropdown-item{
+    margin-left: map.get(v.$spacing, "xl");
+    
+    a {     
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: map.get(v.$spacing, "sm");
+        font-size: map.get(v.$typography, "body-body-lg");
+        font-weight: 600;
+        text-decoration: none;
+    }
+}
+
+.dropdown-item-icon {
+    width: $icon-size;
+    height: $icon-size;
+    font-size: $icon-size;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dropdown-item-text {
+    font-size: map.get(v.$typography, "body-body-lg");
+    font-weight: 600;
+}

@@ -1,7 +1,25 @@
 @use 'sass:map';
 @use '../../../../../../material/src/index.scss' as v;
+@use '../../../../../../design-system/src/scss/index.scss' as b;
 
-.input-text{
-    width: 364px;
+:host {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.input-text {
+    width: 100%;
+    max-width: 364px;
     height: 60px;
+
+    @include b.on-breakpoint('md') {
+        max-width: 600px;
+        margin: 0 10%;
+    }
+
+    @include b.on-breakpoint('xl') {
+        max-width: 600px;
+        height: 72px;
+    }
 }

@@ -1,0 +1,43 @@
+// Reset mais inteligente para evitar quebras no Angular Material (MDC) e outros componentes de UI
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Reset apenas para elementos semânticos comuns de texto
+h1, h2, h3, h4, h5, h6, p, ul, ol, figure, blockquote {
+  margin: 0;
+  padding: 0;
+}
+
+// Reset básico para links
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+// Padronização para botões e campos de entrada fora do Material Design
+// Mas sem usar o seletor universal que quebra o MDC
+button, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+button {
+  box-shadow: none !important;
+}
+
+// Reset específico para botões do Angular Material (MDC)
+.mat-mdc-button, .mat-mdc-raised-button, .mat-mdc-unelevated-button, .mat-mdc-outlined-button, .mat-mdc-fab, .mat-mdc-mini-fab {
+  box-shadow: none !important;
+}

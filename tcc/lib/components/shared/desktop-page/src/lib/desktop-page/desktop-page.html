@@ -1,0 +1,16 @@
+<div class="desktop-page">
+    <header class="header">
+        <lib-header
+          [completeHeader]="header()"
+        />
+    </header>
+    
+    <main class="main">
+        @if(navbar()) {
+            <lib-navbar />
+        }
+        <ng-content>
+
+        </ng-content>
+    </main>
+</div>

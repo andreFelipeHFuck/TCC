@@ -26,8 +26,13 @@
       "@tcc/components/forms": ["lib/components/shared/forms/src/index.ts"],
       "@tcc/components/mobile-page": ["lib/components/shared/mobile-page/src/index.ts"],
       "@tcc/components/title": ["lib/components/shared/title/src/index.ts"],
+      "@tcc/components/mobile": ["lib/components/shared/mobile/src/index.ts"],
+      "@tcc/components/header": ["lib/components/shared/header/src/index.ts"],
+      "@tcc/components/navbar": ["lib/components/shared/navbar/src/index.ts"],
+      "@tcc/components/user-info": ["lib/components/shared/user-info/src/index.ts"],
+      "@tcc/components/desktop-page": ["lib/components/shared/desktop-page/src/index.ts"],
+      "@tcc/components/li-profile-image": ["lib/components/shared/li-profile-image/src/index.ts"],
       "@tcc/domain": ["lib/domain/src/index.ts"],
-      "@tcc/mobile-page": ["lib/components/shared/mobile-page/src/index.ts"],
       "@tcc/models": ["lib/models/src/index.ts"],
       "@tcc/nest-logger": ["lib/services/nest-logger/src/index.ts"],
       "@tcc/nestjs-grpc": ["lib/services/nestjs-grpc/src/index.ts"],
@@ -36,7 +41,8 @@
       "@tcc/services": ["lib/services/src/index.ts"],
       "@tcc/core": ["lib/services/core/src/index.ts"],
       "@tcc/types": ["lib/types/src/index.ts"],
-      "@tcc/utils": ["lib/utils/src/index.ts"]
+      "@tcc/utils": ["lib/utils/src/index.ts"],
+      "@tcc/toggle-menu": ["lib/components/shared/toggle-menu/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
