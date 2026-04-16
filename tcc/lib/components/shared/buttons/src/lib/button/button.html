@@ -1,32 +1,29 @@
-@switch (typeButton()) {
-    @case ('standard') {
-        <button 
-            mat-raised-button 
-            class="standard"
-            [ngClass]="color()"
-            [disabled]="disabled()"
-        >
-            {{ title() }}
-        </button>
-    }
-    @case ('square') {
-        <button 
-            class="square-type square"
-            [ngClass]="color()"
-            [disabled]="disabled()"
-        >
-            @if (icon()) {
-                @if (icon().includes('/') || icon().includes('.')) {
-                    <img 
-                        [src]="icon()" 
-                        alt="icone"
-                        class="button-icon"
-                    >
-                } @else {
-                    <span class="material-symbols-outlined button-icon">{{ icon() }}</span>
-                }
-            }
-            {{ title() }}
-        </button>
-    } 
+@if (typeButton() === 'standard') {
+    <button 
+        mat-raised-button 
+        class="standard"
+        [ngClass]="color()"
+        [disabled]="disabled()"
+    >
+        {{ title() }}
+    </button>
+} @else if (typeButton() === 'square') {
+    <button 
+        class="square square-type"
+        [ngClass]="color()"
+        [disabled]="disabled()"
+        (click)="onClick()"
+    >
+        @if (icon()) {
+            <span class="button-icon material-symbols-outlined">
+                {{ icon() }}
+            </span>
+        }
+        {{ title() }}
+    </button>
+} @else if (typeButton() === 'thumb') {
+    <lib-button-thumb 
+        [title]="title()"
+        (click)="onClick()"
+    />
 }

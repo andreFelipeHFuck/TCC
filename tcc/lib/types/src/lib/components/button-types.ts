@@ -6,4 +6,3 @@ export type ButtonColor = 'primary'
                            | 'google'
                            | 'nav-active'
                            | 'nav-item';
-                        

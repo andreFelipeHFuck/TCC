@@ -1,21 +1,41 @@
 {
+<<<<<<<< HEAD:tcc/lib/components/shared/header/project.json
   "name": "header",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "lib/components/shared/header/src",
+========
+  "name": "buttons",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "lib/components/shared/buttons/src",
+>>>>>>>> origin/develop:tcc/lib/components/shared/buttons/project.json
   "prefix": "lib",
+  "schematics": {
+    "@nx/angular:component": {
+      "style": "scss"
+    }
+  },
   "projectType": "library",
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/angular:ng-packagr-lite",
+      "executor": "@nx/angular:package",
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
+<<<<<<<< HEAD:tcc/lib/components/shared/header/project.json
         "project": "lib/components/shared/header/ng-package.json",
         "tsConfig": "lib/components/shared/header/tsconfig.lib.json"
       },
       "configurations": {
         "production": {
           "tsConfig": "lib/components/shared/header/tsconfig.lib.prod.json"
+========
+        "project": "lib/components/shared/buttons/ng-package.json",
+        "tsConfig": "lib/components/shared/buttons/tsconfig.lib.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "lib/components/shared/buttons/tsconfig.lib.prod.json"
+>>>>>>>> origin/develop:tcc/lib/components/shared/buttons/project.json
         },
         "development": {}
       },
