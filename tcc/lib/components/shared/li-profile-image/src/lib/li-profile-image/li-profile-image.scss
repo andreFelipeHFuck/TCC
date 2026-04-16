@@ -1,0 +1,13 @@
+$profile-image-dimension: 45px;
+
+.profile-image {
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        width: $profile-image-dimension;
+        height: $profile-image-dimension;
+    }
+}

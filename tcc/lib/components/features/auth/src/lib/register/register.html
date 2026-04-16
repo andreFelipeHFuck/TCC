@@ -1,44 +1,106 @@
-<lib-mobile-page>
-    <section class="register">
-        <header class="title">
-            <lib-title 
-                title="Crie sua Conta" 
-            />
-        </header>
+@if(mobile.isMobile()) {
+    <lib-mobile-page>
+        <section class="register">
+            <header class="title">
+                <lib-title 
+                    title="Crie sua Conta" 
+                />
+            </header>
 
-        <main class="form">
-            <lib-button 
-                typeButton="square"
-                title="Cadastrar pelo Google" 
-                color="google"
-                icon="google.png"
-            />
+            <main class="form">
+                <lib-button 
+                    typeButton="square"
+                    title="Cadastrar pelo Google" 
+                    color="google"
+                    icon="google.png"
+                />
 
-            <p class="or-spacing">
-                OU
-            </p>
+                <p class="or-spacing">
+                    OU
+                </p>
 
-            <div class="register">
-                <div class="register-container">
-                    <form 
-                        [formGroup]="registerService.registerForm" 
-                        (ngSubmit)="registerService.onSubmit()"
-                    >
-                        <lib-register-form />
-                        <lib-address-form />
+                <div class="register">
+                    <div>
+                        <form 
+                            [formGroup]="registerService.registerForm" 
+                            (ngSubmit)="registerService.onSubmit()"
+                        >
+                        <div class="register-form">
+                            <lib-register-form 
+                                class="user-form"
+                            />
+                            <lib-address-form 
+                                class="address-form"
+                            />
+                        </div>
 
-                        <lib-button 
-                            [typeButton]="'standard'"
-                            [color]="'primary'"
-                            type="submit"
-                            title="Cadastrar" 
-                            disabled="registerService.registerForm.invalid"
-                        />
-                    </form>
+                            <lib-button 
+                                class="register-button"
+                                [typeButton]="'standard'"
+                                [color]="'primary'"
+                                type="submit"
+                                title="Cadastrar" 
+                                [disabled]="registerService.registerForm.invalid"
+                            />
+                        </form>
+                    </div>
                 </div>
-            </div>
+            </main>
+        </section>
+    </lib-mobile-page>
+} @else {
+    <lib-desktop-page
+        [header]="false"
+        [navbar]="false"
+    >
+         <section class="register register-desktop">
+            <header class="title">
+                <lib-title 
+                    title="Cadastro de Usuário" 
+                />
+            </header>
 
-            
-        </main>
-    </section>
-</lib-mobile-page>
+            <main class="form">
+                <!-- <lib-button 
+                    typeButton="square"
+                    title="Cadastrar pelo Google" 
+                    color="google"
+                    icon="google.png"
+                /> -->
+
+                <!-- <p class="or-spacing">
+                    OU
+                </p> -->
+
+                <div class="register">
+                    <div>
+                        <form 
+                            [formGroup]="registerService.registerForm" 
+                            (ngSubmit)="registerService.onSubmit()"
+                        >
+                        <div class="register-form">
+                            <lib-register-form 
+                                class="user-form"
+                            />
+                            <lib-address-form 
+                                class="address-form"
+                            />
+                        </div>
+
+                        <div class="register-button-desktop">
+                            <lib-button 
+                                class="register-button"
+                                [typeButton]="'standard'"
+                                [color]="'primary'"
+                                type="submit"
+                                title="Cadastrar" 
+                                [disabled]="registerService.registerForm.invalid"
+                            />
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </section>
+    </lib-desktop-page>
+}

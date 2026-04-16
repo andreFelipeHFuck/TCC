@@ -1,0 +1,7 @@
+<div class="profile-image">
+    @if(srcIsEmpty()) {
+        <img [src]="srcStandard" alt="">
+    }@else {
+        <img [src]="src()" alt="">
+    }
+</div>

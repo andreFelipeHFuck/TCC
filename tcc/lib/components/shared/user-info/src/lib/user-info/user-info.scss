@@ -1,0 +1,20 @@
+@use 'sass:map';
+@use '../../../../../material/src/index.scss' as v;
+
+.user-info{
+    display: flex;
+    flex-direction: column;
+    gap: map.get(v.$spacing, "xs");
+    color: var(--user-text-color, inherit);
+    transition: color 0.2s ease;
+}
+
+.username{
+    font-size: map.get(v.$typography, "body-body-lg");
+    font-weight: 600;
+}
+
+.add-info{
+    font-size: map.get(v.$typography, "body-body-md");
+    font-weight: 400;
+}

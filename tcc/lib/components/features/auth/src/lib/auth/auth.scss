@@ -1,5 +1,6 @@
 @use 'sass:map';
 @use '../../../../../material/src/index.scss' as v;
+@use '../../../../../design-system/src/scss/index.scss' as b;
 
 .login{
     display: flex;
@@ -17,8 +18,15 @@
         margin: 0;
         color: map.get(v.$colors, 'black');
         font-size: map.get(v.$typography, 'body-body-md');
-        font-weight: map.get(v.$typography, 'body-body-md');
         font-weight: 300;
+    }
+
+    @include b.on-breakpoint('md') {
+        align-items: center;
+
+        p {
+            font-size: map.get(v.$typography, 'body-heading-heading-xs');
+        }
     }
 }
 
@@ -27,6 +35,10 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.form-auth{
+    width: 100%;
 }
 
 .or-spacing{
@@ -39,7 +51,6 @@
 .footer {
     align-items: center;
     display: flex;
-    align-items: center;
     justify-content: center;
     font-size: map.get(v.$typography, 'body-body-lg');
     
@@ -54,4 +65,25 @@
         color: map.get(v.$brand, 'brand-400');
         text-decoration: none;
     }
+}
+
+.login-desktop{
+     @include b.on-breakpoint('md') {
+         width: 100%;
+         height: 100vh;
+         display: flex;
+         flex-direction: row;
+
+         lib-auth-thumb {
+             width: 60%;
+         }
+
+         .login {
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            margin-top: 180px;
+         }
+     }       
 }

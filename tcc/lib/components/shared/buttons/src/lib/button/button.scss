@@ -1,6 +1,9 @@
 @use 'sass:map';
 @use '../../../../../material/src/index.scss' as v;
 
+$square-type-height: 60px;
+$icon-size: 37px;
+
 :host {
   display: inline-block;
 }
@@ -18,6 +21,9 @@ button {
     background-color: map.get(v.$dark-gray, 'dark-gray-300') !important; 
   }
 
+  &.thumb {
+    background-color: map.get(v.$colors, 'black') !important;
+  }
 }
 
 .standard {
@@ -25,20 +31,31 @@ button {
   height: 56px;
 }
 
-.square {
-   width: 364px;
-   height: 60px ;
-   border-radius: map.get(v.$radius, 'md');
-   display: flex;
-   flex-direction: row;
-   gap: 20px;
-   align-items: center;
+.square-type {
+  width: 100%;
+  height: $square-type-height;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: map.get(v.$spacing, 'xl');
+  border: none;
+  cursor: pointer;
 }
 
-// 
+.square {
+   max-width: 364px;
+   border-radius: map.get(v.$radius, 'md');
+   transition: background-color 0.3s ease;
+}
 
 .button-icon {
-  width: 37px;
-  height: 37px ;
-  margin-left: 24px;
+  width: $icon-size;
+  height: $icon-size;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.material-symbols-outlined {
+   
+  }
 }

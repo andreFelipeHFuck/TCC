@@ -1,0 +1,30 @@
+<div class="header">
+    @if(completeHeader()) { 
+        <nav class="nav">
+            <ul>
+                <li 
+                    (click)="toggleMenu()"
+                    class="user-info-container"
+                >
+                    <lib-li-profile-image />
+
+                    <lib-user-info 
+                        name="André" 
+                        addInfo="Administrador" 
+                    />
+
+                    <lib-toggle-menu 
+                        name="André" 
+                        addInfo="andre@teste.com" 
+                        [isMenuOpen]="isMenuOpen()"
+                        (click)="$event.stopPropagation()"
+                    />
+                </li>
+            </ul>
+        </nav>
+    } @else {
+        <nav class="nav empty">
+            <div class="empty"></div>
+        </nav>
+    }
+</div>

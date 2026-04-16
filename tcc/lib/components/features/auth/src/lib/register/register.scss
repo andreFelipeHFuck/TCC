@@ -1,14 +1,8 @@
 @use 'sass:map';
 @use '../../../../../material/src/index.scss' as v;
 
-.register{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: map.get(v.$spacing, 'xl');
-}
-
 .form{
+    width: 100%;
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -18,4 +12,68 @@
 .or-spacing{
     font-size: map.get(v.$typography, 'body-heading-heading-xs');
     font-weight: 600;
+}
+
+.register{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: map.get(v.$spacing, 'xl');
+
+    @include v.on-breakpoint('lg') {
+       margin-top: map.get(v.$spacing, "form-button-top");
+    }
+}
+
+.register-desktop {
+    align-items: center;
+    margin-top: map.get(v.$spacing, "form-button-top");
+}
+
+.register-form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: map.get(v.$spacing, 'form');
+
+    @include v.on-breakpoint('lg') {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.user-form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: map.get(v.$spacing, 'form');
+}
+
+.address-form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: map.get(v.$spacing, 'form');
+}
+
+.register-button-desktop {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.register-button{
+    display: flex;
+    justify-content: center;
+    margin-top: map.get(v.$spacing, 'form-button-top');
+    margin-bottom: map.get(v.$spacing, 'form-button-bottom');
+
+    @include v.on-breakpoint('lg') {
+        width: 100%;
+        max-width: 600px;
+        justify-content: flex-start;
+    }
 }

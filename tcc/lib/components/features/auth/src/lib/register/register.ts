@@ -15,6 +15,9 @@ import {
   AUTH_SERVICE
 } from '@tcc/types';
 
+import { Mobile } from '@tcc/components/mobile';
+import { DesktopPage } from '@tcc/components/desktop-page';
+
 import { MobilePage } from '@tcc/components/mobile-page';
 import { Title } from '@tcc/components/title';
 import { Button } from '@tcc/components/buttons';
@@ -33,7 +36,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     Title,
     Button,
     RegisterForm,
-    AddressForm
+    AddressForm,
+    DesktopPage
   ],
   templateUrl: './register.html',
   styleUrl: './register.scss',
@@ -45,6 +49,8 @@ export class Register implements OnInit {
   private readonly authService = inject(AUTH_SERVICE);
   public readonly registerService = inject(RegisterService);
   private readonly logger = inject(Logger);
+
+  public readonly mobile = inject(Mobile);
 
   public component = '[REGISTER INTERFACE]';
 

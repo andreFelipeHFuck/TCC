@@ -1,33 +1,71 @@
-<lib-mobile-page>
-    <section class="login">
-        <header class="title">
-            <lib-title 
-                title="Bem vindo de volta"
-            />
-            <p>
-                Faça o login para continuar
-            </p>
-        </header>
+@if (mobile.isMobile()) {
+    <lib-mobile-page>
+        <section class="login">
+            <header class="title">
+                <lib-title 
+                    title="Bem vindo de volta"
+                />
+                <p>
+                    Faça o login para continuar
+                </p>
+            </header>
 
-        <main class="form">
-            <lib-auth-form (formResult)="emitForm($event)"/>
+            <main class="form">
+                <lib-auth-form 
+                    class="form-auth"
+                    (formResult)="emitForm($event)"
+                />
 
-            <p class="or-spacing">
-                OU
-            </p>
+                <p class="or-spacing">
+                    OU
+                </p>
 
-            <lib-button 
-                typeButton="square"
-                title="Entrar pelo Google" 
-                color="google"
-                icon="google.png"
-            />
-        </main>
+                <lib-button 
+                    typeButton="square" 
+                    title="Entrar pelo Google" 
+                    color="google" 
+                    icon="google.png" 
+                />
+            </main>
 
-        <footer class="footer">
+            <footer class="footer">
             <p>
                 Não possui conta ainda? <a routerLink="/auth/register">Cadastre-se</a>
             </p>
-        </footer>
-    </section>
-</lib-mobile-page>
+            </footer>
+        </section>
+    </lib-mobile-page>
+} @else {
+    <section class="login-desktop">
+        <lib-auth-thumb/>
+
+        <section class="login">
+             <header class="title">
+                <lib-title 
+                    title="Acesse sua Conta"
+                />
+                <p>
+                    Faça o login para continuar
+                </p>
+            </header>
+
+             <main class="form">
+                <lib-auth-form 
+                    class="form-auth"
+                    (formResult)="emitForm($event)"
+                />
+
+                <p class="or-spacing">
+                    Ou faça login com
+                </p>
+
+                <lib-button 
+                    typeButton="square" 
+                    title="Entrar pelo Google" 
+                    color="google" 
+                    icon="google.png" 
+                />
+            </main>
+        </section>
+    </section>    
+}
