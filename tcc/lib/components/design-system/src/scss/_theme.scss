@@ -1,12 +1,19 @@
 @use '@angular/material' as mat;
 
-// Define as customizações específicas para o Form Field
+// Define as customizações específicas para o Form Field (M3/M2.5)
 $custom-form-field-overrides: (
-  focus-outline-color: #232028,
-  focus-label-text-color: #9f94ae,
-  caret-color: #ff19cd,
-  outline-color: #6c6c6c,
-  label-text-color: #151218
+  // Outlined
+  outlined-focus-outline-color: #232028,
+  outlined-focus-label-text-color: #9f94ae,
+  outlined-caret-color: #ff19cd,
+  outlined-outline-color: #6c6c6c,
+  outlined-label-text-color: #151218,
+  
+  // Filled
+  filled-focus-active-indicator-color: #232028,
+  filled-focus-label-text-color: #9f94ae,
+  filled-caret-color: #ff19cd,
+  filled-label-text-color: #151218
 );
 
 // Aplica as mudanças globalmente

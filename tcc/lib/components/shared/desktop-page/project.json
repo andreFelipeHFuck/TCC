@@ -1,0 +1,32 @@
+{
+  "name": "desktop-page",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "lib/components/shared/desktop-page/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "lib/components/shared/desktop-page/ng-package.json",
+        "tsConfig": "lib/components/shared/desktop-page/tsconfig.lib.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "lib/components/shared/desktop-page/tsconfig.lib.prod.json"
+        },
+        "development": {}
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/angular:unit-test",
+      "options": {}
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

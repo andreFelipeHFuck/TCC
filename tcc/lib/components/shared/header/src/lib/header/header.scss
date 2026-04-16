@@ -1,0 +1,39 @@
+@use 'sass:map';
+@use '../../../../../material/src/index.scss' as v;
+
+
+.header {
+    background-color: map.get(v.$light-gray, 'light-gray-400');
+    padding: v.$header-padding 0;
+}
+
+.user-info-container{
+    position: relative;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    gap: map.get(v.$spacing, "xl");
+    cursor: pointer;
+}
+
+.user-info-container:hover > lib-user-info {
+    --user-text-color: #{map.get(v.$brand, 'brand-200')};
+}
+
+
+.nav {
+    width: 100%;
+
+    ul {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        margin-right: map.get(v.$spacing, 'top');
+        gap: map.get(v.$spacing, 'lg');
+        list-style-type: none;
+    }
+}
+
+.empty {
+    padding: map.get(v.$spacing, 'xs') 0;
+}

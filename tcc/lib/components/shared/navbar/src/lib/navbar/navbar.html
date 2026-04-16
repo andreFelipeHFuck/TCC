@@ -1,0 +1,21 @@
+<nav class="navbar">
+    <ul class="nav-list">
+        @for (item of menuItems; track item.label) {
+            <li 
+                class="nav-item"
+                [class.nav-first-item]="$first"
+                [class.nav-active]="selectedItem() === item.label"
+                (click)="selectItem(item.label)"
+            >
+                <a class="item-link">
+                    <span class="item-icon material-symbols-outlined">
+                        {{ item.icon }}
+                    </span>
+                    <span class="item-label">
+                        {{ item.label }}
+                    </span>
+                </a>
+            </li>
+        }
+    </ul>
+</nav>

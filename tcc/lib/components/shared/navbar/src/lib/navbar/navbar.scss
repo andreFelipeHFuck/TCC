@@ -1,0 +1,69 @@
+@use 'sass:map';
+@use '../../../../../material/src/index.scss' as v;
+
+$nav-widt: 12%;
+$icon-size: 20px;
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: $nav-widt;
+    height: 100vh;
+    background-color: map.get(v.$brand, 'brand-400');
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-top: map.get(v.$spacing, 'top');
+    display: flex;
+    flex-direction: column;
+    gap: map.get(v.$spacing, 'sm');
+}
+
+.nav-item {
+    margin: 0 map.get(v.$spacing, 'sm');
+
+    .item-link {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: map.get(v.$spacing, 'sm');
+        padding: map.get(v.$spacing, 'sm');
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .item-icon {
+        color: map.get(v.$light-gray, 'light-gray-100');
+        font-size: $icon-size;
+    }
+
+    .item-label{
+        color: map.get(v.$light-gray, 'light-gray-100');
+        font-size: map.get(v.$typography, 'body-body-md');
+        font-weight: 400;
+    }
+
+    &.nav-active {
+        .item-link {
+            background-color: map.get(v.$brand, 'brand-600');
+            border-radius: map.get(v.$radius, 'md');
+        }
+
+        .item-label, .item-icon {
+            color: map.get(v.$colors, 'white');
+            font-weight: 600;
+        }
+    }
+
+    &.nav-first-item {
+        margin-bottom: map.get(v.$spacing, 'xl');
+    }
+}

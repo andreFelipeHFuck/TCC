@@ -4,21 +4,29 @@
             mat-raised-button 
             class="standard"
             [ngClass]="color()"
+            [disabled]="disabled()"
         >
             {{ title() }}
         </button>
     }
     @case ('square') {
         <button 
-            class="square"
+            class="square-type square"
             [ngClass]="color()"
+            [disabled]="disabled()"
         >
-            <img 
-              [src]="icon()" 
-              alt="icone"
-              class="button-icon"
-            >
+            @if (icon()) {
+                @if (icon().includes('/') || icon().includes('.')) {
+                    <img 
+                        [src]="icon()" 
+                        alt="icone"
+                        class="button-icon"
+                    >
+                } @else {
+                    <span class="material-symbols-outlined button-icon">{{ icon() }}</span>
+                }
+            }
             {{ title() }}
         </button>
-    }
+    } 
 }

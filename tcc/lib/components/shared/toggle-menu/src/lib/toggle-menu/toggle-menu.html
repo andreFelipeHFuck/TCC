@@ -1,0 +1,24 @@
+@if (isMenuOpen()) {
+    <div class="dropdown-menu">
+        <div class="dropdown-header">
+            <lib-li-profile-image />
+            <lib-user-info 
+                [name]="name()" 
+                [addInfo]="addInfo()" 
+            />
+        </div>
+
+        <hr class="dropdown-diviser">
+
+        <ul class="dropdown-list">
+            @for (item of menuItems; track $index) {
+                <li class="dropdown-item">
+                    <a href="#">
+                        <span class="dropdown-item-icon material-symbols-outlined">{{ item.icon }}</span>
+                        <span class="dropdown-item-text">{{ item.label }}</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+}
