@@ -1,0 +1,16 @@
+{
+  "name": "nestjs-mongodb",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "lib/services/nestjs-mongodb/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "lib/services/nestjs-mongodb/jest.config.cts"
+      }
+    }
+  }
+}
