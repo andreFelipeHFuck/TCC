@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a7a676c7-3d92-492b-8ae7-4ba3b505f534" name="Changes" comment="" />
+    <list default="true" id="a7a676c7-3d92-492b-8ae7-4ba3b505f534" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,7 +48,7 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "com.google.services.firebase.aqiPopupShown": "true",
-    "git-widget-placeholder": "capacitor",
+    "git-widget-placeholder": "database-mongo",
     "project.structure.last.edited": "SDK Location",
     "project.structure.proportion": "0.17",
     "project.structure.side.proportion": "0.0",
