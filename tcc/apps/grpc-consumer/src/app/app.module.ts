@@ -1,11 +1,17 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 
 import { AuthRpcModule } from '@tcc/nestjs-grpc';
 
+import { NestjsMongodbModule } from '@tcc/nestjs-mongodb';
+
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+
 @Module({
-  imports: [AuthRpcModule],
+  imports: [
+    AuthRpcModule,
+    NestjsMongodbModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

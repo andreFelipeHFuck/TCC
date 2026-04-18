@@ -5,10 +5,15 @@
 
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { MicroserviceOptions, Transport } from '@nestjs/microservices'; 
-import { AppModule } from './app/app.module';
+import { 
+  MicroserviceOptions, 
+  Transport 
+} from '@nestjs/microservices'; 
 
 import { AUTH_GRPC_CONFIG } from '@tcc/nestjs-grpc';
+
+import { AppModule } from './app/app.module';
+
 import { join } from 'path';
 
 async function bootstrap() {
