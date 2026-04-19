@@ -21,6 +21,10 @@ import {
     History, 
     HistorySchema 
 } from './history.schema';
+import { 
+    ChargingStationData, 
+    ChargingStationDataSchema 
+} from './charging-station-data.schema';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -38,8 +42,14 @@ export class ChargingSessions {
     })
     transactionId: string;
 
+    @Prop({ type: ChargingStationDataSchema })
+    chargingStationData: ChargingStationData;
+
     @Prop({type: IdTokensSchema})
     idToken: IdTokens;
+
+    @Prop({ required: true })
+    chargingStationId: string;
 
     @Prop({ type: ConnectorsSchema })
     connector: Connectors;
