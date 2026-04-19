@@ -23,7 +23,8 @@ import { ConsoleLogger } from '@tcc/utils';
 @Injectable()
 export class AuthRpcGuard implements CanActivate {
     constructor(
-        @Inject('LOGGER_TOKEN') private readonly logger: ConsoleLogger
+        @Inject('LOGGER_TOKEN') private readonly logger: ConsoleLogger,
+        private readonly configService: ConfigService
     ) {}
 
     private readonly guard = CsmsGuards.AUTH;
