@@ -15,7 +15,7 @@ export * from './lib/connections';
 export * from './lib/appwrite-types';
 
 // DB TYPES
-export * from './lib/db';
+export * from './lib/frontend';
 
 // SERVICE TYPES
 export * from './lib/service';

@@ -1,4 +1,4 @@
-import { User } from "../db"
+import { User } from "../frontend"
 
 export type UserAuth = User | 'NONE';
 export type UserLoggedIn = { $id: string, email: string } | 'NONE';

@@ -51,7 +51,8 @@
       "@tcc/types": ["lib/types/src/index.ts"],
       "@tcc/utils": ["lib/utils/src/index.ts"],
       "@tcc/toggle-menu": ["lib/components/shared/toggle-menu/src/index.ts"],
-      "@tcc/nestjs-mongodb": ["lib/services/nestjs-mongodb/src/index.ts"]
+      "@tcc/nestjs-mongodb": ["lib/services/nestjs-mongodb/src/index.ts"],
+      "@tcc/nestjs-api-rest": ["lib/services/nestjs-api-rest/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -5,7 +5,7 @@
     "declaration": true,
     "types": ["node"]
   },
-  "include": ["src/**/*.ts", "src/lib/db/charging-stations"],
+  "include": ["src/**/*.ts", "src/lib/frontend/charging-stations"],
   "exclude": [
     "vite.config.ts",
     "vite.config.mts",

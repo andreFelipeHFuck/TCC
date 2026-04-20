@@ -17,7 +17,8 @@ import { AppModule } from './app/app.module';
 import { join } from 'path';
 
 async function bootstrap() {
-  const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule,  {
+  const app = await NestFactory.create(AppModule);
+  app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.GRPC,
     options: {
       package: AUTH_GRPC_CONFIG.package,
@@ -26,8 +27,12 @@ async function bootstrap() {
     },
   });
 
-  await app.listen();
-  Logger.log(`🚀 Application is running on: 0.0.0.0:50051`);
+  app.setGlobalPrefix('api');
+
+  const restPort = 3001; 
+  await app.listen(restPort);
+  Logger.log(`🚀 gRPC Microservice is running on: 0.0.0.0:50051`);
+  Logger.log(`🚀 REST API is running on: http://localhost:${restPort}/api`);
 }
 
-bootstrap();
+bootstrap(); 
