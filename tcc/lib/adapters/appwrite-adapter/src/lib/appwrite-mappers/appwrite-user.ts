@@ -1,19 +1,19 @@
 import {
     User,
-    UserCreateDTO,
+    CreateUserFrontendDTO,
     Address
 } from "@tcc/types";
 
-export function appwriteUserToUserCreateDTO(user: User): UserCreateDTO {
+export function appwriteUserToUserCreateDTO(user: User): CreateUserFrontendDTO {
     const { $id, address, ...rest } = user;
 
     return {
         ...rest,
         ...address
-    } as UserCreateDTO;
+    } as CreateUserFrontendDTO;
 }
 
-export function userCreateDTOToUser(user: UserCreateDTO): User {
+export function CreateUserDTOToUser(user: CreateUserFrontendDTO): User {
     const {
         state,
         city,

@@ -3,6 +3,11 @@ import { IdToken } from "../ocpp/idToken-db";
 
 export type UserType = 'driver' | 'administrator';
 
+export enum UserTypeEnum {
+    DRIVER = 'driver',
+    ADMINISTRATOR = 'administrator'
+}
+
 export interface User {
     $id: string,
     name: string,
@@ -14,7 +19,7 @@ export interface User {
     idTokens?: IdToken[]
 }
 
-export interface UserCreateDTO extends Address {
+export interface CreateUserFrontendDTO extends Address {
     name: string,
     email: string,
     password?: string,

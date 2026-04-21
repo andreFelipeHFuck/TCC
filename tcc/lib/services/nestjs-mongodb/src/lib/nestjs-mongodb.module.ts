@@ -21,7 +21,7 @@ import {
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27017/tcc-teste'),
+    MongooseModule.forRoot('mongodb://admin:mongo123@localhost:27017/tcc-teste?authSource=admin'),
 
     MongooseModule.forFeature([
       { name: Users.name, schema: UsersSchema },

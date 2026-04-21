@@ -40,8 +40,8 @@ export class Users {
     })
     email: string;
 
-    @Prop({ required: true })
-    password: string;
+    @Prop()
+    password?: string;
 
     @Prop({ 
         required: true,
@@ -49,8 +49,8 @@ export class Users {
     })
     userType: string;
 
-    @Prop({ required: true })
-    photo: string;
+    @Prop()
+    photo?: string;
 
     @Prop({ type: AddressSchema })
     address: Address;

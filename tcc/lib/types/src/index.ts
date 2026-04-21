@@ -14,11 +14,17 @@ export * from './lib/connections';
 // APPWRITE TYPES 
 export * from './lib/appwrite-types';
 
-// DB TYPES
+// FRONTEND TYPES
 export * from './lib/frontend';
 
 // SERVICE TYPES
 export * from './lib/service';
+
+// DB TYPES
+export * from './lib/db';
+
+// REST TYPES 
+export * from './lib/rest';
 
 // GRPC TYPES
 export * from './lib/grpc/generated';

@@ -16,7 +16,7 @@ export type ChargingStationsDocument = HydratedDocument<ChargingStations>;
 
 @Schema({ 
     timestamps: true,
-    collection: 'users' 
+    collection: 'charging-stations' 
 })
 export class ChargingStations {
     @Prop({ 
