@@ -5,7 +5,7 @@ import {
 } from "@tcc/types";
 
 export function appwriteUserToUserCreateDTO(user: User): CreateUserFrontendDTO {
-    const { $id, address, ...rest } = user;
+    const { userId: $id, address, ...rest } = user;
 
     return {
         ...rest,

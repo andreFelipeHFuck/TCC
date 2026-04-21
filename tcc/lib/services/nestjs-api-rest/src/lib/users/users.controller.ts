@@ -8,7 +8,10 @@ import {
     Post,
     BadRequestException,
     ConflictException,
-    InternalServerErrorException
+    InternalServerErrorException,
+    Param,
+    NotFoundException,
+    Logger
 } from '@nestjs/common';
 
 import { 
@@ -27,6 +30,32 @@ export class UsersController {
     findAll() {
         return { message: 'Hello World' };
     }
+
+    @Get('/getUser/:userId')
+    async getUser(@Param('userId') userId: string): Promise<RestResponse<User>> {
+        Logger.log(userId);
+        
+        try {
+            const user = await this.usersService.getById(userId);
+
+            if (!user) {
+                throw new NotFoundException(`Usuário com ID ${userId} não encontrado.`);
+            }
+
+            return {
+                message: 'Usuário encontrado com sucesso',
+                data: user,
+            }
+        } catch (error: any) {
+            if (error.name === 'CastError') {
+                throw new BadRequestException('ID de usuário inválido.');
+            }
+
+            throw new InternalServerErrorException('Ocorreu um erro ao processar sua solicitação.');
+        }
+    }
+
+    
 
     @Post()
     @HttpCode(HttpStatus.CREATED)

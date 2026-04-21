@@ -62,7 +62,7 @@ export class DatabaseUser
     const user = result.documents[0];
 
     return { 
-      $id: user['$id'], 
+      userId: user['$id'], 
       name: user['name'],
       email: user['email'],
       photo: user['photo'],
@@ -118,7 +118,7 @@ export class DatabaseUser
     const user = result.documents[0];
 
     return { 
-      $id: user['$id'], 
+      userId: user['$id'], 
       name: user['name'],
       email: user['email'],
       photo: user['photo'],

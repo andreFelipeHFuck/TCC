@@ -17,6 +17,14 @@ export class UsersService {
         @InjectModel(Users.name) private userModel: Model<User>
     ) {}
 
+    async getById(userId: string): Promise<User | null> {        
+        const user = await this.userModel.find({
+            userId: { $eq: userId }
+        }).exec();
+
+        return user.length === 1 ? user[0] : null;
+    }
+
     async create(createUserDto: CreateUserDTO): Promise<User> {
         const createUser = new this.userModel(createUserDto);
 
