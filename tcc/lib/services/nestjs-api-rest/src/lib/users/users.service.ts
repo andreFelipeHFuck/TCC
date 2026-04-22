@@ -9,6 +9,8 @@ import {
     User 
 } from '@tcc/types';
 
+import { hashedPassword } from '@tcc/utils'
+
 import { Users } from '@tcc/nestjs-mongodb';
 
 @Injectable()
@@ -25,7 +27,17 @@ export class UsersService {
         return user.length === 1 ? user[0] : null;
     }
 
+    async getByEmail(userEmail: string): Promise<User | null> {
+        const user = await this.userModel.find({
+            email: { $eq: userEmail}
+        }).exec();
+
+        return user.length === 1 ? user[0] : null;
+    }
+
     async create(createUserDto: CreateUserDTO): Promise<User> {
+        createUserDto.password = await hashedPassword(createUserDto.password!);
+
         const createUser = new this.userModel(createUserDto);
 
         return createUser.save();

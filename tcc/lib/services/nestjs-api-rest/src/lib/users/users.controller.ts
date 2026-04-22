@@ -11,7 +11,9 @@ import {
     InternalServerErrorException,
     Param,
     NotFoundException,
-    Logger
+    Logger,
+    HttpException,
+    UseGuards
 } from '@nestjs/common';
 
 import { 
@@ -20,17 +22,22 @@ import {
     CreateUserDTO
 } from '@tcc/types';
 
+import { LocalAuthGuard } from '../auth/auth.guard';
+import { Public } from '../auth/public.decorator';
+
 import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
     constructor(@Inject(UsersService) private readonly usersService: UsersService) {}
 
+    @UseGuards(LocalAuthGuard)
     @Get()
     findAll() {
         return { message: 'Hello World' };
     }
 
+    @Public()
     @Get('/getUser/:userId')
     async getUser(@Param('userId') userId: string): Promise<RestResponse<User>> {
         Logger.log(userId);
@@ -47,6 +54,10 @@ export class UsersController {
                 data: user,
             }
         } catch (error: any) {
+            if (error instanceof HttpException) {
+                throw error;
+            }
+
             if (error.name === 'CastError') {
                 throw new BadRequestException('ID de usuário inválido.');
             }
@@ -55,8 +66,36 @@ export class UsersController {
         }
     }
 
-    
+    @Public()
+    @Get('/getUserByEmail/:userEmail')
+    async getUserByEmail(@Param('userEmail') userEmail: string): Promise<RestResponse<User>> {
+        try {
+            const user = await this.usersService.getByEmail(userEmail);
 
+            Logger.log(user);
+
+            if (!user) {
+                throw new NotFoundException(`Usuário com Email ${userEmail} não encontrado.`);
+            }
+
+            return {
+                message: 'Usuário encontrado com sucesso',
+                data: user,
+            }
+        } catch (error: any) {
+            if (error instanceof HttpException) {
+                throw error;
+            }
+
+            if (error.name === 'CastError') {
+                throw new BadRequestException('Email de usuário inválido.');
+            }
+
+            throw new InternalServerErrorException('Ocorreu um erro ao processar sua solicitação.');
+        }
+    }
+
+    @Public()
     @Post()
     @HttpCode(HttpStatus.CREATED)
     async create(@Body() createUserDto: CreateUserDTO): Promise<RestResponse<User>> {
@@ -83,7 +122,6 @@ export class UsersController {
                 throw new BadRequestException('Erro de validação: ' + error.message);
             }
 
-            // Erro genérico
             throw new InternalServerErrorException('Ocorreu um erro ao processar sua solicitação.');
         }
     }
