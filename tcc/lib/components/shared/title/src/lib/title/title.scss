@@ -1,14 +1,9 @@
 @use 'sass:map';
 @use '../../../../../material/src/index.scss' as v;
-@use '../../../../../design-system/src/scss/index.scss' as b;
 
 .title {
     color: map.get(v.$colors, 'black');
     font-size: map.get(v.$typography, 'body-heading-heading-sm');
     font-weight: 700;
     margin: 0;
-
-    @include b.on-breakpoint('md') {
-        font-size: map.get(v.$typography, 'body-heading-heading-md');
-    }
 }

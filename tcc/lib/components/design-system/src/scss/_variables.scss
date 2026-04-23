@@ -82,7 +82,6 @@ $typography: (
     "body-heading-heading-sm": 28px,
     "body-heading-heading-md": 38px,
     "body-heading-heading-lg": 51px,
-    "body-heading-heading-xl": 81px,
 );
 
 
@@ -95,9 +94,7 @@ $spacing: (
    "lg": 16px,
    "xl": 20px, 
    "top": 80px,
-   "form": 20px,
-   "form-button-top": 60px,
-   "form-button-bottom": 60px,
+   "form": 32px
 );
 
 $margin: 24px;
@@ -109,24 +106,10 @@ $radius: (
     "lg": 12px,
 );
 
-/* Elevation */
+/* Eletvation */
 
 $elevation: (
     "default": 16px,
     "raised": 8px,
     "sunken": 4px,
 );
-
-
-/* Breakpoints */
-
-$breakpoints: (
-  "xs": 0,
-  "sm": 576px,
-  "md": 768px,
-  "lg": 992px,
-  "xl": 1200px,
-  "xxl": 1400px,
-);
-
-$header-padding: 4px;

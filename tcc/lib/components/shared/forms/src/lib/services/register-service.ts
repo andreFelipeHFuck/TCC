@@ -78,7 +78,7 @@ export class RegisterService {
 
   private formToUser(form: FormGroup): User {
     return {
-      userId: '',
+      $id: '',
       name: form.get('user')?.get('name')?.value,
       email: form.get('user')?.get('email')?.value,
       password: form.get('user')?.get('password')?.value,

@@ -26,20 +26,16 @@
   [placeholder]="'Itaum'"
 />
 
-<div class="street-row">
-  <lib-input
-    class="street-input"
-    [label]="'Rua'"
-    [control]="streetControl()"
-    [type]="'text'"
-    [placeholder]="'Imperador'"
-  />
-  
-  <lib-input
-    class="num-street"
-    [label]="'N° Rua'"
-    [control]="numStreetControl()"
-    [type]="'text'"
-    [placeholder]="'Imperador'"
-  />
-</div>
+<lib-input
+  [label]="'Rua'"
+  [control]="streetControl()"
+  [type]="'text'"
+  [placeholder]="'Imperador'"
+/>
+
+<lib-input
+  [label]="'N° Rua'"
+  [control]="numStreetControl()"
+  [type]="'text'"
+  [placeholder]="'Imperador'"
+/>
