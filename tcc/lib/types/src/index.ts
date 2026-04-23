@@ -1,6 +1,7 @@
 // APP TYPES 
 export * from './lib/errors/app-error';
 export * from './lib/errors/app-domam-errors-types';
+export * from './lib/errors/api-rest-domam-errors-types';
 
 // API TYPES
 export * from './lib/errors/api-domam-errors-types';

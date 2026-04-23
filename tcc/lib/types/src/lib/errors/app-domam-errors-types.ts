@@ -3,31 +3,31 @@
  */
 import { AppwriteError } from "./app-error";
 
-export class NetworkError extends AppwriteError {
+export class NetworkErrorAppwrite extends AppwriteError {
     constructor(message?: string) {
         super(message || 'Não foi possível conectar ao servidor');
     }
 }
 
-export class UnauthorizedError extends AppwriteError {
+export class UnauthorizedErrorAppwrite extends AppwriteError {
     constructor(message?: string) {
         super(message || 'Usuário não autorizado');
     }
 }
 
-export class AuthError extends AppwriteError {
+export class AuthErrorAppwrite extends AppwriteError {
     constructor(message?: string) {
         super(message || 'Erro ao realizar autenticação');
     }
 }
 
-export class NotFoundError extends AppwriteError {
+export class NotFoundErrorAppwrite extends AppwriteError {
     constructor(resource?: string) {
         super(resource ? `${resource} não encontrado` : 'Recurso não encontrado');
     }
 }
 
-export class UnknowError extends AppwriteError {
+export class UnknownErrorAppwrite extends AppwriteError {
     constructor(message?: string) {
         super(message || 'Erro inesperado');
     }

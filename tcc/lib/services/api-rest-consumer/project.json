@@ -1,0 +1,28 @@
+{
+  "name": "api-rest-consumer",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "lib/services/api-rest-consumer/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "lib/services/api-rest-consumer/ng-package.json",
+        "tsConfig": "lib/services/api-rest-consumer/tsconfig.lib.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "lib/services/api-rest-consumer/tsconfig.lib.prod.json"
+        },
+        "development": {}
+      },
+      "defaultConfiguration": "production"
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

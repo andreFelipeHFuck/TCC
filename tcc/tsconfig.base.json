@@ -52,7 +52,9 @@
       "@tcc/utils": ["lib/utils/src/index.ts"],
       "@tcc/toggle-menu": ["lib/components/shared/toggle-menu/src/index.ts"],
       "@tcc/nestjs-mongodb": ["lib/services/nestjs-mongodb/src/index.ts"],
-      "@tcc/nestjs-api-rest": ["lib/services/nestjs-api-rest/src/index.ts"]
+      "@tcc/nestjs-api-rest": ["lib/services/nestjs-api-rest/src/index.ts"],
+      "@tcc/api-rest-consumer": ["lib/services/api-rest-consumer/src/index.ts"],
+      "@tcc/api-rest-adapter": ["lib/adapters/api-rest-adapter/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

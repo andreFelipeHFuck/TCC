@@ -1,0 +1,9 @@
+{
+  "name": "api-rest-adapter",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "lib/adapters/api-rest-adapter/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project api-rest-adapter --web",
+  "targets": {}
+}

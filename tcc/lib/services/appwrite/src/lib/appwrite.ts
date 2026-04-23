@@ -11,7 +11,7 @@ import {
   AppwriteServices,
   ConnectionServices,
   Logger,
-  UnauthorizedError
+  UnauthorizedErrorAppwrite
 } from "@tcc/types";
 import { appwriteMapperError } from '@tcc/appwrite-adapter';
 
@@ -125,7 +125,7 @@ export class Appwrite extends ConnectionServices<AppwriteError> {
 
       this.setError(appwriteMapperError(
         AppwriteServices.CONNECTION,
-        new UnauthorizedError
+        new UnauthorizedErrorAppwrite
       ));
 
       throw this.getError();

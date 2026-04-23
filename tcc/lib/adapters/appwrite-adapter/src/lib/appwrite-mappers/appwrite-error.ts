@@ -1,10 +1,8 @@
 import {
     AppwriteError,
-    NetworkError,
-    UnauthorizedError,
-    AuthError,
-    NotFoundError,
-    UnknowError,
+    UnauthorizedErrorAppwrite,
+    AuthErrorAppwrite,
+    UnknownErrorAppwrite,
     AppwriteServices
 } from '@tcc/types';
 
@@ -40,7 +38,7 @@ export function appwriteMapperError(service: AppwriteServices, error: unknown): 
         case AppwriteServices.FUNCTIONS:
             return appwriteMapperErrorFUNCTIONS(error);
         default:
-            return new UnknowError();
+            return new UnknownErrorAppwrite();
     }
 }
 
@@ -49,14 +47,14 @@ function appwriteMapperErrorCONNECTION(error: unknown): AppwriteError {
         const appwriteError = error as AppwriteError;
         switch (String(appwriteError.code)) {
             case '401':
-                return new UnauthorizedError('Usuário não autorizado');
+                return new UnauthorizedErrorAppwrite('Usuário não autorizado');
 
             default:
-                return new UnknowError(String(appwriteError.message));
+                return new UnknownErrorAppwrite(String(appwriteError.message));
         }
     }
 
-    return new UnknowError();
+    return new UnknownErrorAppwrite();
 }
 
 function appwriteMapperErrorAUTH(error: unknown): AppwriteError {
@@ -64,23 +62,23 @@ function appwriteMapperErrorAUTH(error: unknown): AppwriteError {
         const appwriteError = error as AppwriteError;
         switch (String(appwriteError.code)) {
             case '409':
-                return new AuthError('Tentativa de criar uma conta com um email já cadastrado');
+                return new AuthErrorAppwrite('Tentativa de criar uma conta com um email já cadastrado');
 
             case '429':
-                return new UnauthorizedError('Muitas tentativas de login em pouco tempo');
+                return new UnauthorizedErrorAppwrite('Muitas tentativas de login em pouco tempo');
 
             default:
-                return new UnknowError(String(appwriteError));
+                return new UnknownErrorAppwrite(String(appwriteError));
         }
     }
 
-    return new UnknowError('Erro inesperado de autenticação');
+    return new UnknownErrorAppwrite('Erro inesperado de autenticação');
 }
 
 function appwriteMapperErrorFUNCTIONS(error: unknown): AppwriteError {
     if (isAppwriteErrorLike(error)) {
         const appwriteError = error as AppwriteError;
-        return new UnknowError(appwriteError.message);
+        return new UnknownErrorAppwrite(appwriteError.message);
 
         // switch (String(appwriteError.code)) {
         //     case '401':
@@ -91,7 +89,7 @@ function appwriteMapperErrorFUNCTIONS(error: unknown): AppwriteError {
         // }
     }
 
-    return new UnknowError();
+    return new UnknownErrorAppwrite();
 }
 
 function appwriteMapperErrorDATABASE(error: unknown): AppwriteError {
@@ -99,13 +97,12 @@ function appwriteMapperErrorDATABASE(error: unknown): AppwriteError {
         const appwriteError = error as AppwriteError;
         switch (String(appwriteError.code)) {
             case '403':
-                return new UnauthorizedError('Usuário não autorizado a escrever no banco de dados');
+                return new UnauthorizedErrorAppwrite('Usuário não autorizado a escrever no banco de dados');
 
             default:
-                return new UnknowError(String(appwriteError.message));
+                return new UnknownErrorAppwrite(String(appwriteError.message));
         }
     }
 
-    return new UnknowError();
+    return new UnknownErrorAppwrite();
 }
-

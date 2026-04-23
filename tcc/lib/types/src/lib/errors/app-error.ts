@@ -8,6 +8,15 @@ export abstract class AppwriteError extends Error {
     }
 }
 
+export abstract class ApiRestError extends Error {
+    constructor(
+        message: string,
+        public readonly code?: string
+    ){
+        super(message);
+    }
+}
+
 export interface jsonMensage {
     readonly type?: string,
     readonly code?: string,
