@@ -75,7 +75,7 @@ export class CsmsSystem {
 
     if (result.success && result.sessionId) {
       this.logger.info(`[${this.service}] Sessão obtida, salvando no cache persistente: ${result.sessionId}`);
-      await this.capacitorSession.setSession(result);
+      await this.capacitorSession.grpcSetSession(result);
     } else {
       this.logger.error(`[${this.service}]: Falha ao obter sessão no CSMS`);
       return false;
@@ -99,7 +99,7 @@ export class CsmsSystem {
     const user = await this.verifyUser();
     
     if (user !== 'NONE') {
-      const cachedSession = await this.capacitorSession.getSession();
+      const cachedSession = await this.capacitorSession.grpcGetSession();
       
       if (cachedSession) {
         if (!this.isSessionExpired(cachedSession)) {
@@ -108,7 +108,7 @@ export class CsmsSystem {
         }
         
         this.logger.info(`[${this.service}]: Sessão expirada encontrada, removendo...`);
-        await this.capacitorSession.removeSession();
+        await this.capacitorSession.grpcRemoveSession();
       }
 
       this.logger.info(`[${this.service}]: Gerando nova sessão no CSMS...`);
@@ -133,7 +133,7 @@ export class CsmsSystem {
 
     if (result.success) {
       this.logger.info(`[${this.service}] Sessão encerrada no CSMS gRPC com sucesso`);
-      await this.capacitorSession.removeSession();
+      await this.capacitorSession.grpcRemoveSession();
       return true;
     }
 
@@ -145,7 +145,7 @@ export class CsmsSystem {
     const user = await this.verifyUser();
     
     if (user !== 'NONE') {
-      const cachedSession = await this.capacitorSession.getSession();
+      const cachedSession = await this.capacitorSession.grpcGetSession();
 
       if (cachedSession) {
         return await this.closeSession(cachedSession.sessionId);

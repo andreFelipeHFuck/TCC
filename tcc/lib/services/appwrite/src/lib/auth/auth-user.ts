@@ -27,11 +27,6 @@ export class AuthUser implements AuthService {
 
   protected service = '[APPWRITE USER AUTH SERVICE]'
 
-/**
- * @todo Refatoração de AuthUser
- * 4 - Refatorar o serviço de logger deixando mais simples e menos propenso a erros entre os vários serviços
- */
-
   async isLoggedIn(): Promise<UserLoggedIn> {
     try {
       const user = await this.auth.get();

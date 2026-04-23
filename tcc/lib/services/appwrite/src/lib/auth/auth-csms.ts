@@ -69,7 +69,7 @@ export class AuthCsms {
 
     if (result.success && result.sessionId) {
       this.logger.info(`[${this.service}] Sessão obtida, salvando no cache persistente: ${result.sessionId}`);
-      await this.capacitorSession.setSession(result);
+      await this.capacitorSession.grpcSetSession(result);
     }else{
       this.logger.error(`[${this.service}]: Falha ao obter sessão no CSMS`);
       return false;
@@ -93,7 +93,7 @@ export class AuthCsms {
     const user = await this.verifyUser();
     
     if (user != 'NONE') {
-      const cachedSession = await this.capacitorSession.getSession();
+      const cachedSession = await this.capacitorSession.grpcGetSession();
       
       if (cachedSession) {
         if (!this.isSessionExpired(cachedSession)) {
@@ -102,7 +102,7 @@ export class AuthCsms {
         }
         
         this.logger.info(`[${this.service}]: Sessão expirada encontrada, removendo...`);
-        await this.capacitorSession.removeSession();
+        await this.capacitorSession.grpcRemoveSession();
       }
 
       this.logger.info(`[${this.service}]: Iniciando sessão no CSMS...`);
@@ -128,7 +128,7 @@ export class AuthCsms {
 
     if (result.success) {
       this.logger.info(`[${this.service}] Sessão encerrada com sucesso`);
-      await this.capacitorSession.removeSession();
+      await this.capacitorSession.grpcRemoveSession();
     }else{
       this.logger.error(`[${this.service}]: Falha ao encerrar sessão no CSMS`);
       return false;
@@ -142,14 +142,14 @@ export class AuthCsms {
     const user = await this.verifyUser();
     
     if (user !== 'NONE') {
-      const cachedSession = await this.capacitorSession.getSession();
+      const cachedSession = await this.capacitorSession.grpcGetSession();
 
       if (cachedSession) {
         const logoutSession = await this.closeSession(cachedSession.sessionId);
 
         if(logoutSession) {
           this.logger.info(`[${this.service}]: Sessão encerrada com sucesso`);
-          this.capacitorSession.removeSession();
+          this.capacitorSession.grpcRemoveSession();
           return true;
         }
 

@@ -36,12 +36,23 @@ export class Auth extends ApiRest implements IAuthDriver {
     }
 
     async login(email: string, password: string): Promise<UserLoggedIn> {
-       return await this.handleCall(
+       const result = await this.handleCall(
         () => lastValueFrom(this.httpClient.post<any>(`${this.baseUrl}${AUTH_ENDPOINT}`, { email, password })),
         RestServices.AUTH,
         'Login realizado com sucesso',
         'Erro ao realizar login'
        );
+
+       if(result === 'NONE') {
+        return 'NONE';
+       } 
+
+       return {
+          $id: result.data.userId,
+          email: result.data.email,
+          accessToken: result.data.access_token,
+          user: result.data.user
+       }
     }
 
     async generateToken(): Promise<string> {
