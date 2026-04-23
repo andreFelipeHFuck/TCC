@@ -51,7 +51,7 @@ implements CrudServiceDB, IDatabaseDriver {
         );
 
         return {
-            userId: result.data['$id'],
+            userId: result.data['userId'],
             name: result.data['name'],
             email: result.data['email'],
             photo: result.data['photo'],
