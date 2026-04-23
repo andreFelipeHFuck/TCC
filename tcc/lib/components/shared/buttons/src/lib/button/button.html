@@ -12,7 +12,6 @@
         class="square square-type"
         [ngClass]="color()"
         [disabled]="disabled()"
-        (click)="onClick()"
     >
         @if (icon()) {
             <span class="button-icon material-symbols-outlined">
@@ -24,6 +23,5 @@
 } @else if (typeButton() === 'thumb') {
     <lib-button-thumb 
         [title]="title()"
-        (click)="onClick()"
     />
 }
