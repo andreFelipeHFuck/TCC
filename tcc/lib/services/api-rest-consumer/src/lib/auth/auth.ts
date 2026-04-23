@@ -9,13 +9,12 @@ import { lastValueFrom } from 'rxjs';
 import { 
     IAuthDriver,
     RestServices, 
-    User,
     UserLoggedIn
 } from '@tcc/types';
 
 import { ApiRest } from '../../api-rest';
 
-const ENDPOINT = '/auth/login';
+const AUTH_ENDPOINT = '/auth/login';
 
 @Injectable({
     providedIn: 'root'
@@ -38,7 +37,7 @@ export class Auth extends ApiRest implements IAuthDriver {
 
     async login(email: string, password: string): Promise<UserLoggedIn> {
        return await this.handleCall(
-        () => lastValueFrom(this.httpClient.post<any>(`${this.baseUrl}${ENDPOINT}`, { email, password })),
+        () => lastValueFrom(this.httpClient.post<any>(`${this.baseUrl}${AUTH_ENDPOINT}`, { email, password })),
         RestServices.AUTH,
         'Login realizado com sucesso',
         'Erro ao realizar login'

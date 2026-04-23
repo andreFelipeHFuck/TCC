@@ -23,10 +23,27 @@ export class AuthService {
         return null;
     }
 
+    private loginResponse(user: any) {
+        const userDoc = user._doc;
+
+        return {
+            userId: userDoc.userId,
+            name: userDoc.name,
+            email: userDoc.email,
+            photo: userDoc.photo,
+            userType: userDoc.userType,
+            address: userDoc.address
+        }
+    }
+
     async login(user: any) {
         const payload = { email: user.email, sub: user.userId };
         return {
-            access_token: this.jwtService.sign(payload),
+            message: "Login realizado com sucesso",
+            data: {
+                access_token: this.jwtService.sign(payload),
+                user: this.loginResponse(user)
+            }
         };
     }
 }
