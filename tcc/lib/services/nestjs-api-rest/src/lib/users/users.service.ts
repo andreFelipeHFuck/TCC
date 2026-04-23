@@ -38,7 +38,30 @@ export class UsersService {
     async create(createUserDto: CreateUserDTO): Promise<User> {
         createUserDto.password = await hashedPassword(createUserDto.password!);
 
-        const createUser = new this.userModel(createUserDto);
+        console.log(createUserDto);
+        
+        const { name, email, password, photo, userType } = createUserDto;
+        const { state, city, neighborhood, street, cep, streetNumber } = createUserDto;
+        
+        const userAddress = {
+            state,
+            city,
+            neighborhood,
+            street,
+            cep,
+            streetNumber
+        };
+        
+        const userData = {
+            name,
+            email,
+            password,
+            photo,
+            userType,
+            address: userAddress
+            };
+
+        const createUser = new this.userModel(userData);
 
         return createUser.save();
     }

@@ -12,9 +12,9 @@ export interface IAuthDriver {
   logout(): Promise<void>;
 }
 
-export interface IDatabaseDriver {
+export interface IDatabaseDriver<TCreateReturn = any> {
     getByEmail(email: string): Promise<UserAuth | 'NONE'>;
-    create<T>(data: T): Promise<void>;
+    create<T>(data: T): Promise<TCreateReturn>;
     login(email: string, password: string): Promise<UserAuth | 'NONE'>;
 }
 
