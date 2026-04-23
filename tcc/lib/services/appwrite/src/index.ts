@@ -11,6 +11,7 @@ export * from './lib/database/database-user';
 
 // AUTH
 export * from './lib/auth/auth-user';
+export * from './lib/functions/grpc/auth/auth-grpc';
 
 // PROXY
 export * from './lib/auth/auth-csms';

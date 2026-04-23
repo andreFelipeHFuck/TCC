@@ -9,7 +9,8 @@ import {
 } from "@tcc/types";
 import { AuthSystem, CsmsSystem } from "@tcc/core";
 
-import { APPWRITE_CONFIG, APPWRITE_DATABASE_ID } from './appwrite-connections/appwrite-token';
+import { APPWRITE_CONFIG, APPWRITE_DATABASE_ID } from './appwrite-connections/appwrite-token'; 
+
 import { Appwrite } from "./appwrite";
 import { Auth } from "./auth/auth";
 import { DatabaseUser } from "./database/database-user";
