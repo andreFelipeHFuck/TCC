@@ -14,7 +14,7 @@ function isApiRestErrorLike(error: any): boolean {
     );
 }
 
-export function restMapperError(
+export function apiRestMapperError(
     service: RestServices,
     error: unknown
 ) {

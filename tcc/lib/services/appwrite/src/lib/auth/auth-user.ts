@@ -8,7 +8,7 @@ import {
   Logger,
   User,
   UserAuth,
-  UserCreateDTO,
+  CreateUserFrontendDTO,
   UserLoggedIn,
   UserSession
 } from '@tcc/types';
@@ -74,7 +74,7 @@ export class AuthUser implements AuthService {
   }
 
   async createUser(user: User) {
-    const userCreateDTO: UserCreateDTO = appwriteUserToUserCreateDTO(user);
+    const userCreateDTO: CreateUserFrontendDTO = appwriteUserToUserCreateDTO(user);
 
     await this.auth.create(userCreateDTO.name, userCreateDTO.email, userCreateDTO.password!);
     await this.databaseUser.create(userCreateDTO);
