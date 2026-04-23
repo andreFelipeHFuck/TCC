@@ -10,9 +10,9 @@ import {
   Logger,
   User,
   UserAuth,
-  UserCreateDTO,
   UserLoggedIn,
-  UserSession
+  UserSession,
+  CreateUserDTO
 } from '@tcc/types';
 
 /**
@@ -80,7 +80,7 @@ export class AuthSystem implements AuthService {
     // Note: Em um sistema agnóstico, o mapeamento para DTO deve ser feito 
     // antes de chegar aqui ou por um serviço de tradução.
     // Por enquanto, assumimos que o objeto 'user' é compatível ou já mapeado.
-    const userCreateDTO: UserCreateDTO = user as unknown as UserCreateDTO;
+    const userCreateDTO: CreateUserDTO = user as unknown as CreateUserDTO;
 
     await this.authDriver.create(userCreateDTO.name, userCreateDTO.email, userCreateDTO.password!);
     await this.databaseDriver.create(userCreateDTO);

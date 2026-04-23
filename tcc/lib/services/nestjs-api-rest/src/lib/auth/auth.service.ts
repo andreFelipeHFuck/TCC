@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 
-import { comparePassword } from '@tcc/utils'
+import { comparePassword } from './auth-utils';
 
 import { UsersService } from "../users/users.service";
 

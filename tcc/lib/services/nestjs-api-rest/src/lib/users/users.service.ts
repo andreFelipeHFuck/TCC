@@ -9,7 +9,7 @@ import {
     User 
 } from '@tcc/types';
 
-import { hashedPassword } from '@tcc/utils'
+import { hashedPassword } from '../auth/auth-utils';
 
 import { Users } from '@tcc/nestjs-mongodb';
 
