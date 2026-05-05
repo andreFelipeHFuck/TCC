@@ -11,6 +11,7 @@ import {
     RestServices, 
     UserLoggedIn
 } from '@tcc/types';
+import { CapacitorSessionService } from '@tcc/capacitor-session';
 
 import { ApiRest } from '../../api-rest';
 
@@ -21,6 +22,7 @@ const AUTH_ENDPOINT = '/auth/login';
 })
 export class Auth extends ApiRest implements IAuthDriver {
     private readonly httpClient = inject(HttpClient);
+    private readonly capacitorSession = inject(CapacitorSessionService);
 
     constructor() {
         super();
@@ -28,14 +30,15 @@ export class Auth extends ApiRest implements IAuthDriver {
     }
 
     async get(): Promise<UserLoggedIn | 'NONE'> {
-      return 'NONE';   
+       const session = await this.capacitorSession.apiRestGetSession();
+       return session ? session : 'NONE';
     }
 
     async create(name: string, email: string, password: string): Promise<UserLoggedIn> {
       return 'NONE';
     }
 
-    async login(email: string, password: string): Promise<UserLoggedIn> {
+    async login(email: string, password: string): Promise<UserLoggedIn | 'NONE'> {
        const result = await this.handleCall(
         () => lastValueFrom(this.httpClient.post<any>(`${this.baseUrl}${AUTH_ENDPOINT}`, { email, password })),
         RestServices.AUTH,
@@ -47,12 +50,17 @@ export class Auth extends ApiRest implements IAuthDriver {
         return 'NONE';
        } 
 
-       return {
+       const userLoggedIn: UserLoggedIn = {
           $id: result.data.userId,
           email: result.data.email,
           accessToken: result.data.access_token,
           user: result.data.user
-       }
+       };
+
+       // Salva no cache para que o get() possa recuperar depois
+       await this.capacitorSession.apiRestSetSession(userLoggedIn);
+
+       return userLoggedIn;
     }
 
     async generateToken(): Promise<string> {
@@ -60,6 +68,6 @@ export class Auth extends ApiRest implements IAuthDriver {
     }
 
     async logout(): Promise<void> {
-      return;
+      await this.capacitorSession.apiRestRemoveSession();
     }
 }

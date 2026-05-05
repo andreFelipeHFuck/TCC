@@ -9,9 +9,7 @@ import {
 import { AuthSystem, CsmsSystem } from "@tcc/core";
 import { AuthGrpc } from "@tcc/appwrite";
 
-import { Auth } from "./auth/auth";
-import { DatabaseUser } from "./database/database-user";
-
+import { AuthUser } from "./auth/auth-user";
 
 export function apiRestProvide(): Provider[] {
   return [
@@ -31,10 +29,10 @@ export function apiRestProvide(): Provider[] {
       useClass: AuthGrpc, 
     },
 
-    // 3. Serviços do Core 
+    // 3. Serviço de Autenticação Integrado da ApiRest
     {
       provide: AUTH_SERVICE,
-      useClass: AuthSystem,
+      useClass: AuthUser, 
     },
     CsmsSystem
   ];

@@ -68,9 +68,29 @@ implements CrudServiceDB, IDatabaseDriver {
    }
 
    public async create<T = CreateUserFrontendDTO>(data: T): Promise<UserAuth> {
+        // Removemos o userId para não enviá-lo à API (o banco gera o seu próprio)
+        const { userId, ...uData } = data as any;
+        const { state, city, neighborhood, street, cep, streetNumber } = uData.address;
+
+        const userData = {
+            name: uData.name,
+            email: uData.email,
+            password: uData.password,
+            photo: uData.photo,
+            userType: uData.userType,
+            state: state,
+            city: city,
+            neighborhood: neighborhood,
+            street: street,
+            cep: cep,
+            streetNumber: streetNumber
+        }
+
+        this.logger.info(`${this.service} Criando usuário com dados: ${JSON.stringify(userData)}`);
+
         const result = await this.handleCall(
              () => lastValueFrom(
-                this.httpClient.post<any>(`${this.baseUrl}${USER_ENDPOINT}`, data)
+                this.httpClient.post<any>(`${this.baseUrl}${USER_ENDPOINT}`, userData)
             ),
             RestServices.DATABASE,
             'Usuário criado com sucesso',

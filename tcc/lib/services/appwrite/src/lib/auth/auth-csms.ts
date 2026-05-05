@@ -51,7 +51,7 @@ export class AuthCsms {
     const expiresAt = new Date(Date.now() + 15 * 60 * 1000);
     const authBody = this.authBusiness.generateAuthenticationRequest(
       AuthType.AUTH,
-      user.userId,
+      user.userId!,
       user.name,
       token,
       expiresAt

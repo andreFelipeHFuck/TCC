@@ -17,7 +17,12 @@ import { join } from 'path';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.enableCors(); 
+  app.enableCors({
+    origin: '*', // Permite qualquer origem (Cuidado: apenas para desenvolvimento!)
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+  }); 
   
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true,

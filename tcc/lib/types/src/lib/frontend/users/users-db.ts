@@ -9,7 +9,7 @@ export enum UserTypeEnum {
 }
 
 export interface User {
-    userId: string,
+    userId?: string,
     name: string,
     photo: string,
     email: string,
